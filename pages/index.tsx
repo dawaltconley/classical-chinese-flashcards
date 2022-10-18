@@ -2,7 +2,16 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 import Head from 'next/head'
 
-type WordClass = 'n.' | 'pron.' | 'v.' | 't.v.' | 's.v.' | 'adv.' | 'conj.' | 'g.p.' | 'other'
+type WordClass =
+  | 'n.'
+  | 'pron.'
+  | 'v.'
+  | 't.v.'
+  | 's.v.'
+  | 'adv.'
+  | 'conj.'
+  | 'g.p.'
+  | 'other'
 
 const wcDict: Record<WordClass, string> = {
   'n.': 'noun',
@@ -13,14 +22,14 @@ const wcDict: Record<WordClass, string> = {
   'adv.': 'adverb',
   'conj.': 'conjunction',
   'g.p.': 'grammatical particle',
-  'other': 'other',
+  other: 'other',
 }
 
 type Word = {
-  hanzi: string,
-  pinyin: string,
-  type: WordClass,
-  definition: string,
+  hanzi: string
+  pinyin: string
+  type: WordClass
+  definition: string
   other?: (Pick<Word, 'definition'> & Partial<Word>)[]
 }
 
@@ -32,11 +41,11 @@ const wordlist: Word[] = [
     definition: 'Master / son',
     other: [
       {
-        definition: 'daughter'
+        definition: 'daughter',
       },
       {
         type: 's.v.',
-        definition: 'to be a son, to act as a son (should)'
+        definition: 'to be a son, to act as a son (should)',
       },
     ],
   },
@@ -45,23 +54,30 @@ const wordlist: Word[] = [
     pinyin: 'xìng',
     type: 'n.',
     definition: 'nature',
-  }
+  },
 ]
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className='flex flex-col flex-center w-screen h-screen'>{ children }</div>
+  <div className="flex-center h-screen w-screen flex-col">{children}</div>
 )
 
 const Card = ({ word }: { word: Word }) => {
-  const [ showAnswer, setShowAnswer ] = useState(false)
+  const [showAnswer, setShowAnswer] = useState(false)
   const flip = () => setShowAnswer(show => !show)
 
   return (
-    <button className='w-40 h-40 flex-center border-4 border-slate-500/10 rounded-2xl text-slate-800' onClick={flip}>
-      <h1 className={`text-8xl ${showAnswer ? 'hidden' : ''}`}>{ word.hanzi }</h1>
+    <button
+      className="flex-center h-40 w-40 rounded-2xl border-4 border-slate-500/10 text-slate-800"
+      onClick={flip}
+    >
+      <h1 className={`text-8xl ${showAnswer ? 'hidden' : ''}`}>{word.hanzi}</h1>
       <div className={`text-left ${showAnswer ? '' : 'hidden'}`}>
-        <p><span className='bold'>pinyin:</span> { word.pinyin }</p>
-        <p><span className='bold'>{ word.type }</span> {word.definition}</p>
+        <p>
+          <span className="bold">pinyin:</span> {word.pinyin}
+        </p>
+        <p>
+          <span className="bold">{word.type}</span> {word.definition}
+        </p>
       </div>
     </button>
   )
@@ -77,9 +93,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>{
-        <Card word={word}/>
-      }</main>
+      <main>{<Card word={word} />}</main>
     </Container>
   )
 }
