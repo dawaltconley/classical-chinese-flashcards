@@ -35,6 +35,22 @@ const Button = ({ onClick, children }: ButtonProps) => {
   )
 }
 
+const WordHanzi = ({ word }: { word?: Word }) => (
+  <div className="text-9xl">{word ? word.hanzi : ':)'}</div>
+)
+
+const WordInfo = ({ word }: { word?: Word }) =>
+  word ? (
+    <div className="inline-block h-full overflow-y-scroll text-left">
+      <p>
+        <span className="bold">pinyin:</span> {word?.pinyin}
+      </p>
+      <p>
+        <span className="bold">{word.type}</span> {word.definition}
+      </p>
+    </div>
+  ) : null
+
 interface CardProps {
   word: Word
   markCorrect: () => void
@@ -42,55 +58,72 @@ interface CardProps {
 }
 const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
   const defaultDur = 500
-  const [showAnswer, setShowAnswer] = useState(false)
+
+  const [isFlipped, setIsFlipped] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
   const [flipDur, setFlipDur] = useState(defaultDur)
 
+  const [frontContent, setFrontContent] = useState(<WordHanzi word={word} />)
+  const [backContent, setBackContent] = useState(<WordInfo word={word} />)
+
   const flip = () => {
-    if (isFlipping) return null
-    setShowAnswer(show => !show)
+    if (isFlipping) return
+    setIsFlipped(show => !show)
     if (flipDur > 0) {
       setIsFlipping(true)
-      setTimeout(() => setIsFlipping(false), flipDur)
+      setTimeout(() => {
+        setIsFlipping(false)
+      }, flipDur)
     }
   }
 
-  const reset = (handler: () => void) => {
-    if (showAnswer) setFlipDur(0)
-    setShowAnswer(false)
-    handler()
+  /**
+   * handles the answer
+   */
+  const handleAnswer = (answer: () => void) => {
+    if (isFlipping) return
+    if (!isFlipped) {
+      // if card is front-side up, secretly flip it first
+      setBackContent(frontContent)
+      setFlipDur(0)
+      setIsFlipped(true)
+    }
+
+    // handle the answer and get a new word
+    answer()
   }
 
+  /** reset the card to its initial state whenever it recieves a new word */
   useEffect(() => {
+    setFrontContent(<WordHanzi word={word} />)
+    setIsFlipped(false)
     setFlipDur(defaultDur)
+    setIsFlipping(true)
+    setTimeout(() => {
+      setBackContent(<WordInfo word={word} />)
+      setIsFlipping(false)
+    }, defaultDur)
   }, [word])
 
   return (
     <div className="context-3d">
       <button
         className={`flex-center flippable ${
-          showAnswer ? 'flippable--flipped' : ''
+          isFlipped ? 'flippable--flipped' : ''
         } rounded-2xl border-4 border-slate-500/10 p-4 text-slate-800`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}
-        onClick={flip}
+        onClick={() => flip()}
       >
-        <h1 className="flippable__front text-9xl">{word.hanzi}</h1>
-        <div className="flippable__back absolute inset-0 overflow-y-scroll text-center">
-          <div className="inline-block p-4 text-left">
-            <p>
-              <span className="bold">pinyin:</span> {word.pinyin}
-            </p>
-            <p>
-              <span className="bold">{word.type}</span> {word.definition}
-            </p>
-          </div>
+        <h1 className="flippable__front">{frontContent}</h1>
+        <div className="flippable__back absolute inset-4 text-center">
+          {backContent}
         </div>
       </button>
       <div className="mt-4 flex justify-between space-x-2">
-        <Button onClick={() => reset(markCorrect)}>Correct</Button>
-        <Button onClick={() => reset(markIncorrect)}>Incorrect</Button>
+        <Button onClick={() => handleAnswer(markCorrect)}>Correct</Button>
+        <Button onClick={() => handleAnswer(markIncorrect)}>Incorrect</Button>
       </div>
     </div>
   )
