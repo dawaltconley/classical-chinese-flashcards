@@ -36,7 +36,9 @@ const Button = ({ onClick, children }: ButtonProps) => {
 }
 
 const WordHanzi = ({ word }: { word?: Word }) => (
-  <div className="text-9xl">{word ? word.hanzi : ':)'}</div>
+  <div className="overflow-hidden whitespace-nowrap text-9xl">
+    {word ? word.hanzi : ':)'}
+  </div>
 )
 
 const WordInfo = ({ word }: { word?: Word }) =>
