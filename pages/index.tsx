@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 
 import wordlist, { Word } from '../data/wordlist'
@@ -60,11 +60,14 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
   const defaultDur = 500
 
   const [isFlipped, setIsFlipped] = useState(false)
+  const [hasFlipped, setHasFlipped] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
   const [flipDur, setFlipDur] = useState(defaultDur)
 
   const [frontContent, setFrontContent] = useState(<WordHanzi word={word} />)
   const [backContent, setBackContent] = useState(<WordInfo word={word} />)
+
+  const answerButtons = useRef<HTMLDivElement>(null)
 
   const flip = () => {
     if (isFlipping) return
@@ -93,10 +96,15 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
     answer()
   }
 
+  useEffect(() => {
+    if (isFlipped) setHasFlipped(true)
+  }, [isFlipped])
+
   /** reset the card to its initial state whenever it recieves a new word */
   useEffect(() => {
     setFrontContent(<WordHanzi word={word} />)
     setIsFlipped(false)
+    setHasFlipped(false)
     setFlipDur(defaultDur)
     setIsFlipping(true)
     setTimeout(() => {
@@ -121,9 +129,21 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
           {backContent}
         </div>
       </button>
-      <div className="mt-4 flex justify-between space-x-2">
-        <Button onClick={() => handleAnswer(markCorrect)}>Correct</Button>
-        <Button onClick={() => handleAnswer(markIncorrect)}>Incorrect</Button>
+      <div
+        ref={answerButtons}
+        className="mt-4 overflow-hidden"
+        style={{
+          transitionDuration: flipDur.toString() + 'ms',
+          height:
+            hasFlipped && answerButtons.current
+              ? answerButtons.current.scrollHeight
+              : '0px',
+        }}
+      >
+        <div className="flex justify-between space-x-2 ">
+          <Button onClick={() => handleAnswer(markCorrect)}>Correct</Button>
+          <Button onClick={() => handleAnswer(markIncorrect)}>Incorrect</Button>
+        </div>
       </div>
     </div>
   )
