@@ -2,65 +2,7 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 import Head from 'next/head'
 
-type WordClass =
-  | 'n.'
-  | 'pron.'
-  | 'v.'
-  | 't.v.'
-  | 's.v.'
-  | 'adv.'
-  | 'conj.'
-  | 'g.p.'
-  | 'other'
-
-const wcDict: Record<WordClass, string> = {
-  'n.': 'noun',
-  'pron.': 'pronoun',
-  'v.': 'verb',
-  't.v.': 'transitive verb',
-  's.v.': 'stative verb',
-  'adv.': 'adverb',
-  'conj.': 'conjunction',
-  'g.p.': 'grammatical particle',
-  other: 'other',
-}
-
-type Word = {
-  hanzi: string
-  pinyin: string
-  type: WordClass
-  lesson: number
-  definition: string
-  other?: WordVariant[]
-}
-type WordVariant = Pick<Word, 'definition'> &
-  Partial<Pick<Word, 'pinyin' | 'type'>>
-
-const wordlist: Word[] = [
-  {
-    hanzi: '子',
-    pinyin: 'zǐ',
-    lesson: 1,
-    type: 'n.',
-    definition: 'Master / son',
-    other: [
-      {
-        definition: 'daughter',
-      },
-      {
-        type: 's.v.',
-        definition: 'to be a son, to act as a son (should)',
-      },
-    ],
-  },
-  {
-    hanzi: '性',
-    pinyin: 'xìng',
-    lesson: 1,
-    type: 'n.',
-    definition: 'nature',
-  },
-]
+import wordlist, { Word } from '../data/wordlist'
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="flex-center h-screen w-screen flex-col">{children}</div>
