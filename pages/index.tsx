@@ -1,41 +1,120 @@
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 import wordlist, { Word } from '../data/wordlist'
+
+var shuffle = <T extends any>(arr: T[]): T[] => {
+  const len = arr.length
+  const remaining: T[] = [...arr]
+  const shuffled: T[] = []
+  while (shuffled.length < len) {
+    let i = Math.floor(Math.random() * remaining.length)
+    let item = remaining.splice(i, 1)[0]
+    shuffled.push(item)
+  }
+  return shuffled
+}
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="flex-center h-screen w-screen flex-col">{children}</div>
 )
 
-const Card = ({ word }: { word: Word }) => {
-  const [showAnswer, setShowAnswer] = useState(false)
-  const flip = () => setShowAnswer(show => !show)
-
+interface ButtonProps {
+  onClick: () => void
+  children?: React.ReactNode
+}
+const Button = ({ onClick, children }: ButtonProps) => {
   return (
     <button
-      className={`flex-center flippable ${
-        showAnswer ? 'flippable--flipped' : ''
-      } rounded-2xl border-4 border-slate-500/10 p-4 text-slate-800`}
-      onClick={flip}
+      className="rounded-full bg-gray-200 px-2 py-1"
+      onClick={() => onClick()}
     >
-      <h1 className="flippable__front text-9xl">{word.hanzi}</h1>
-      <div className="flippable__back absolute inset-0 overflow-y-scroll text-center">
-        <div className="inline-block p-4 text-left">
-          <p>
-            <span className="bold">pinyin:</span> {word.pinyin}
-          </p>
-          <p>
-            <span className="bold">{word.type}</span> {word.definition}
-          </p>
-        </div>
-      </div>
+      {children}
     </button>
   )
 }
 
+interface CardProps {
+  word: Word
+  markCorrect: () => void
+  markIncorrect: () => void
+}
+const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
+  const defaultDur = 500
+  const [showAnswer, setShowAnswer] = useState(false)
+  const [isFlipping, setIsFlipping] = useState(false)
+  const [flipDur, setFlipDur] = useState(defaultDur)
+
+  const flip = () => {
+    if (isFlipping) return null
+    setShowAnswer(show => !show)
+    if (flipDur > 0) {
+      setIsFlipping(true)
+      setTimeout(() => setIsFlipping(false), flipDur)
+    }
+  }
+
+  const reset = (handler: () => void) => {
+    if (showAnswer) setFlipDur(0)
+    setShowAnswer(false)
+    handler()
+  }
+
+  useEffect(() => {
+    setFlipDur(defaultDur)
+  }, [word])
+
+  return (
+    <div className="context-3d">
+      <button
+        className={`flex-center flippable ${
+          showAnswer ? 'flippable--flipped' : ''
+        } rounded-2xl border-4 border-slate-500/10 p-4 text-slate-800`}
+        style={{
+          transitionDuration: flipDur.toString() + 'ms',
+        }}
+        onClick={flip}
+      >
+        <h1 className="flippable__front text-9xl">{word.hanzi}</h1>
+        <div className="flippable__back absolute inset-0 overflow-y-scroll text-center">
+          <div className="inline-block p-4 text-left">
+            <p>
+              <span className="bold">pinyin:</span> {word.pinyin}
+            </p>
+            <p>
+              <span className="bold">{word.type}</span> {word.definition}
+            </p>
+          </div>
+        </div>
+      </button>
+      <div className="mt-4 flex justify-between space-x-2">
+        <Button onClick={() => reset(markCorrect)}>Correct</Button>
+        <Button onClick={() => reset(markIncorrect)}>Incorrect</Button>
+      </div>
+    </div>
+  )
+}
+
 const Home: NextPage = () => {
-  let word = wordlist[0]
+  const [words, setWords] = useState(wordlist)
+  const [completed, setCompleted] = useState<Word[]>([])
+  const currentWord = words[0]
+
+  const resetFlashcards = () => {
+    setWords(shuffle(wordlist))
+    setCompleted([])
+  }
+  useEffect(resetFlashcards, [])
+
+  const markCorrect = () => {
+    setCompleted(completed => completed.concat(currentWord))
+    setWords(words => words.slice(1))
+  }
+  const markIncorrect = () => {
+    setWords(words => words.slice(1).concat(currentWord))
+  }
+
   return (
     <Container>
       <Head>
@@ -44,7 +123,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="context-3d">{<Card word={word} />}</main>
+      <main>
+        {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
+      </main>
     </Container>
   )
 }
