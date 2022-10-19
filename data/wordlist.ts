@@ -543,10 +543,10 @@ const wordlist: Word[] = [
   {
     hanzi: '恆',
     simplified: '恒',
-    pinyin: '',
+    pinyin: 'héng',
     lesson: 6,
-    type: 'v.',
-    definition: '',
+    type: 's.v.',
+    definition: 'to be constant',
   },
   {
     hanzi: '名',
