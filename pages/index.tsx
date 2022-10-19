@@ -14,17 +14,23 @@ const Card = ({ word }: { word: Word }) => {
 
   return (
     <button
-      className="flex-center h-40 w-40 rounded-2xl border-4 border-slate-500/10 text-slate-800"
+      className={`flex-center flippable ${
+        showAnswer ? 'flippable--flipped' : ''
+      } h-40 w-40 rounded-2xl border-4 border-slate-500/10 text-slate-800`}
       onClick={flip}
     >
-      <h1 className={`text-8xl ${showAnswer ? 'hidden' : ''}`}>{word.hanzi}</h1>
-      <div className={`text-left ${showAnswer ? '' : 'hidden'}`}>
-        <p>
-          <span className="bold">pinyin:</span> {word.pinyin}
-        </p>
-        <p>
-          <span className="bold">{word.type}</span> {word.definition}
-        </p>
+      <h1 className="flippable__side flippable__side--front text-8xl">
+        {word.hanzi}
+      </h1>
+      <div className="flex-center flippable__side flippable__side--back absolute inset-0 text-left">
+        <div className="p-4">
+          <p>
+            <span className="bold">pinyin:</span> {word.pinyin}
+          </p>
+          <p>
+            <span className="bold">{word.type}</span> {word.definition}
+          </p>
+        </div>
       </div>
     </button>
   )
@@ -40,7 +46,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>{<Card word={word} />}</main>
+      <main className="context-3d">{<Card word={word} />}</main>
     </Container>
   )
 }

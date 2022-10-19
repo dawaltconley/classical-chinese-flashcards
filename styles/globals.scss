@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
+
+@layer components {
+  .context-3d {
+    --perspective: 1000px;
+    --transform-style: preserve-3d;
+    perspective: var(--perspective);
+  }
+
+  .flippable {
+    --angle: 0deg;
+    --transition: 500ms;
+    transform: translateZ(0) rotateY(var(--angle, 0deg));
+    transform-style: var(--transform-style, initial);
+    transition-duration: var(--transition, 500ms);
+    transition-property: transform;
+
+    &__side {
+      transform-style: var(--transform-style, initial);
+      backface-visibility: hidden;
+
+      &--front {
+        transform: translateZ(0) rotateY(0deg);
+      }
+      &--back {
+        transform: translateZ(0) rotateY(180deg);
+      }
+    }
+
+    &--flipped {
+      --angle: 180deg;
+    }
+  }
+}
