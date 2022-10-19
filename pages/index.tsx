@@ -35,20 +35,18 @@ const Button = ({ onClick, children }: ButtonProps) => {
   )
 }
 
-const WordHanzi = ({ word }: { word?: Word }) => (
-  <div className="overflow-hidden whitespace-nowrap text-9xl">
-    {word ? word.hanzi : ':)'}
+const WordHanzi = ({ word }: { word: Word }) => (
+  <div className="overflow-hidden whitespace-nowrap font-serif text-9xl">
+    {word.hanzi}
   </div>
 )
 
-const WordInfo = ({ word }: { word?: Word }) =>
+const WordInfo = ({ word }: { word: Word }) =>
   word ? (
-    <div className="inline-block h-full overflow-y-scroll text-left">
-      <p>
-        <span className="bold">pinyin:</span> {word?.pinyin}
-      </p>
-      <p>
-        <span className="bold">{word.type}</span> {word.definition}
+    <div className="inline-block h-full overflow-y-scroll text-left font-serif">
+      <p className="text-center text-xl font-bold">{word.pinyin}</p>
+      <p className="leading-snug">
+        <span className="italic">{word.type}</span> {word.definition}
       </p>
     </div>
   ) : null
@@ -120,7 +118,7 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
       <button
         className={`flex-center flippable ${
           isFlipped ? 'flippable--flipped' : ''
-        } rounded-2xl border-4 border-slate-500/10 p-4 text-slate-800`}
+        } rounded-2xl border-8 border-slate-500/10 p-4 text-slate-800`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}
