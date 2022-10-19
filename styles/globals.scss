@@ -19,8 +19,6 @@
     --angle: 0deg;
     transform: translateZ(0) rotateY(var(--angle, 0deg));
     transform-style: var(--transform-style, initial);
-    transition-duration: 500ms;
-    transition-property: transform;
 
     &__front {
       transform: translateZ(0) rotateY(0deg);
