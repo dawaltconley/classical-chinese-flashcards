@@ -29,14 +29,18 @@ type Word = {
   hanzi: string
   pinyin: string
   type: WordClass
+  lesson: number
   definition: string
-  other?: (Pick<Word, 'definition'> & Partial<Word>)[]
+  other?: WordVariant[]
 }
+type WordVariant = Pick<Word, 'definition'> &
+  Partial<Pick<Word, 'pinyin' | 'type'>>
 
 const wordlist: Word[] = [
   {
     hanzi: '子',
     pinyin: 'zǐ',
+    lesson: 1,
     type: 'n.',
     definition: 'Master / son',
     other: [
@@ -52,6 +56,7 @@ const wordlist: Word[] = [
   {
     hanzi: '性',
     pinyin: 'xìng',
+    lesson: 1,
     type: 'n.',
     definition: 'nature',
   },
