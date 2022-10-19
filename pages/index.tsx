@@ -16,14 +16,12 @@ const Card = ({ word }: { word: Word }) => {
     <button
       className={`flex-center flippable ${
         showAnswer ? 'flippable--flipped' : ''
-      } h-40 w-40 rounded-2xl border-4 border-slate-500/10 text-slate-800`}
+      } rounded-2xl border-4 border-slate-500/10 p-4 text-slate-800`}
       onClick={flip}
     >
-      <h1 className="flippable__side flippable__side--front text-8xl">
-        {word.hanzi}
-      </h1>
-      <div className="flex-center flippable__side flippable__side--back absolute inset-0 text-left">
-        <div className="p-4">
+      <h1 className="flippable__front text-9xl">{word.hanzi}</h1>
+      <div className="flippable__back absolute inset-0 overflow-y-scroll text-center">
+        <div className="inline-block p-4 text-left">
           <p>
             <span className="bold">pinyin:</span> {word.pinyin}
           </p>

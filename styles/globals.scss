@@ -10,7 +10,7 @@
 
 @layer components {
   .context-3d {
-    --perspective: 1000px;
+    --perspective: 500px;
     --transform-style: preserve-3d;
     perspective: var(--perspective);
   }
@@ -23,16 +23,16 @@
     transition-duration: var(--transition, 500ms);
     transition-property: transform;
 
-    &__side {
+    &__front {
+      transform: translateZ(0) rotateY(0deg);
+    }
+    &__back {
+      transform: translateZ(0) rotateY(180deg);
+    }
+    &__front,
+    &__back {
       transform-style: var(--transform-style, initial);
       backface-visibility: hidden;
-
-      &--front {
-        transform: translateZ(0) rotateY(0deg);
-      }
-      &--back {
-        transform: translateZ(0) rotateY(180deg);
-      }
     }
 
     &--flipped {
