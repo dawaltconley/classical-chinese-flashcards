@@ -12,5 +12,5 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require('sass-themes/tailwind')],
 }

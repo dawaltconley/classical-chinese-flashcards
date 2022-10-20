@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   sassOptions: {
     loadPaths: ['node_modules'],
+    functions: require('sass-cast/legacy').sassFunctions,
   },
 }
 

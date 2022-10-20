@@ -1,0 +1,32 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass-themes/mixins' as theme;
+
+$tw-colors: require(
+  './styles/tailwind-theme.js',
+  colors,
+  $parseUnquotedStrings: true
+);
+
+$dark: map.get($tw-colors, slate, '800');
+
+@layer utilities {
+  .theme-light {
+    @include theme.create($bg: white, $tx: $dark);
+  }
+
+  .theme-dark {
+    @include theme.create($bg: $dark, $tx: white);
+  }
+}
+
+@layer base {
+  body {
+    @apply theme-light;
+
+    @media (prefers-color-scheme: dark) {
+      @apply theme-dark;
+    }
+  }
+}
