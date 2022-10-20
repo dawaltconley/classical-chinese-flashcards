@@ -6,6 +6,9 @@
   .flex-center {
     @apply flex items-center justify-center;
   }
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+  }
 }
 
 @layer components {

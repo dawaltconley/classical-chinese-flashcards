@@ -48,7 +48,7 @@ const ButtonCircle: Button = ({ onClick, children }) => {
 }
 
 const WordHanzi = ({ word }: { word: Word }) => (
-  <div className="overflow-hidden whitespace-nowrap font-serif text-9xl">
+  <div className="writing-vertical-rl overflow-hidden whitespace-nowrap font-serif text-9xl">
     {word.hanzi}
   </div>
 )
