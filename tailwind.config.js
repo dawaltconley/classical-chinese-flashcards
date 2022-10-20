@@ -6,8 +6,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ['Noto Sans Traditional Chinese', 'sans-serif'],
-      serif: ['Noto Serif Traditional Chinese', 'serif'],
+      sans: ['Noto Sans TC', 'sans-serif'],
+      serif: ['Noto Serif TC', 'serif'],
       display: ['Ma Shan Zheng', 'Noto Serif Traditional Chinese', 'serif'],
     },
     extend: {},
