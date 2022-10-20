@@ -1,5 +1,7 @@
-import type { NextPage } from 'next'
 import { useState, useEffect, useRef } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import wordlist, { Word } from '../data/wordlist'
@@ -20,14 +22,24 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="flex-center h-screen w-screen flex-col">{children}</div>
 )
 
-interface ButtonProps {
+type Button = (props: {
   onClick: () => void
   children?: React.ReactNode
-}
-const Button = ({ onClick, children }: ButtonProps) => {
+}) => JSX.Element
+const Button: Button = ({ onClick, children }) => {
   return (
     <button
       className="rounded-full bg-gray-200 px-2 py-1"
+      onClick={() => onClick()}
+    >
+      {children}
+    </button>
+  )
+}
+const ButtonCircle: Button = ({ onClick, children }) => {
+  return (
+    <button
+      className="aspect-square rounded-full bg-gray-200 p-1"
       onClick={() => onClick()}
     >
       {children}
@@ -58,8 +70,20 @@ interface ScoreDisplayProps {
 }
 const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
   <div className="mx-auto flex max-w-md justify-evenly p-4">
-    <span className="text-green-700">{correct}</span>
-    <span className="text-red-700">{incorrect}</span>
+    <span className="text-green-700">
+      <span>{correct}</span>
+      <FontAwesomeIcon
+        icon={faCheck}
+        className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
+      />
+    </span>
+    <span className="text-red-700">
+      <span>{incorrect}</span>
+      <FontAwesomeIcon
+        icon={faXmark}
+        className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
+      />
+    </span>
     <span>{remaining} remaining</span>
   </div>
 )
@@ -131,7 +155,7 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
       <button
         className={`flex-center flippable ${
           isFlipped ? 'flippable--flipped' : ''
-        } rounded-2xl border-8 border-slate-500/10 p-4 text-slate-800`}
+        } mx-auto rounded-2xl border-8 border-slate-500/10 p-4 text-slate-800`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}
@@ -153,9 +177,16 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
               : '0px',
         }}
       >
-        <div className="flex justify-between space-x-2 ">
-          <Button onClick={() => handleAnswer(markCorrect)}>Correct</Button>
-          <Button onClick={() => handleAnswer(markIncorrect)}>Incorrect</Button>
+        <div className="flex justify-around text-lg">
+          <p>Rate yourself: </p>
+          <span className="ml-2 inline-block space-x-2">
+            <ButtonCircle onClick={() => handleAnswer(markCorrect)}>
+              <FontAwesomeIcon icon={faCheck} className="h-[1em] w-[1em]" />
+            </ButtonCircle>
+            <ButtonCircle onClick={() => handleAnswer(markIncorrect)}>
+              <FontAwesomeIcon icon={faXmark} className="h-[1em] w-[1em]" />
+            </ButtonCircle>
+          </span>
         </div>
       </div>
     </div>
