@@ -4,7 +4,7 @@ import { faCheck, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import wordlist, { Word } from '../data/wordlist'
+import wordlist, { Word, WordVariant } from '../data/wordlist'
 
 var shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -53,17 +53,44 @@ const WordHanzi = ({ word }: { word: Word }) => (
   </div>
 )
 
-const WordInfo = ({ word }: { word: Word }) =>
-  word ? (
+const WordDefinition = ({
+  word,
+  variant,
+}: {
+  word: Word
+  variant?: WordVariant
+}) => (
+  <li className="table-row">
+    <abbr className="table-cell pr-2 text-right italic">
+      {variant?.type || word.type}
+    </abbr>
+    <span className="table-cell">
+      {' ' + (variant?.definition || word.definition)}
+      {/* variant?.pinyin && ` (${variant.pinyin})` */}
+      {variant?.pinyin && (
+        <span className="ml-2 font-bold">({variant.pinyin})</span>
+      )}
+    </span>
+  </li>
+)
+
+const WordInfo = ({ word }: { word: Word }) => {
+  return (
     <div className="flex h-full w-full overflow-y-auto">
       <div className="m-auto text-left font-serif">
-        <p className="text-center text-xl font-bold">{word.pinyin}</p>
-        <p className="leading-snug">
-          <span className="italic">{word.type}</span> {word.definition}
-        </p>
+        <p className="mb-2 text-center text-xl font-bold">{word.pinyin}</p>
+        <ol className="list-decimal leading-snug">
+          <WordDefinition key={'main'} word={word} />
+          {word.other
+            ? word.other.map((variant, i) => (
+                <WordDefinition key={i} {...{ word, variant }} />
+              ))
+            : null}
+        </ol>
       </div>
     </div>
-  ) : null
+  )
+}
 
 interface ScoreDisplayProps {
   correct: number
