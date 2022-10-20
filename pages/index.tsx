@@ -55,11 +55,13 @@ const WordHanzi = ({ word }: { word: Word }) => (
 
 const WordInfo = ({ word }: { word: Word }) =>
   word ? (
-    <div className="inline-block h-full overflow-y-scroll text-left font-serif">
-      <p className="text-center text-xl font-bold">{word.pinyin}</p>
-      <p className="leading-snug">
-        <span className="italic">{word.type}</span> {word.definition}
-      </p>
+    <div className="flex h-full w-full overflow-y-auto">
+      <div className="m-auto text-left font-serif">
+        <p className="text-center text-xl font-bold">{word.pinyin}</p>
+        <p className="leading-snug">
+          <span className="italic">{word.type}</span> {word.definition}
+        </p>
+      </div>
     </div>
   ) : null
 
@@ -155,16 +157,14 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
       <button
         className={`flex-center flippable ${
           isFlipped ? 'flippable--flipped' : ''
-        } mx-auto rounded-2xl border-8 border-slate-500/10 p-4 text-slate-800`}
+        } relative mx-auto rounded-2xl border-8 border-slate-500/10 p-4 text-slate-800`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}
         onClick={() => flip()}
       >
         <h1 className="flippable__front">{frontContent}</h1>
-        <div className="flippable__back absolute inset-4 text-center">
-          {backContent}
-        </div>
+        <div className="flippable__back absolute inset-4">{backContent}</div>
       </button>
       <div
         ref={answerButtons}
