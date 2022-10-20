@@ -12,6 +12,12 @@
 }
 
 @layer components {
+  .hanzi {
+    font-size: max(6rem, min(40vmin, 360px));
+    writing-mode: vertical-rl;
+    line-height: 1;
+  }
+
   .context-3d {
     --perspective: 500px;
     --transform-style: preserve-3d;
