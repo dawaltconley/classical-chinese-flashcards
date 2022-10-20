@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
@@ -39,7 +39,7 @@ const Button: Button = ({ onClick, children }) => {
 const ButtonCircle: Button = ({ onClick, children }) => {
   return (
     <button
-      className="aspect-square rounded-full bg-gray-200 p-1"
+      className="aspect-square rounded-full bg-gray-200 p-2"
       onClick={() => onClick()}
     >
       {children}
@@ -102,14 +102,14 @@ const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
     <span className="text-green-700">
       <span>{correct}</span>
       <FontAwesomeIcon
-        icon={faCheck}
+        icon={faThumbsUp}
         className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
       />
     </span>
     <span className="text-red-700">
       <span>{incorrect}</span>
       <FontAwesomeIcon
-        icon={faXmark}
+        icon={faThumbsDown}
         className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
       />
     </span>
@@ -208,10 +208,13 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
           <p>Rate yourself: </p>
           <span className="ml-2 inline-block space-x-2">
             <ButtonCircle onClick={() => handleAnswer(markCorrect)}>
-              <FontAwesomeIcon icon={faCheck} className="h-[1em] w-[1em]" />
+              <FontAwesomeIcon icon={faThumbsUp} className="h-[1em] w-[1em]" />
             </ButtonCircle>
             <ButtonCircle onClick={() => handleAnswer(markIncorrect)}>
-              <FontAwesomeIcon icon={faXmark} className="h-[1em] w-[1em]" />
+              <FontAwesomeIcon
+                icon={faThumbsDown}
+                className="h-[1em] w-[1em]"
+              />
             </ButtonCircle>
           </span>
         </div>
