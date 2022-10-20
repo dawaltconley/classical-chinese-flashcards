@@ -13,7 +13,9 @@
 
 @layer components {
   .hanzi {
-    font-size: max(6rem, min(40vmin, 360px));
+    --size: min(40vmin, 360px);
+    min-width: var(--size);
+    font-size: max(6rem, var(--size));
     writing-mode: vertical-rl;
     line-height: 1;
   }
