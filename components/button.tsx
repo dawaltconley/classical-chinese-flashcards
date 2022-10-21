@@ -24,7 +24,9 @@ const getButtonClass = (style?: ButtonStyle) => {
 const Button: Button = ({ style, onClick, children }) => (
   <button
     className={
-      'button ' + getButtonClass(style) + ' rounded-full bg-gray-200 px-2 py-1'
+      'button ' +
+      getButtonClass(style) +
+      ' rounded-full bg-gray-200 px-2 py-1 duration-150'
     }
     onClick={() => onClick()}
   >
@@ -35,7 +37,9 @@ const Button: Button = ({ style, onClick, children }) => (
 const ButtonCircle: Button = ({ style, onClick, children }) => (
   <button
     className={
-      'button ' + getButtonClass(style) + ' aspect-square rounded-full p-2'
+      'button ' +
+      getButtonClass(style) +
+      ' aspect-square rounded-full p-2 duration-150'
     }
     onClick={() => onClick()}
   >
