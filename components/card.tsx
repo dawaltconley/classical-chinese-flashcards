@@ -117,7 +117,7 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
       <button
         className={`flex-center flippable ${
           isFlipped ? 'flippable--flipped' : ''
-        } relative mx-auto rounded-2xl border-8 border-slate-500/10`}
+        } relative mx-auto rounded-2xl border-8 border-gray-500/10`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}
