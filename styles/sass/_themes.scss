@@ -7,22 +7,30 @@ $dark: tw.color(gray, 800);
 @layer utilities {
   .theme-light {
     @include theme.create($bg: white, $tx: $dark, $br: tw.color(slate, 200));
-    --theme-green: theme('colors.green.300');
-    --theme-green--light: theme('colors.green.200');
-    --theme-green--dark: theme('colors.green.400');
-    --theme-red: theme('colors.red.300');
-    --theme-red--light: theme('colors.red.200');
-    --theme-red--dark: theme('colors.red.400');
+
+    --theme-green: theme('colors.green.800');
+    --theme-red: theme('colors.red.800');
+
+    --theme-btn-green: theme('colors.green.300');
+    --theme-btn-green--light: theme('colors.green.200');
+    --theme-btn-green--dark: theme('colors.green.400');
+    --theme-btn-red: theme('colors.red.300');
+    --theme-btn-red--light: theme('colors.red.200');
+    --theme-btn-red--dark: theme('colors.red.400');
   }
 
   .theme-dark {
     @include theme.create($bg: $dark, $tx: white, $br: tw.color(slate, 700));
-    --theme-green: theme('colors.green.700');
-    --theme-green--light: theme('colors.green.600');
-    --theme-green--dark: theme('colors.green.800');
-    --theme-red: theme('colors.red.700');
-    --theme-red--light: theme('colors.red.600');
-    --theme-red--dark: theme('colors.red.800');
+
+    --theme-green: theme('colors.green.400');
+    --theme-red: theme('colors.red.400');
+
+    --theme-btn-green: theme('colors.green.700');
+    --theme-btn-green--light: theme('colors.green.600');
+    --theme-btn-green--dark: theme('colors.green.800');
+    --theme-btn-red: theme('colors.red.700');
+    --theme-btn-red--light: theme('colors.red.600');
+    --theme-btn-red--dark: theme('colors.red.800');
   }
 }
 
@@ -53,22 +61,22 @@ $dark: tw.color(gray, 800);
     }
 
     &--green {
-      background-color: var(--theme-green);
+      background-color: var(--theme-btn-green);
       &:hover {
-        background-color: var(--theme-green--light);
+        background-color: var(--theme-btn-green--light);
       }
       &:active {
-        background-color: var(--theme-green--dark);
+        background-color: var(--theme-btn-green--dark);
       }
     }
 
     &--red {
-      background-color: var(--theme-red);
+      background-color: var(--theme-btn-red);
       &:hover {
-        background-color: var(--theme-red--light);
+        background-color: var(--theme-btn-red--light);
       }
       &:active {
-        background-color: var(--theme-red--dark);
+        background-color: var(--theme-btn-red--dark);
       }
     }
   }

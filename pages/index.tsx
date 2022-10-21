@@ -31,14 +31,14 @@ interface ScoreDisplayProps {
 }
 const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
   <>
-    <span className="text-green-700">
+    <span className="text-theme-green">
       <span>{correct}</span>
       <FontAwesomeIcon
         icon={faThumbsUp}
         className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
       />
     </span>
-    <span className="text-red-700">
+    <span className="text-theme-red">
       <span>{incorrect}</span>
       <FontAwesomeIcon
         icon={faThumbsDown}

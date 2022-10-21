@@ -10,7 +10,16 @@ module.exports = {
       serif: ['Noto Serif TC', 'serif'],
       display: ['Ma Shan Zheng', 'Noto Serif Traditional Chinese', 'serif'],
     },
-    extend: {},
+    extend: {
+      colors: {
+        'theme-green': {
+          DEFAULT: 'var(--theme-green)',
+        },
+        'theme-red': {
+          DEFAULT: 'var(--theme-red)',
+        },
+      },
+    },
   },
   plugins: [require('sass-themes/tailwind')],
 }
