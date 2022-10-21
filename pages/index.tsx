@@ -6,6 +6,7 @@ import Head from 'next/head'
 
 import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
+import { ThemeToggle } from '../components/button'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -29,7 +30,7 @@ interface ScoreDisplayProps {
   remaining: number
 }
 const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
-  <div className="mx-auto flex max-w-md justify-evenly p-4">
+  <>
     <span className="text-green-700">
       <span>{correct}</span>
       <FontAwesomeIcon
@@ -45,7 +46,7 @@ const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
       />
     </span>
     <span>{remaining} remaining</span>
-  </div>
+  </>
 )
 
 const Home: NextPage = () => {
@@ -77,12 +78,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="fixed top-0 left-0 right-0 w-full">
-        <ScoreDisplay
-          correct={completed.length}
-          incorrect={missed}
-          remaining={words.length}
-        />
+      <header className="items center fixed top-0 left-0 right-0 flex h-16 w-full justify-between p-4">
+        <div className="mx-auto flex items-center justify-between space-x-8">
+          <ScoreDisplay
+            correct={completed.length}
+            incorrect={missed}
+            remaining={words.length}
+          />
+        </div>
+        <ThemeToggle />
       </header>
 
       <main>
