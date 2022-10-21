@@ -34,4 +34,8 @@
       --angle: 180deg;
     }
   }
+
+  .card-border {
+    @apply rounded-2xl border-8 border-gray-500/10;
+  }
 }

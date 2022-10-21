@@ -117,14 +117,16 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
       <button
         className={`flex-center flippable ${
           isFlipped ? 'flippable--flipped' : ''
-        } relative mx-auto rounded-2xl border-8 border-gray-500/10`}
+        } relative mx-auto`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}
         onClick={() => flip()}
       >
-        <h1 className="flippable__front bg-theme-bg p-4">{frontContent}</h1>
-        <div className="flippable__back absolute inset-0 bg-theme-bg p-4">
+        <h1 className="flippable__front card-border bg-theme-bg p-4">
+          {frontContent}
+        </h1>
+        <div className="flippable__back card-border absolute inset-0 bg-theme-bg p-4">
           {backContent}
         </div>
       </button>
