@@ -1,5 +1,5 @@
 @use 'tailwind' as tw;
-@use 'sass-themes/mixins' as theme;
+@use 'sass-themes' as theme;
 @use 'scss-properties' as prop; // dependency of sass-themes
 
 $dark: tw.color(gray, 800);
