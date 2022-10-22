@@ -1,0 +1,16 @@
+@layer components {
+  .drawer {
+    --handle-height: 60px;
+
+    @apply fixed left-0 right-0;
+    top: calc(100vh - var(--handle-height));
+
+    &__handle {
+      height: var(--handle-height);
+    }
+
+    &__body {
+      height: 800px;
+    }
+  }
+}

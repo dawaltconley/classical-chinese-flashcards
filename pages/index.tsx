@@ -7,6 +7,7 @@ import Head from 'next/head'
 import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
 import { ThemeToggle } from '../components/button'
+import { Drawer } from '../components/settings'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -21,7 +22,9 @@ const shuffle = <T extends any>(arr: T[]): T[] => {
 }
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex-center h-screen w-screen flex-col">{children}</div>
+  <div id="container" className="flex-center h-screen w-screen flex-col">
+    {children}
+  </div>
 )
 
 interface ScoreDisplayProps {
@@ -92,6 +95,8 @@ const Home: NextPage = () => {
       <main>
         {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
       </main>
+
+      <Drawer />
     </Container>
   )
 }
