@@ -140,10 +140,16 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
         <div className="flex justify-around text-lg">
           <p>Rate yourself: </p>
           <span className="ml-2 inline-block space-x-2">
-            <ButtonCircle onClick={() => handleAnswer(markCorrect)}>
+            <ButtonCircle
+              style="green"
+              onClick={() => handleAnswer(markCorrect)}
+            >
               <FontAwesomeIcon icon={faThumbsUp} className="h-[1em] w-[1em]" />
             </ButtonCircle>
-            <ButtonCircle onClick={() => handleAnswer(markIncorrect)}>
+            <ButtonCircle
+              style="red"
+              onClick={() => handleAnswer(markIncorrect)}
+            >
               <FontAwesomeIcon
                 icon={faThumbsDown}
                 className="h-[1em] w-[1em]"

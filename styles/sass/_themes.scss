@@ -1,15 +1,32 @@
 @use 'tailwind' as tw;
 @use 'sass-themes/mixins' as theme;
+@use 'scss-properties' as prop; // dependency of sass-themes
 
-$dark: tw.color(slate, 800);
+$dark: tw.color(gray, 800);
 
 @layer utilities {
   .theme-light {
-    @include theme.create($bg: white, $tx: $dark);
+    @include theme.create($bg: white, $tx: $dark, $br: tw.color(slate, 200));
+    @include prop.define(
+      (
+        --theme: (
+          -green: tw.color(green, 300),
+          -red: tw.color(red, 300),
+        ),
+      )
+    );
   }
 
   .theme-dark {
-    @include theme.create($bg: $dark, $tx: white);
+    @include theme.create($bg: $dark, $tx: white, $br: tw.color(slate, 700));
+    @include prop.define(
+      (
+        --theme: (
+          -green: tw.color(green, 700),
+          -red: tw.color(red, 700),
+        ),
+      )
+    );
   }
 }
 
@@ -19,6 +36,59 @@ $dark: tw.color(slate, 800);
 
     @media (prefers-color-scheme: dark) {
       @apply theme-dark;
+    }
+  }
+}
+
+@layer components {
+  .button {
+    background-color: var(--theme-br);
+
+    &:hover {
+      background-color: prop.scale(--theme-br, $lightness: 40%);
+    }
+    &:active {
+      background-color: prop.scale(
+        --theme-br,
+        $lightness: -40%,
+        $saturation: 40%
+      );
+    }
+
+    &--green {
+      background-color: var(--theme-green);
+      &:hover {
+        background-color: prop.scale(
+          --theme-green,
+          $lightness: 15%,
+          $saturation: -10%
+        );
+      }
+      &:active {
+        background-color: prop.scale(
+          --theme-green,
+          $lightness: -20%,
+          $saturation: 20%
+        );
+      }
+    }
+
+    &--red {
+      background-color: var(--theme-red);
+      &:hover {
+        background-color: prop.scale(
+          --theme-red,
+          $lightness: 15%,
+          $saturation: -10%
+        );
+      }
+      &:active {
+        background-color: prop.scale(
+          --theme-red,
+          $lightness: -20%,
+          $saturation: 20%
+        );
+      }
     }
   }
 }
