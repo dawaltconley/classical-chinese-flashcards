@@ -1,0 +1,13 @@
+// utilities for interfacing with tailwindcss
+
+@use 'sass:map';
+
+$tw-colors: require(
+  './styles/tailwind-theme.js',
+  colors,
+  $parseUnquotedStrings: true
+);
+
+@function color($name, $num) {
+  @return map.get($tw-colors, #{$name}, #{$num});
+}

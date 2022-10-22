@@ -1,15 +1,7 @@
-@use 'sass:map';
-@use 'sass:meta';
-@use 'sass:list';
+@use 'tailwind' as tw;
 @use 'sass-themes/mixins' as theme;
 
-$tw-colors: require(
-  './styles/tailwind-theme.js',
-  colors,
-  $parseUnquotedStrings: true
-);
-
-$dark: map.get($tw-colors, slate, '800');
+$dark: tw.color(slate, 800);
 
 @layer utilities {
   .theme-light {
