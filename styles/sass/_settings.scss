@@ -7,10 +7,16 @@
 
     &__handle {
       height: var(--handle-height);
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
     }
 
     &__body {
       height: 800px;
+      max-height: calc(100vh - var(--handle-height));
     }
   }
 }

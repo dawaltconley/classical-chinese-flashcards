@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useResizeObserver from '@react-hook/resize-observer'
-import Draggable from 'react-draggable'
+import Draggable, { DraggableEventHandler } from 'react-draggable'
 import { Button, ButtonCircle } from './button'
 
 const FilterSelect = () => {
@@ -9,6 +9,7 @@ const FilterSelect = () => {
 
 // const dragListener = ()
 
+// TODO handle cases where the drawer contents are bigger than the window and need to scroll
 const Drawer = ({ children }: { children: React.ReactNode }) => {
   const drawer = useRef<HTMLDivElement>(null)
   const handle = useRef<HTMLDivElement>(null)
@@ -18,6 +19,7 @@ const Drawer = ({ children }: { children: React.ReactNode }) => {
   const [drawerHeight, setDrawerHeight] = useState(0)
   const [boundsTop, setBoundsTop] = useState(0)
   const [defaultY, setDefaultY] = useState(0)
+  const [isBeingDragged, setIsBeingDragged] = useState(false)
 
   const open = () => {
     setIsOpen(true)
@@ -29,16 +31,27 @@ const Drawer = ({ children }: { children: React.ReactNode }) => {
     setDefaultY(0)
   }
 
-  const onStop = () => {
-    if (!drawer.current) return
-    let { top } = drawer.current.getBoundingClientRect()
-    console.log(top)
-
-    if (top < window.innerHeight * 0.8) open()
-    else close()
+  const onStart: DraggableEventHandler = () => {
+    setIsBeingDragged(true)
   }
 
-  console.log({ defaultY })
+  const onStop: DraggableEventHandler = (_event, { y, deltaY }) => {
+    setIsBeingDragged(false)
+    let threshold = Math.min(120, window.innerHeight / 5)
+    if (deltaY) {
+      // handle flick
+      if (deltaY < 0) open()
+      else if (deltaY > 0) close()
+    } else if (isOpen) {
+      // position threshold to trigger close
+      if (-y < drawerHeight - threshold) close()
+      else open()
+    } else {
+      // position threshold to trigger open if closed
+      if (-y > threshold) open()
+      else close()
+    }
+  }
 
   const updateDrawerBounds = useCallback(() => {
     setDrawerHeight(body.current?.clientHeight || 0)
@@ -56,10 +69,18 @@ const Drawer = ({ children }: { children: React.ReactNode }) => {
       axis="y"
       bounds={{ top: boundsTop, bottom: 0 }}
       handle=".drawer__handle"
+      onStart={onStart}
       onStop={onStop}
-      position={{ x: 0, y: defaultY }}
+      position={{ x: 0, y: isOpen ? -drawerHeight : 0 }}
     >
-      <div ref={drawer} className="drawer">
+      <div
+        ref={drawer}
+        className="drawer"
+        style={{
+          transitionDuration: isBeingDragged ? '0s' : '500ms',
+          transitionProperty: 'transform',
+        }}
+      >
         <div ref={handle} className="drawer__handle rounded-t-2xl bg-pink-200">
           Filters
         </div>
