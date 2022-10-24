@@ -5,11 +5,10 @@
     --handle-height: 60px;
     --background-color: #{prop.set(--theme-bg, $mix: lightness --theme-tx 97%)};
 
-    @apply fixed left-0 right-0;
-    top: calc(100vh - var(--handle-height));
+    @apply fixed inset-x-0;
+    top: calc(100vh - var(--handle-height, 60px));
 
     &__handle {
-      height: var(--handle-height);
       background-color: var(--background-color);
       box-shadow: 0px -2px 8px rgba(black, 0.12);
       cursor: grab;
