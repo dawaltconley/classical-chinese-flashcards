@@ -1,7 +1,12 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, CSSProperties } from 'react'
 import useResizeObserver from '@react-hook/resize-observer'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
 import { Toggle } from './button'
+
+interface DrawerProperties extends CSSProperties {
+  '--handle-height'?: string
+  '--background-color'?: string
+}
 
 const Drawer = ({
   title,
@@ -15,6 +20,7 @@ const Drawer = ({
   const body = useRef<HTMLDivElement>(null)
 
   const [isOpen, setIsOpen] = useState(false)
+  const [handleHeight, setHandleHeight] = useState(0)
   const [drawerHeight, setDrawerHeight] = useState(0)
   const [boundsTop, setBoundsTop] = useState(0)
   const [isBeingDragged, setIsBeingDragged] = useState(false)
@@ -46,15 +52,16 @@ const Drawer = ({
   }
 
   const updateDrawerBounds = useCallback(() => {
+    setHandleHeight(handle.current?.clientHeight || 0)
     setDrawerHeight(body.current?.clientHeight || 0)
     setBoundsTop((body.current?.clientHeight || 0) * -1)
-  }, [body])
+  }, [handle, body])
 
   useEffect(() => {
     updateDrawerBounds()
   }, [updateDrawerBounds])
 
-  useResizeObserver(body.current, () => updateDrawerBounds())
+  useResizeObserver(drawer, () => updateDrawerBounds())
 
   return (
     <Draggable
@@ -72,6 +79,9 @@ const Drawer = ({
           transitionDuration: isBeingDragged ? '0s' : '500ms',
           transitionProperty: 'transform',
           transitionTimingFunction: 'ease-out',
+          ...({
+            '--handle-height': handleHeight ? handleHeight + 'px' : null,
+          } as DrawerProperties),
         }}
       >
         <div
