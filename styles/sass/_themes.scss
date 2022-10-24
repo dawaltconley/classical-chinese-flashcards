@@ -6,7 +6,7 @@ $dark: tw.color(gray, 900);
 
 @layer utilities {
   .theme-light {
-    @include theme.create($bg: white, $tx: $dark, $br: tw.color(slate, 200));
+    @include theme.create($bg: white, $tx: $dark, $br: tw.color(blue, 600));
 
     --theme-green: theme('colors.green.800');
     --theme-red: theme('colors.red.800');
@@ -20,7 +20,7 @@ $dark: tw.color(gray, 900);
   }
 
   .theme-dark {
-    @include theme.create($bg: $dark, $tx: white, $br: tw.color(slate, 700));
+    @include theme.create($bg: $dark, $tx: white, $br: tw.color(blue, 700));
 
     --theme-green: theme('colors.green.400');
     --theme-red: theme('colors.red.400');
@@ -95,7 +95,11 @@ $dark: tw.color(gray, 900);
 
     &--on {
       background-color: var(--theme-br);
-      color: var(--theme-bg);
+
+      &,
+      &:hover {
+        color: white;
+      }
 
       &:hover {
         background-color: prop.set(
@@ -103,7 +107,6 @@ $dark: tw.color(gray, 900);
           $lightness: mix --theme-bg 85%,
           $saturation: mix --theme-bg 80%
         );
-        color: var(--theme-bg);
       }
     }
   }
