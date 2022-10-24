@@ -80,4 +80,31 @@ $dark: tw.color(gray, 900);
       }
     }
   }
+
+  .toggle {
+    background-color: prop.set(--theme-bg, $lightness: mix --theme-tx 80%);
+
+    &:hover {
+      background-color: prop.set(
+        --theme-bg,
+        $hue: mix --theme-br 0%,
+        $saturation: mix --theme-br 20%,
+        $lightness: mix --theme-tx 80%
+      );
+    }
+
+    &--on {
+      background-color: var(--theme-br);
+      color: var(--theme-bg);
+
+      &:hover {
+        background-color: prop.set(
+          --theme-br,
+          $lightness: mix --theme-bg 85%,
+          $saturation: mix --theme-bg 80%
+        );
+        color: var(--theme-bg);
+      }
+    }
+  }
 }

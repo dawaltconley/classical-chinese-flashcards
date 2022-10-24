@@ -47,6 +47,42 @@ const ButtonCircle: Button = ({ style, onClick, children }) => (
   </button>
 )
 
+const Toggle = ({
+  name,
+  text,
+  onToggle,
+  initialState = false,
+}: {
+  name: string
+  text: string
+  onToggle: (state: boolean) => void
+  style?: ButtonStyle
+  initialState?: boolean
+}) => {
+  const [isOn, setIsOn] = useState(initialState)
+
+  return (
+    <label
+      className={`toggle ${
+        isOn ? 'toggle--on' : ''
+      } relative inline-block cursor-pointer rounded-full px-2 py-2 leading-none duration-150`}
+    >
+      {text}
+      <input
+        className="absolute h-0 w-0 opacity-0"
+        type="checkbox"
+        defaultChecked={initialState}
+        onChange={event => {
+          let state = event.target.checked
+          setIsOn(state)
+          onToggle(state)
+        }}
+        name={name}
+      />
+    </label>
+  )
+}
+
 type Theme = 'light' | 'dark'
 const themeClasses: Record<Theme, string> = {
   light: 'theme-light',
@@ -90,4 +126,4 @@ const ThemeToggle = () => {
   )
 }
 
-export { Button, ButtonCircle, ThemeToggle }
+export { Button, ButtonCircle, Toggle, ThemeToggle }
