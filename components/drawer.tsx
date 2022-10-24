@@ -71,11 +71,12 @@ const Drawer = ({
         style={{
           transitionDuration: isBeingDragged ? '0s' : '500ms',
           transitionProperty: 'transform',
+          transitionTimingFunction: 'ease-out',
         }}
       >
         <div
           ref={handle}
-          className="drawer__handle rounded-t-2xl bg-theme-bg p-4 text-center"
+          className="drawer__handle rounded-t-2xl p-4 text-center"
         >
           {title ? (
             <Toggle
@@ -86,7 +87,7 @@ const Drawer = ({
             />
           ) : null}
         </div>
-        <div ref={body} className="drawer__body bg-theme-bg">
+        <div ref={body} className="drawer__body">
           {children}
         </div>
       </div>
