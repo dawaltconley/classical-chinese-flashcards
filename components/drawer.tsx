@@ -54,7 +54,7 @@ const Drawer = ({
     updateDrawerBounds()
   }, [updateDrawerBounds])
 
-  useResizeObserver(body.current, () => updateDrawerBounds)
+  useResizeObserver(body.current, () => updateDrawerBounds())
 
   return (
     <Draggable
