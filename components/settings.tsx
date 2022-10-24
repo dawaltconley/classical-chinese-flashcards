@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useResizeObserver from '@react-hook/resize-observer'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
-import { Button, ButtonCircle } from './button'
+import { Toggle } from './button'
 
-const FilterSelect = () => {
-  return <main></main>
-}
-
-// const dragListener = ()
-
-// TODO handle cases where the drawer contents are bigger than the window and need to scroll
-const Drawer = ({ children }: { children: React.ReactNode }) => {
+const Drawer = ({
+  title,
+  children,
+}: {
+  title?: string
+  children?: React.ReactNode
+}) => {
   const drawer = useRef<HTMLDivElement>(null)
   const handle = useRef<HTMLDivElement>(null)
   const body = useRef<HTMLDivElement>(null)
@@ -18,18 +17,11 @@ const Drawer = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [drawerHeight, setDrawerHeight] = useState(0)
   const [boundsTop, setBoundsTop] = useState(0)
-  const [defaultY, setDefaultY] = useState(0)
   const [isBeingDragged, setIsBeingDragged] = useState(false)
 
-  const open = () => {
-    setIsOpen(true)
-    setDefaultY(-drawerHeight)
-  }
-
-  const close = () => {
-    setIsOpen(false)
-    setDefaultY(0)
-  }
+  const open = () => setIsOpen(true)
+  const close = () => setIsOpen(false)
+  const toggle = () => setIsOpen(state => !state)
 
   const onStart: DraggableEventHandler = () => {
     setIsBeingDragged(true)
@@ -81,10 +73,22 @@ const Drawer = ({ children }: { children: React.ReactNode }) => {
           transitionProperty: 'transform',
         }}
       >
-        <div ref={handle} className="drawer__handle rounded-t-2xl bg-pink-200">
-          Filters
+        <div
+          ref={handle}
+          className="drawer__handle rounded-t-2xl bg-theme-bg p-4 text-center"
+        >
+          {title ? (
+            <Toggle
+              name="test"
+              text={title}
+              onToggle={() => toggle()}
+              initialState={isOpen}
+            />
+          ) : null}
         </div>
-        <div ref={body} className="drawer__body bg-pink-200"></div>
+        <div ref={body} className="drawer__body bg-theme-bg">
+          {children}
+        </div>
       </div>
     </Draggable>
   )

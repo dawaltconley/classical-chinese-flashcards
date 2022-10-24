@@ -96,7 +96,7 @@ const Home: NextPage = () => {
         {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
       </main>
 
-      <Drawer />
+      <Drawer title="Filters" />
     </Container>
   )
 }
