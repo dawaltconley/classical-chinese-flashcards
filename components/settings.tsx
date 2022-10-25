@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Button, Toggle } from './button'
-import { Word } from '../data/wordlist'
+import wordlist, { Word } from '../data/wordlist'
 
 type FilterMap = {
   [item: string]: boolean
@@ -117,15 +117,22 @@ const filterWords = (words: Word[], filters: WordFilter): Word[] =>
     return true
   })
 
+type FilterCallback = (words: Word[]) => Word[]
+
 const Settings = ({
   words,
+  wordData = wordlist,
   onFilter,
 }: {
   words: Word[]
-  onFilter: (filtered: Word[]) => void
+  wordData?: Word[]
+  onFilter: (filterCallback: FilterCallback) => void
 }) => {
-  const [options, setOptions] = useState(getFilterFromWords(words))
-  const [filters, setFilters] = useState(options)
+  // options describe all possible words;
+  // filters describe only selected words
+
+  const [options] = useState(getFilterFromWords(wordData))
+  const [filters, setFilters] = useState(getFilterFromWords(words))
   const [error, setError] = useState<boolean | string>(false)
 
   const handleFilter = (attr: keyof Word, filtered: string[]) => {
@@ -136,27 +143,24 @@ const Settings = ({
   }
 
   const saveFilters = () => {
-    const filtered = filterWords(words, filters)
-    if (filtered.length) {
+    if (filterWords(words, filters).length) {
       setError(false)
-      onFilter(filtered)
+      onFilter((words: Word[]) => filterWords(words, filters))
     } else {
       setError('Filters must contain at least one word.')
     }
   }
 
   useEffect(() => {
-    const filtered = filterWords(words, filters)
-    if (filtered.length) {
+    if (filterWords(words, filters).length) {
       setError(false)
     } else {
       setError(true)
     }
   }, [words, filters])
 
-  // TODO this really should never change
   useEffect(() => {
-    setOptions(getFilterFromWords(words))
+    setFilters(getFilterFromWords(words))
   }, [words])
 
   return (
@@ -164,11 +168,13 @@ const Settings = ({
       <FilterList
         name="Lessons"
         options={options.lesson}
+        include={filters.lesson}
         onFilter={filtered => handleFilter('lesson', filtered)}
       />
       <FilterList
         name="Types"
         options={options.type}
+        include={filters.type}
         onFilter={filtered => handleFilter('type', filtered)}
       />
       <div className="text-center">
@@ -181,3 +187,6 @@ const Settings = ({
 }
 
 export default Settings
+
+export { filterWords }
+export type { FilterCallback }
