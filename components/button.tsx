@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSunBright, faMoon } from '@fortawesome/pro-light-svg-icons'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 type ButtonStyle = 'default' | 'green' | 'red'
@@ -51,15 +51,21 @@ const Toggle = ({
   name,
   text,
   onToggle,
-  initialState = false,
+  watchState = false,
 }: {
   name: string
   text: string
   onToggle: (state: boolean) => void
   style?: ButtonStyle
-  initialState?: boolean
+  watchState?: boolean
 }) => {
-  const [isOn, setIsOn] = useState(initialState)
+  const checkbox = useRef<HTMLInputElement>(null)
+  const [isOn, setIsOn] = useState(watchState)
+
+  useEffect(() => {
+    setIsOn(watchState)
+    if (checkbox.current) checkbox.current.checked = watchState
+  }, [watchState])
 
   return (
     <label
@@ -69,9 +75,10 @@ const Toggle = ({
     >
       {text}
       <input
+        ref={checkbox}
         className="absolute h-0 w-0 opacity-0"
         type="checkbox"
-        defaultChecked={initialState}
+        defaultChecked={watchState}
         onChange={event => {
           let state = event.target.checked
           setIsOn(state)
