@@ -1,0 +1,69 @@
+@use 'scss-properties' as prop; // dependency of sass-themes
+
+@layer components {
+  .button {
+    background-color: var(--theme-br);
+    transition-property: background-color;
+
+    &:hover {
+      background-color: prop.scale(--theme-br, $lightness: 40%);
+    }
+    &:active {
+      background-color: prop.scale(
+        --theme-br,
+        $lightness: -40%,
+        $saturation: 40%
+      );
+    }
+
+    &--green {
+      background-color: var(--theme-btn-green);
+      &:hover {
+        background-color: var(--theme-btn-green--light);
+      }
+      &:active {
+        background-color: var(--theme-btn-green--dark);
+      }
+    }
+
+    &--red {
+      background-color: var(--theme-btn-red);
+      &:hover {
+        background-color: var(--theme-btn-red--light);
+      }
+      &:active {
+        background-color: var(--theme-btn-red--dark);
+      }
+    }
+  }
+
+  .toggle {
+    background-color: prop.set(--theme-bg, $lightness: mix --theme-tx 80%);
+
+    &:hover {
+      background-color: prop.set(
+        --theme-bg,
+        $hue: mix --theme-br 0%,
+        $saturation: mix --theme-br 20%,
+        $lightness: mix --theme-tx 80%
+      );
+    }
+
+    &--on {
+      background-color: var(--theme-br);
+
+      &,
+      &:hover {
+        color: white;
+      }
+
+      &:hover {
+        background-color: prop.set(
+          --theme-br,
+          $lightness: mix --theme-bg 85%,
+          $saturation: mix --theme-bg 80%
+        );
+      }
+    }
+  }
+}
