@@ -126,11 +126,43 @@ const Settings = ({
   const [filters, setFilters] = useState(options)
   const [error, setError] = useState<boolean | string>(false)
 
-  const handleFilter = (attr: keyof Word, filtered: string[]) => {
-    setFilters(filters => ({
+  const handleFilter = (
+    filteredAttr: keyof WordFilter,
+    filteredValues: string[]
+  ) => {
+    // i want to convey some information about the kinds of items
+    // in the currently filtered words list by
+    //
+    // 1) displaying only highlighted filters that are available
+    // 2) never affecting the filter list being selected
+    // 3) if filter scope is closed then widened, other filters that were not
+    //    explicitely disabled should be re-enabled
+
+    const newFilters: WordFilter = {
       ...filters,
-      [attr]: filtered,
-    }))
+      [filteredAttr]: filteredValues,
+    }
+    // console.log('newFilters')
+    // console.log(newFilters)
+    // const filtered = filterWords(words, newFilters)
+    // console.log('filtered')
+    // console.log(filtered)
+    // for (let key in newFilters) {
+    //   let attr = key as keyof WordFilter
+    //   if (attr === filteredAttr) continue
+    //   // console.log(attr, filtered, getOptionsFromAttr(filtered, attr))
+    //   newFilters[attr] = getOptionsFromAttr(filtered, attr)
+    // }
+    //
+    // console.log(newFilters)
+    //
+    // if (filtered.length) {
+    //   setError(false)
+    // } else {
+    //   setError(true)
+    // }
+
+    setFilters(newFilters)
   }
 
   const saveFilters = () => {
@@ -165,11 +197,13 @@ const Settings = ({
       <FilterList
         name="Lessons"
         options={options.lesson}
+        include={filters.lesson}
         onFilter={filtered => handleFilter('lesson', filtered)}
       />
       <FilterList
         name="Types"
         options={options.type}
+        include={filters.lesson}
         onFilter={filtered => handleFilter('type', filtered)}
       />
       <div className="text-center">
