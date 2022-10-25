@@ -26,7 +26,7 @@ const Button: Button = ({ style, onClick, children }) => (
     className={
       'button ' +
       getButtonClass(style) +
-      ' rounded-full bg-gray-200 px-2 py-1 duration-150'
+      ' rounded-full px-3 py-2 leading-none duration-150'
     }
     onClick={() => onClick()}
   >
@@ -63,9 +63,9 @@ const Toggle = ({
 
   return (
     <label
-      className={`toggle ${
-        isOn ? 'toggle--on' : ''
-      } relative inline-block cursor-pointer rounded-full px-2 py-2 leading-none duration-150`}
+      className={`button ${
+        isOn ? 'button--active' : ''
+      } relative inline-block cursor-pointer rounded-full px-3 py-2 leading-none duration-150`}
     >
       {text}
       <input
