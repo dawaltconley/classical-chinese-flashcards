@@ -8,7 +8,7 @@ import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
 import { ThemeToggle } from '../components/button'
 import Drawer from '../components/drawer'
-import Settings from '../components/settings'
+import Settings, { FilterCallback } from '../components/settings'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -76,12 +76,23 @@ const Home: NextPage = () => {
     setWords(words => words.slice(1).concat(currentWord))
   }
 
-  const handleFilter = (filtered: Word[]) => {
-    setWords(
-      wordlist.filter(word =>
-        filtered.some(filter => filter.hanzi === word.hanzi)
-      )
+  const handleFilter = (filter: FilterCallback) => {
+    // get words that match the current filter and have not already been completed
+    let newWords = filter(wordlist).filter(word =>
+      completed.every(({ hanzi }) => hanzi !== word.hanzi)
     )
+    newWords = shuffle(newWords)
+
+    // if newWords contains currentWord, keep that at the the front
+    for (let i = 0; i < newWords.length; i++) {
+      if (newWords[i].hanzi === currentWord.hanzi) {
+        newWords[i] = newWords[0]
+        newWords[0] = currentWord
+      }
+    }
+
+    // update state
+    setWords(newWords)
     setDrawerOpen(false)
   }
 
@@ -110,7 +121,7 @@ const Home: NextPage = () => {
 
       <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>
         <div className="mx-auto max-w-md px-4">
-          <Settings words={wordlist} onFilter={handleFilter} />
+          <Settings words={words} onFilter={handleFilter} />
         </div>
       </Drawer>
     </Container>
