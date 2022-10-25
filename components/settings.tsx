@@ -100,6 +100,11 @@ const getOptionsFromAttr = (items: Word[], attr: keyof Word): string[] => {
   return options
 }
 
+const getFilterFromWords = (words: Word[]): WordFilter => ({
+  lesson: getOptionsFromAttr(words, 'lesson'),
+  type: getOptionsFromAttr(words, 'type'),
+})
+
 const filterWords = (words: Word[], filters: WordFilter): Word[] =>
   words.filter(word => {
     for (let str in filters) {
@@ -119,10 +124,7 @@ const Settings = ({
   words: Word[]
   onFilter: (filtered: Word[]) => void
 }) => {
-  const [options, setOptions] = useState<WordFilter>({
-    lesson: getOptionsFromAttr(words, 'lesson'),
-    type: getOptionsFromAttr(words, 'type'),
-  })
+  const [options, setOptions] = useState(getFilterFromWords(words))
   const [filters, setFilters] = useState(options)
   const [error, setError] = useState<boolean | string>(false)
 
@@ -154,10 +156,7 @@ const Settings = ({
 
   // TODO this really should never change
   useEffect(() => {
-    setOptions({
-      lesson: getOptionsFromAttr(words, 'lesson'),
-      type: getOptionsFromAttr(words, 'type'),
-    })
+    setOptions(getFilterFromWords(words))
   }, [words])
 
   return (
