@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
 import { Button, ThemeToggle } from '../components/button'
+import { ScoreDisplay } from '../components/score'
 import Drawer from '../components/drawer'
 import Settings, { filterWords, WordFilter } from '../components/settings'
 
@@ -26,31 +25,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   <div id="container" className="flex-center h-screen w-screen flex-col">
     {children}
   </div>
-)
-
-interface ScoreDisplayProps {
-  correct: number
-  incorrect: number
-  remaining: number
-}
-const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
-  <>
-    <span className="text-theme-green">
-      <span>{correct}</span>
-      <FontAwesomeIcon
-        icon={faThumbsUp}
-        className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
-      />
-    </span>
-    <span className="text-theme-red">
-      <span>{incorrect}</span>
-      <FontAwesomeIcon
-        icon={faThumbsDown}
-        className="align-text-middle ml-1 inline-block aspect-square h-[0.9em]"
-      />
-    </span>
-    <span>{remaining} remaining</span>
-  </>
 )
 
 const Home: NextPage = () => {
