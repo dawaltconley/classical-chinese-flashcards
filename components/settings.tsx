@@ -107,7 +107,7 @@ const Settings = ({
   })
   const [filters, setFilters] = useState(options)
 
-  const handleFilter = (attr: string, filtered: string[]) => {
+  const handleFilter = (attr: keyof Word, filtered: string[]) => {
     setFilters(filters => ({
       ...filters,
       [attr]: filtered,
@@ -129,12 +129,12 @@ const Settings = ({
       <FilterList
         name="Lessons"
         options={options.lesson}
-        onFilter={filtered => handleFilter('lessons', filtered)}
+        onFilter={filtered => handleFilter('lesson', filtered)}
       />
       <FilterList
         name="Types"
         options={options.type}
-        onFilter={filtered => handleFilter('types', filtered)}
+        onFilter={filtered => handleFilter('type', filtered)}
       />
       <Button onClick={saveFilters}>Apply</Button>
     </div>
