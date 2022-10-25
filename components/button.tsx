@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive'
 type ButtonStyle = 'default' | 'green' | 'red'
 type Button = (props: {
   style?: ButtonStyle
+  circle?: boolean
   onClick: () => void
   error?: boolean | string
   children?: React.ReactNode
@@ -22,7 +23,7 @@ const getButtonClass = (style?: ButtonStyle) => {
   }
 }
 
-const Button: Button = ({ style, onClick, error, children }) => {
+const Button: Button = ({ style, circle, onClick, error, children }) => {
   const button = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -39,30 +40,15 @@ const Button: Button = ({ style, onClick, error, children }) => {
   return (
     <button
       ref={button}
-      className={
-        'button ' +
-        getButtonClass(style) +
-        ' rounded-full px-3 py-2 leading-none duration-150'
-      }
+      className={`button ${getButtonClass(style)}
+        rounded-full leading-none duration-150
+        ${circle ? 'aspect-square p-2' : 'px-3 py-2'}`}
       onClick={() => onClick()}
     >
       {children}
     </button>
   )
 }
-
-const ButtonCircle: Button = ({ style, onClick, children }) => (
-  <button
-    className={
-      'button ' +
-      getButtonClass(style) +
-      ' aspect-square rounded-full p-2 duration-150'
-    }
-    onClick={() => onClick()}
-  >
-    {children}
-  </button>
-)
 
 const Toggle = ({
   name,
@@ -150,4 +136,4 @@ const ThemeToggle = () => {
   )
 }
 
-export { Button, ButtonCircle, Toggle, ThemeToggle }
+export { Button, Toggle, ThemeToggle }
