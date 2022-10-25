@@ -43,12 +43,10 @@ const FilterList = ({
   }
 
   useEffect(() => {
-    console.log('effect: options')
     setFiltered(mapFromItems(options, include))
   }, [options, include])
 
   useEffect(() => {
-    console.log('effect: filter')
     onFilter(itemsFromMap(filtered))
   }, [filtered, onFilter])
 
@@ -126,7 +124,6 @@ const Settings = ({
       lesson: getOptionsFromAttr(words, 'lesson'),
       type: getOptionsFromAttr(words, 'type'),
     })
-    console.log('effect: words')
   }, [words])
 
   return (
