@@ -160,7 +160,7 @@ const Settings = ({
   }, [words])
 
   return (
-    <form className="space-y-2">
+    <div className="space-y-2">
       <FilterList
         name="Lessons"
         options={options.lesson}
@@ -176,7 +176,7 @@ const Settings = ({
           Apply
         </Button>
       </div>
-    </form>
+    </div>
   )
 }
 
