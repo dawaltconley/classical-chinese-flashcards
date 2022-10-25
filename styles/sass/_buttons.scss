@@ -1,18 +1,39 @@
 @use 'scss-properties' as prop; // dependency of sass-themes
 
 @layer components {
+  .button,
+  .toggle {
+    min-width: 2em;
+    text-align: center;
+  }
+
   .button {
-    background-color: var(--theme-br);
-    transition-property: background-color;
+    background-color: prop.set(--theme-bg, $lightness: mix --theme-tx 80%);
 
     &:hover {
-      background-color: prop.scale(--theme-br, $lightness: 40%);
+      background-color: prop.set(
+        --theme-bg,
+        $hue: mix --theme-br 0%,
+        $saturation: mix --theme-br 20%,
+        $lightness: mix --theme-tx 80%
+      );
     }
-    &:active {
-      background-color: prop.scale(
+
+    &:active,
+    &--active {
+      background-color: var(--theme-br);
+
+      &,
+      &:hover {
+        color: white;
+      }
+    }
+
+    &--active:hover {
+      background-color: prop.set(
         --theme-br,
-        $lightness: -40%,
-        $saturation: 40%
+        $lightness: mix --theme-bg 85%,
+        $saturation: mix --theme-bg 80%
       );
     }
 
@@ -33,36 +54,6 @@
       }
       &:active {
         background-color: var(--theme-btn-red--dark);
-      }
-    }
-  }
-
-  .toggle {
-    background-color: prop.set(--theme-bg, $lightness: mix --theme-tx 80%);
-
-    &:hover {
-      background-color: prop.set(
-        --theme-bg,
-        $hue: mix --theme-br 0%,
-        $saturation: mix --theme-br 20%,
-        $lightness: mix --theme-tx 80%
-      );
-    }
-
-    &--on {
-      background-color: var(--theme-br);
-
-      &,
-      &:hover {
-        color: white;
-      }
-
-      &:hover {
-        background-color: prop.set(
-          --theme-br,
-          $lightness: mix --theme-bg 85%,
-          $saturation: mix --theme-bg 80%
-        );
       }
     }
   }
