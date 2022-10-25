@@ -58,7 +58,7 @@ const FilterList = ({
             name={`${name} filter ${option}`}
             text={option}
             onToggle={state => handleToggle(option, state)}
-            initialState={include?.includes(option) || true}
+            watchState={include?.includes(option) || true}
           />
         ))}
       </div>
