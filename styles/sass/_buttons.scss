@@ -19,6 +19,20 @@
       );
     }
 
+    &:invalid {
+      background-color: prop.set(
+        --theme-bg,
+        $saturation: change 0%,
+        $lightness: mix --theme-tx 90%
+      );
+      color: prop.set(
+        --theme-bg,
+        $saturation: change 0%,
+        $lightness: mix --theme-tx 50%
+      );
+      cursor: not-allowed;
+    }
+
     &:active,
     &--active {
       background-color: var(--theme-br);
@@ -26,6 +40,21 @@
       &,
       &:hover {
         color: white;
+      }
+
+      &:invalid {
+        background-color: prop.set(
+          --theme-bg,
+          $hue: change 0deg,
+          $saturation: change 40%,
+          $lightness: mix --theme-tx 90%
+        );
+        color: prop.set(
+          --theme-bg,
+          $hue: change 0deg,
+          $saturation: change 40%,
+          $lightness: mix --theme-tx 50%
+        );
       }
     }
 

@@ -7,6 +7,7 @@ type ButtonStyle = 'default' | 'green' | 'red'
 type Button = (props: {
   style?: ButtonStyle
   onClick: () => void
+  error?: boolean | string
   children?: React.ReactNode
 }) => JSX.Element
 
@@ -21,18 +22,34 @@ const getButtonClass = (style?: ButtonStyle) => {
   }
 }
 
-const Button: Button = ({ style, onClick, children }) => (
-  <button
-    className={
-      'button ' +
-      getButtonClass(style) +
-      ' rounded-full px-3 py-2 leading-none duration-150'
+const Button: Button = ({ style, onClick, error, children }) => {
+  const button = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (!button.current) return
+    if (error) {
+      const hasErrorMsg = typeof error === 'string'
+      button.current.setCustomValidity(hasErrorMsg ? error : 'invalid')
+      if (hasErrorMsg) button.current.reportValidity()
+    } else {
+      button.current.setCustomValidity('')
     }
-    onClick={() => onClick()}
-  >
-    {children}
-  </button>
-)
+  }, [error])
+
+  return (
+    <button
+      ref={button}
+      className={
+        'button ' +
+        getButtonClass(style) +
+        ' rounded-full px-3 py-2 leading-none duration-150'
+      }
+      onClick={() => onClick()}
+    >
+      {children}
+    </button>
+  )
+}
 
 const ButtonCircle: Button = ({ style, onClick, children }) => (
   <button
