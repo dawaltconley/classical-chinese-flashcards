@@ -59,6 +59,8 @@ const Home: NextPage = () => {
   const [missed, setMissed] = useState(0)
   const currentWord = words[0]
 
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
   const resetFlashcards = () => {
     setWords(shuffle(wordlist))
     setCompleted([])
@@ -80,6 +82,7 @@ const Home: NextPage = () => {
         filtered.some(filter => filter.hanzi === word.hanzi)
       )
     )
+    setDrawerOpen(false)
   }
 
   return (
@@ -105,7 +108,7 @@ const Home: NextPage = () => {
         {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
       </main>
 
-      <Drawer title="Filters">
+      <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>
         <div className="mx-auto max-w-md px-4">
           <Settings words={wordlist} onFilter={handleFilter} />
         </div>

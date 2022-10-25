@@ -10,16 +10,19 @@ interface DrawerProperties extends CSSProperties {
 
 const Drawer = ({
   title,
+  isOpen,
+  setIsOpen,
   children,
 }: {
   title?: string
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
   children?: React.ReactNode
 }) => {
   const drawer = useRef<HTMLDivElement>(null)
   const handle = useRef<HTMLDivElement>(null)
   const body = useRef<HTMLDivElement>(null)
 
-  const [isOpen, setIsOpen] = useState(false)
   const [handleHeight, setHandleHeight] = useState(0)
   const [drawerHeight, setDrawerHeight] = useState(0)
   const [boundsTop, setBoundsTop] = useState(0)
@@ -27,7 +30,7 @@ const Drawer = ({
 
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
-  const toggle = () => setIsOpen(state => !state)
+  const toggle = () => setIsOpen(!isOpen)
 
   const onStart: DraggableEventHandler = () => {
     setIsBeingDragged(true)
