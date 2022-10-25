@@ -124,6 +124,7 @@ const Settings = ({
     type: getOptionsFromAttr(words, 'type'),
   })
   const [filters, setFilters] = useState(options)
+  const [error, setError] = useState<boolean | string>(false)
 
   const handleFilter = (attr: keyof Word, filtered: string[]) => {
     setFilters(filters => ({
@@ -132,7 +133,24 @@ const Settings = ({
     }))
   }
 
-  const saveFilters = () => onFilter(filterWords(words, filters))
+  const saveFilters = () => {
+    const filtered = filterWords(words, filters)
+    if (filtered.length) {
+      setError(false)
+      onFilter(filtered)
+    } else {
+      setError('Filters must contain at least one word.')
+    }
+  }
+
+  useEffect(() => {
+    const filtered = filterWords(words, filters)
+    if (filtered.length) {
+      setError(false)
+    } else {
+      setError(true)
+    }
+  }, [words, filters])
 
   // TODO this really should never change
   useEffect(() => {
@@ -155,7 +173,9 @@ const Settings = ({
         onFilter={filtered => handleFilter('type', filtered)}
       />
       <div className="text-center">
-        <Button onClick={saveFilters}>Apply</Button>
+        <Button onClick={saveFilters} error={error}>
+          Apply
+        </Button>
       </div>
     </div>
   )
