@@ -6,9 +6,9 @@ import Head from 'next/head'
 
 import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
-import { ThemeToggle } from '../components/button'
+import { Button, ThemeToggle } from '../components/button'
 import Drawer from '../components/drawer'
-import Settings, { FilterCallback } from '../components/settings'
+import Settings, { filterWords, WordFilter } from '../components/settings'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -57,15 +57,10 @@ const Home: NextPage = () => {
   const [words, setWords] = useState(wordlist)
   const [completed, setCompleted] = useState<Word[]>([])
   const [missed, setMissed] = useState(0)
+  const [filter, setFilter] = useState<WordFilter | null>(null)
   const currentWord = words[0]
 
   const [drawerOpen, setDrawerOpen] = useState(false)
-
-  const resetFlashcards = () => {
-    setWords(shuffle(wordlist))
-    setCompleted([])
-  }
-  useEffect(resetFlashcards, [])
 
   const markCorrect = () => {
     setCompleted(completed => completed.concat(currentWord))
@@ -76,9 +71,9 @@ const Home: NextPage = () => {
     setWords(words => words.slice(1).concat(currentWord))
   }
 
-  const handleFilter = (filter: FilterCallback) => {
+  const handleFilter = (filter: WordFilter) => {
     // get words that match the current filter and have not already been completed
-    let newWords = filter(wordlist).filter(word =>
+    let newWords = filterWords(wordlist, filter).filter(word =>
       completed.every(({ hanzi }) => hanzi !== word.hanzi)
     )
     newWords = shuffle(newWords)
@@ -93,8 +88,20 @@ const Home: NextPage = () => {
 
     // update state
     setWords(newWords)
+    setFilter(filter)
     setDrawerOpen(false)
   }
+
+  const resetFlashcards = (filter: WordFilter | null) => {
+    let newWords = shuffle(wordlist)
+    if (filter) newWords = filterWords(newWords, filter)
+    setWords(newWords)
+    setCompleted([])
+  }
+
+  useEffect(() => {
+    resetFlashcards(null)
+  }, [])
 
   return (
     <Container>
@@ -116,7 +123,11 @@ const Home: NextPage = () => {
       </header>
 
       <main>
-        {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
+        {currentWord ? (
+          <Card word={currentWord} {...{ markCorrect, markIncorrect }} />
+        ) : (
+          <Button onClick={() => resetFlashcards(filter)}>Reset</Button>
+        )}
       </main>
 
       <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>

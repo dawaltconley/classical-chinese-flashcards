@@ -117,8 +117,6 @@ const filterWords = (words: Word[], filters: WordFilter): Word[] =>
     return true
   })
 
-type FilterCallback = (words: Word[]) => Word[]
-
 const Settings = ({
   words,
   wordData = wordlist,
@@ -126,7 +124,7 @@ const Settings = ({
 }: {
   words: Word[]
   wordData?: Word[]
-  onFilter: (filterCallback: FilterCallback) => void
+  onFilter: (filter: WordFilter) => void
 }) => {
   // options describe all possible words;
   // filters describe only selected words
@@ -145,7 +143,8 @@ const Settings = ({
   const saveFilters = () => {
     if (filterWords(words, filters).length) {
       setError(false)
-      onFilter((words: Word[]) => filterWords(words, filters))
+      onFilter(filters)
+      // onFilter((words: Word[]) => filterWords(words, filters))
     } else {
       setError('Filters must contain at least one word.')
     }
@@ -164,29 +163,31 @@ const Settings = ({
   }, [words])
 
   return (
-    <div className="space-y-2">
-      <FilterList
-        name="Lessons"
-        options={options.lesson}
-        include={filters.lesson}
-        onFilter={filtered => handleFilter('lesson', filtered)}
-      />
-      <FilterList
-        name="Types"
-        options={options.type}
-        include={filters.type}
-        onFilter={filtered => handleFilter('type', filtered)}
-      />
-      <div className="text-center">
+    <>
+      <div className="space-y-2">
+        <FilterList
+          name="Lessons"
+          options={options.lesson}
+          include={filters.lesson}
+          onFilter={filtered => handleFilter('lesson', filtered)}
+        />
+        <FilterList
+          name="Types"
+          options={options.type}
+          include={filters.type}
+          onFilter={filtered => handleFilter('type', filtered)}
+        />
+      </div>
+      <div className="mt-6 text-center">
         <Button onClick={saveFilters} error={error}>
           Apply
         </Button>
       </div>
-    </div>
+    </>
   )
 }
 
 export default Settings
 
 export { filterWords }
-export type { FilterCallback }
+export type { WordFilter }
