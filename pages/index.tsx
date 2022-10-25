@@ -8,6 +8,7 @@ import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
 import { ThemeToggle } from '../components/button'
 import Drawer from '../components/drawer'
+import Settings from '../components/settings'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -71,6 +72,14 @@ const Home: NextPage = () => {
     setWords(words => words.slice(1).concat(currentWord))
   }
 
+  const handleFilter = (filtered: Word[]) => {
+    setWords(
+      wordlist.filter(word =>
+        filtered.some(filter => filter.hanzi === word.hanzi)
+      )
+    )
+  }
+
   return (
     <Container>
       <Head>
@@ -94,7 +103,9 @@ const Home: NextPage = () => {
         {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
       </main>
 
-      <Drawer title="Filters" />
+      <Drawer title="Filters">
+        <Settings words={wordlist} onFilter={handleFilter} />
+      </Drawer>
     </Container>
   )
 }
