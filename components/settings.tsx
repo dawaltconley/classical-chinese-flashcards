@@ -51,15 +51,17 @@ const FilterList = ({
   return (
     <fieldset>
       <legend>{name}</legend>
-      {options.map(option => (
-        <Toggle
-          key={`${name} filter ${option}`}
-          name={`${name} filter ${option}`}
-          text={option}
-          onToggle={state => handleToggle(option, state)}
-          initialState={include?.includes(option) || true}
-        />
-      ))}
+      <div className="button-list">
+        {options.map(option => (
+          <Toggle
+            key={`${name} filter ${option}`}
+            name={`${name} filter ${option}`}
+            text={option}
+            onToggle={state => handleToggle(option, state)}
+            initialState={include?.includes(option) || true}
+          />
+        ))}
+      </div>
     </fieldset>
   )
 }
@@ -125,7 +127,7 @@ const Settings = ({
   }, [words])
 
   return (
-    <div>
+    <div className="space-y-2">
       <FilterList
         name="Lessons"
         options={options.lesson}
@@ -136,7 +138,9 @@ const Settings = ({
         options={options.type}
         onFilter={filtered => handleFilter('type', filtered)}
       />
-      <Button onClick={saveFilters}>Apply</Button>
+      <div className="text-center">
+        <Button onClick={saveFilters}>Apply</Button>
+      </div>
     </div>
   )
 }

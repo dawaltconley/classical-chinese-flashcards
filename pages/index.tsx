@@ -104,7 +104,9 @@ const Home: NextPage = () => {
       </main>
 
       <Drawer title="Filters">
-        <Settings words={wordlist} onFilter={handleFilter} />
+        <div className="mx-auto max-w-md px-4">
+          <Settings words={wordlist} onFilter={handleFilter} />
+        </div>
       </Drawer>
     </Container>
   )
