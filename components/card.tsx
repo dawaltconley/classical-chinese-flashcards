@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 
 import type { Word, WordVariant } from '../data/wordlist'
-import { ButtonCircle } from './button'
+import { Button } from './button'
 
 const WordHanzi = ({ word }: { word: Word }) => (
   <div className="hanzi overflow-hidden whitespace-nowrap font-serif">
@@ -144,21 +144,23 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
         <div className="flex justify-around text-lg">
           <p>Rate yourself: </p>
           <span className="ml-2 inline-block space-x-2">
-            <ButtonCircle
+            <Button
               style="green"
+              circle
               onClick={() => handleAnswer(markCorrect)}
             >
               <FontAwesomeIcon icon={faThumbsUp} className="h-[1em] w-[1em]" />
-            </ButtonCircle>
-            <ButtonCircle
+            </Button>
+            <Button
               style="red"
+              circle
               onClick={() => handleAnswer(markIncorrect)}
             >
               <FontAwesomeIcon
                 icon={faThumbsDown}
                 className="h-[1em] w-[1em]"
               />
-            </ButtonCircle>
+            </Button>
           </span>
         </div>
       </div>
