@@ -55,7 +55,6 @@ const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
 
 const Home: NextPage = () => {
   const [words, setWords] = useState(wordlist)
-  const [filtered, setFiltered] = useState(words)
   const [completed, setCompleted] = useState<Word[]>([])
   const [missed, setMissed] = useState(0)
   const currentWord = words[0]
@@ -75,7 +74,13 @@ const Home: NextPage = () => {
     setWords(words => words.slice(1).concat(currentWord))
   }
 
-  console.log(filtered.map(f => f.hanzi))
+  const handleFilter = (filtered: Word[]) => {
+    setWords(
+      wordlist.filter(word =>
+        filtered.some(filter => filter.hanzi === word.hanzi)
+      )
+    )
+  }
 
   return (
     <Container>
@@ -101,7 +106,7 @@ const Home: NextPage = () => {
       </main>
 
       <Drawer title="Filters">
-        <Settings words={wordlist} onFilter={setFiltered} />
+        <Settings words={wordlist} onFilter={handleFilter} />
       </Drawer>
     </Container>
   )
