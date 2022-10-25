@@ -72,9 +72,9 @@ const Toggle = ({
 
   return (
     <label
-      className={`button ${
-        isOn ? 'button--active' : ''
-      } relative inline-block cursor-pointer rounded-full px-3 py-2 leading-none duration-150`}
+      className={`button ${isOn ? 'button--active' : ''}
+        relative inline-block cursor-pointer rounded-full
+        px-3 py-2 leading-none duration-150`}
     >
       {text}
       <input
