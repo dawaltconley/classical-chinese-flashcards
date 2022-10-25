@@ -1,16 +1,12 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
-import { Toggle } from './button'
-import wordlist, { Word } from '../data/wordlist'
-
-// interface FilterProps<T> {
-//
-// }
+import { useState, useEffect, useCallback } from 'react'
+import { Button, Toggle } from './button'
+import { Word } from '../data/wordlist'
 
 type FilterMap = {
   [item: string]: boolean
 }
 
-const mapFromItems = (options: string[], include?: string[]): FilterMap => {
+const mapFromItems = (options: string[], include?: string[]) => {
   const f: FilterMap = {}
   for (let option of options) {
     if (!include || include.includes(option)) f[option] = true
@@ -47,10 +43,12 @@ const FilterList = ({
   }
 
   useEffect(() => {
+    console.log('effect: options')
     setFiltered(mapFromItems(options, include))
   }, [options, include])
 
   useEffect(() => {
+    console.log('effect: filter')
     onFilter(itemsFromMap(filtered))
   }, [filtered, onFilter])
 
@@ -70,31 +68,32 @@ const FilterList = ({
   )
 }
 
-var getOptionsFromAttr = (items: Word[], attr: keyof Word): string[] => {
+type WordFilter = Pick<
+  {
+    [Attribute in keyof Word]: string[]
+  },
+  'lesson' | 'type'
+>
+
+const getOptionsFromAttr = (items: Word[], attr: keyof Word): string[] => {
   let options: string[] = []
   for (let item of items) {
     let value = item[attr]?.toString()
-    if (value && !options.some(opt => opt === value)) options.push(value)
+    if (value && !options.some(opt => opt == value)) {
+      options.push(value)
+    }
   }
   return options
 }
 
-interface SettingsProps<T> {
-  items: T[]
-  attributes: (keyof T)[]
-  onFilter: (filtered: T[]) => void
-}
-
-const filterWords = (
-  words: Word[],
-  filters: Record<keyof Word, string[]>
-): Word[] =>
+const filterWords = (words: Word[], filters: WordFilter): Word[] =>
   words.filter(word => {
     for (let str in filters) {
-      let attr = str as keyof Word
+      let attr = str as keyof WordFilter
       let valid = filters[attr]
       let value = word[attr]?.toString()
-      if (!value || !valid.includes(value)) return false
+      if (value === undefined) return false
+      if (!valid?.some(v => v == value)) return false
     }
     return true
   })
@@ -106,11 +105,9 @@ const Settings = ({
   words: Word[]
   onFilter: (filtered: Word[]) => void
 }) => {
-  // const [lessons, setLessons] = useState(getOptionsFromAttr(words, 'lesson'))
-  // const [type, setType] = useState(getOptionsFromAttr(words, 'type'))
-  const [options, setOptions] = useState({
-    lessons: getOptionsFromAttr(words, 'lesson'),
-    types: getOptionsFromAttr(words, 'type'),
+  const [options, setOptions] = useState<WordFilter>({
+    lesson: getOptionsFromAttr(words, 'lesson'),
+    type: getOptionsFromAttr(words, 'type'),
   })
   const [filters, setFilters] = useState(options)
 
@@ -123,25 +120,33 @@ const Settings = ({
 
   const saveFilters = () => onFilter(filterWords(words, filters))
 
+  // TODO this really should never change
   useEffect(() => {
     setOptions({
-      lessons: getOptionsFromAttr(words, 'lesson'),
-      types: getOptionsFromAttr(words, 'type'),
+      lesson: getOptionsFromAttr(words, 'lesson'),
+      type: getOptionsFromAttr(words, 'type'),
     })
+    console.log('effect: words')
   }, [words])
 
   return (
     <div>
       <FilterList
         name="Lessons"
-        options={options.lessons}
-        onFilter={filtered => handleFilter('lessons', filtered)}
+        options={options.lesson}
+        onFilter={useCallback(
+          filtered => handleFilter('lessons', filtered),
+          []
+        )}
       />
       <FilterList
         name="Types"
-        options={options.types}
-        onFilter={filtered => handleFilter('types', filtered)}
+        options={options.type}
+        onFilter={useCallback(filtered => handleFilter('types', filtered), [])}
       />
+      <Button onClick={saveFilters}>Apply</Button>
     </div>
   )
 }
+
+export default Settings
