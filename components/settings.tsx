@@ -44,6 +44,16 @@ const FilterList = ({
     onFilter(itemsFromMap(newFilters))
   }
 
+  const selectAll = () => {
+    setFiltered(mapFromItems(options))
+    onFilter(options)
+  }
+
+  const selectNone = () => {
+    setFiltered(mapFromItems(options, []))
+    onFilter([])
+  }
+
   useEffect(() => {
     setFiltered(mapFromItems(options, include))
   }, [options, include])
@@ -52,13 +62,19 @@ const FilterList = ({
     <fieldset>
       <legend>{name}</legend>
       <div className="button-list">
+        <Toggle
+          name={`${name} filter all`}
+          text="Select all"
+          onToggle={state => (state ? selectAll() : selectNone())}
+          watchState={Object.values(filtered).every(Boolean)}
+        />
         {options.map(option => (
           <Toggle
             key={`${name} filter ${option}`}
             name={`${name} filter ${option}`}
             text={option}
             onToggle={state => handleToggle(option, state)}
-            watchState={include?.includes(option) || true}
+            watchState={filtered[option]}
           />
         ))}
       </div>
