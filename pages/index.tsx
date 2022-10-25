@@ -8,6 +8,7 @@ import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
 import { ThemeToggle } from '../components/button'
 import Drawer from '../components/drawer'
+import Settings from '../components/settings'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -54,6 +55,7 @@ const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
 
 const Home: NextPage = () => {
   const [words, setWords] = useState(wordlist)
+  const [filtered, setFiltered] = useState(words)
   const [completed, setCompleted] = useState<Word[]>([])
   const [missed, setMissed] = useState(0)
   const currentWord = words[0]
@@ -72,6 +74,8 @@ const Home: NextPage = () => {
     setMissed(missed => missed + 1)
     setWords(words => words.slice(1).concat(currentWord))
   }
+
+  console.log(filtered.map(f => f.hanzi))
 
   return (
     <Container>
@@ -96,7 +100,9 @@ const Home: NextPage = () => {
         {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
       </main>
 
-      <Drawer title="Filters" />
+      <Drawer title="Filters">
+        <Settings words={wordlist} onFilter={setFiltered} />
+      </Drawer>
     </Container>
   )
 }
