@@ -36,19 +36,17 @@ const FilterList = ({
   )
 
   const handleToggle = (item: string, state: boolean) => {
-    setFiltered(filtered => ({
+    const newFilters = {
       ...filtered,
       [item]: state,
-    }))
+    }
+    setFiltered(newFilters)
+    onFilter(itemsFromMap(newFilters))
   }
 
   useEffect(() => {
     setFiltered(mapFromItems(options, include))
   }, [options, include])
-
-  useEffect(() => {
-    onFilter(itemsFromMap(filtered))
-  }, [filtered, onFilter])
 
   return (
     <fieldset>
@@ -131,15 +129,12 @@ const Settings = ({
       <FilterList
         name="Lessons"
         options={options.lesson}
-        onFilter={useCallback(
-          filtered => handleFilter('lessons', filtered),
-          []
-        )}
+        onFilter={filtered => handleFilter('lessons', filtered)}
       />
       <FilterList
         name="Types"
         options={options.type}
-        onFilter={useCallback(filtered => handleFilter('types', filtered), [])}
+        onFilter={filtered => handleFilter('types', filtered)}
       />
       <Button onClick={saveFilters}>Apply</Button>
     </div>
