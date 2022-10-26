@@ -628,9 +628,9 @@ const wordlist: Word[] = [
   {
     hanzi: '縲絏',
     simplified: '缧绁',
-    pinyin: 'léi xiè',
+    pinyin: 'léixiè',
     lesson: 6,
-    type: 'n.',
+    type: 'other',
     definition: 'fetters, ropes for binding prisoners',
   },
   {
