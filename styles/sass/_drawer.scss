@@ -35,7 +35,7 @@
       @apply fixed inset-0 bg-black/50 opacity-0;
 
       &--active {
-        @apply opacity-100 backdrop-blur-sm;
+        @apply opacity-100;
       }
     }
   }
