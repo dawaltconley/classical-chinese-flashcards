@@ -8,6 +8,7 @@
     &__handle {
       height: var(--handle-height);
       cursor: grab;
+      box-shadow: 0px -2px 8px rgba(black, 0.12);
 
       &:active {
         cursor: grabbing;
