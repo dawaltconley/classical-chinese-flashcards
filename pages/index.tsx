@@ -33,7 +33,7 @@ const shuffle = <T extends any>(arr: T[]): T[] => {
 }
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex-center h-screen w-screen flex-col">{children}</div>
+  <div className="flex-center h-full flex-col">{children}</div>
 )
 
 const Home: NextPage = () => {
