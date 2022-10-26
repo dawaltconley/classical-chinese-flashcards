@@ -9,6 +9,17 @@ import { ScoreDisplay } from '../components/score'
 import Drawer from '../components/drawer'
 import Settings, { filterWords, WordFilter } from '../components/settings'
 
+interface SaveGame {
+  words: Word[]
+  completed: Word[]
+  missed: number
+  filter: WordFilter | null
+}
+
+let lastGame: string | null
+if (typeof window !== 'undefined')
+  lastGame = window.localStorage.getItem('flashcards')
+
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
   const remaining: T[] = [...arr]
@@ -75,7 +86,28 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    resetFlashcards(null)
+    const save: SaveGame = {
+      words,
+      completed,
+      missed,
+      filter,
+    }
+    window.localStorage.setItem('flashcards', JSON.stringify(save))
+  }, [words, completed, missed, filter])
+
+  useEffect(() => {
+    const save: SaveGame | null = lastGame && JSON.parse(lastGame)
+    if (save) {
+      const words = save.filter
+        ? filterWords(save.words, save.filter)
+        : save.words
+      setWords(words)
+      setFilter(save.filter)
+      setCompleted(save.completed)
+      setMissed(save.missed)
+    } else {
+      resetFlashcards(null)
+    }
   }, [])
 
   return (
