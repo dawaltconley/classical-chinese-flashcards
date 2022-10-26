@@ -5,12 +5,13 @@
     --handle-height: 60px;
     --background-color: #{prop.set(--theme-bg, $mix: lightness --theme-tx 97%)};
 
-    @apply fixed inset-x-0;
+    @apply fixed inset-x-0 mx-auto max-w-lg rounded-t-2xl;
     top: calc(100vh - var(--handle-height, 60px));
+    box-shadow: 0px -2px 8px rgba(black, 0.12);
 
     &__handle {
+      @apply rounded-t-2xl p-4 text-center;
       background-color: var(--background-color);
-      box-shadow: 0px -2px 8px rgba(black, 0.12);
       cursor: grab;
 
       &:active {
@@ -19,7 +20,7 @@
     }
 
     &__body {
-      height: 800px;
+      @apply py-4;
       max-height: calc(100vh - var(--handle-height));
       background-color: var(--background-color);
     }

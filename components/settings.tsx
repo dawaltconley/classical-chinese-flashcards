@@ -180,7 +180,7 @@ const Settings = ({
           onFilter={filtered => handleFilter('type', filtered)}
         />
       </div>
-      <div className="mt-6 space-x-4 text-center">
+      <div className="mt-12 space-x-4 space-y-2 text-center">
         <Button onClick={() => handleReset(filters)} error={error}>
           Reset Cards
         </Button>
