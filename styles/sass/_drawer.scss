@@ -1,18 +1,24 @@
+@use 'sass-themes' as theme;
 @use 'scss-properties' as prop;
 
 @layer components {
   .drawer {
     --handle-height: 60px;
-    --background-color: #{prop.set(--theme-bg, $mix: lightness --theme-tx 97%)};
 
     @apply fixed inset-x-0 mx-auto max-w-lg rounded-t-2xl;
     top: calc(100vh - var(--handle-height, 60px));
-    box-shadow: 0px -2px 8px rgba(black, 0.12);
+    box-shadow: 0px -1px 6px rgba(black, theme.if-light(0.08, 0.36));
 
     &__handle {
       @apply rounded-t-2xl p-4 text-center;
-      background-color: var(--background-color);
+      background-color: prop.set(
+        --theme-bg,
+        $mix: lightness --theme-tx theme.if-light(0.98, 0.965)
+      );
       cursor: grab;
+
+      border-bottom: 1px solid
+        prop.mix(--theme-tx, --theme-bg, theme.if-light(0.06, 0.048));
 
       &:active {
         cursor: grabbing;
@@ -22,7 +28,7 @@
     &__body {
       @apply py-4;
       max-height: calc(100vh - var(--handle-height));
-      background-color: var(--background-color);
+      background-color: var(--theme-bg);
     }
 
     &__lightbox {
