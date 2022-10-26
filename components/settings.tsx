@@ -117,6 +117,8 @@ const filterWords = (words: Word[], filters: WordFilter): Word[] =>
     return true
   })
 
+// TODO: should revert to old filters if drawer is closed
+// without current settings being applied
 const Settings = ({
   words,
   wordData = wordlist,
