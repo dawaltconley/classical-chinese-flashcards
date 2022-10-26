@@ -19,6 +19,11 @@
       );
     }
 
+    &:active {
+      background-color: var(--theme-br);
+      color: white;
+    }
+
     &:invalid {
       background-color: prop.set(
         --theme-bg,
@@ -31,26 +36,8 @@
         $lightness: mix --theme-tx 50%
       );
       cursor: not-allowed;
-    }
 
-    &:active {
-      background-color: var(--theme-br);
-      color: white;
-    }
-
-    &--active {
-      background-color: var(--theme-br);
-      color: white;
-
-      &:hover {
-        background-color: prop.set(
-          --theme-br,
-          $lightness: mix --theme-bg 85%,
-          $saturation: mix --theme-bg 80%
-        );
-      }
-
-      &:invalid {
+      &:active {
         background-color: prop.set(
           --theme-bg,
           $hue: change 0deg,
@@ -62,6 +49,19 @@
           $hue: change 0deg,
           $saturation: change 40%,
           $lightness: mix --theme-tx 50%
+        );
+      }
+    }
+
+    &--active {
+      background-color: var(--theme-br);
+      color: white;
+
+      &:hover {
+        background-color: prop.set(
+          --theme-br,
+          $lightness: mix --theme-bg 85%,
+          $saturation: mix --theme-bg 80%
         );
       }
     }
