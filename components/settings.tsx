@@ -121,10 +121,12 @@ const Settings = ({
   words,
   wordData = wordlist,
   onFilter,
+  handleReset,
 }: {
   words: Word[]
   wordData?: Word[]
   onFilter: (filter: WordFilter) => void
+  handleReset: (filter: WordFilter) => void
 }) => {
   // options describe all possible words;
   // filters describe only selected words
@@ -178,9 +180,12 @@ const Settings = ({
           onFilter={filtered => handleFilter('type', filtered)}
         />
       </div>
-      <div className="mt-6 text-center">
+      <div className="mt-6 space-x-4 text-center">
+        <Button onClick={() => handleReset(filters)} error={error}>
+          Reset Cards
+        </Button>
         <Button onClick={saveFilters} error={error}>
-          Apply
+          Apply Filters
         </Button>
       </div>
     </>

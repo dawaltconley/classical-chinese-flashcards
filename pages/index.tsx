@@ -138,7 +138,11 @@ const Home: NextPage = () => {
 
       <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>
         <div className="mx-auto max-w-md px-4">
-          <Settings words={words} onFilter={handleFilter} />
+          <Settings
+            words={words}
+            onFilter={handleFilter}
+            handleReset={filter => resetFlashcards(filter)}
+          />
         </div>
       </Drawer>
     </Container>
