@@ -81,6 +81,7 @@ const Home: NextPage = () => {
     setWords(newWords)
     setCompleted([])
     setMissed(0)
+    setDrawerOpen(false)
   }
 
   useEffect(() => {
