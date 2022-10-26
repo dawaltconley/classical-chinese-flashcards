@@ -24,5 +24,13 @@
       max-height: calc(100vh - var(--handle-height));
       background-color: var(--background-color);
     }
+
+    &__lightbox {
+      @apply fixed inset-0 bg-black/50 opacity-0;
+
+      &--active {
+        @apply opacity-100 backdrop-blur-sm;
+      }
+    }
   }
 }

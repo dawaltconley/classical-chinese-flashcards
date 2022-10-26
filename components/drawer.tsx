@@ -67,41 +67,52 @@ const Drawer = ({
   useResizeObserver(drawer, () => updateDrawerBounds())
 
   return (
-    <Draggable
-      axis="y"
-      bounds={{ top: boundsTop, bottom: 0 }}
-      handle=".drawer__handle"
-      onStart={onStart}
-      onStop={onStop}
-      position={{ x: 0, y: isOpen ? -drawerHeight : 0 }}
-    >
+    <>
       <div
-        ref={drawer}
-        className="drawer"
+        className={`drawer__lightbox
+          ${isOpen ? 'drawer__lightbox--active' : ''}`}
         style={{
-          transitionDuration: isBeingDragged ? '0s' : '500ms',
-          transitionProperty: 'transform',
-          transitionTimingFunction: 'ease-out',
-          ...({
-            '--handle-height': handleHeight ? handleHeight + 'px' : null,
-          } as DrawerProperties),
+          transitionDuration: '500ms',
+          pointerEvents: isOpen ? undefined : 'none',
         }}
+        onClick={() => close()}
+      ></div>
+      <Draggable
+        axis="y"
+        bounds={{ top: boundsTop, bottom: 0 }}
+        handle=".drawer__handle"
+        onStart={onStart}
+        onStop={onStop}
+        position={{ x: 0, y: isOpen ? -drawerHeight : 0 }}
       >
-        <div ref={handle} className="drawer__handle">
-          {title ? (
-            <Toggle
-              name="test"
-              text={title}
-              onToggle={() => toggle()}
-              watchState={isOpen}
-            />
-          ) : null}
+        <div
+          ref={drawer}
+          className="drawer"
+          style={{
+            transitionDuration: isBeingDragged ? '0s' : '500ms',
+            transitionProperty: 'transform',
+            transitionTimingFunction: 'ease-out',
+            ...({
+              '--handle-height': handleHeight ? handleHeight + 'px' : null,
+            } as DrawerProperties),
+          }}
+        >
+          <div ref={handle} className="drawer__handle">
+            {title ? (
+              <Toggle
+                name="test"
+                text={title}
+                onToggle={() => toggle()}
+                watchState={isOpen}
+              />
+            ) : null}
+          </div>
+          <div ref={body} className="drawer__body">
+            {children}
+          </div>
         </div>
-        <div ref={body} className="drawer__body">
-          {children}
-        </div>
-      </div>
-    </Draggable>
+      </Draggable>
+    </>
   )
 }
 
