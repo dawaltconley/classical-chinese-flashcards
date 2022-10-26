@@ -111,7 +111,7 @@ const wordlist: Word[] = [
     hanzi: '齊',
     pinyin: 'Qí',
     lesson: 2,
-    type: 'n.',
+    type: 'other',
     definition: '(name of a state)',
   },
   {
@@ -122,7 +122,7 @@ const wordlist: Word[] = [
     definition: 'to be bright, shining',
     other: [
       {
-        type: 'n.',
+        type: 'other',
         definition: 'Jing (honorific posthumous name)',
       },
     ],
@@ -223,7 +223,7 @@ const wordlist: Word[] = [
     hanzi: '樊',
     pinyin: 'fán',
     lesson: 3,
-    type: 'n.',
+    type: 'other',
     definition: '(family name)',
   },
   {
@@ -231,7 +231,7 @@ const wordlist: Word[] = [
     simplified: '迟',
     pinyin: 'chí',
     lesson: 3,
-    type: 'n.',
+    type: 'other',
     definition: '(personal name)',
   },
   {
@@ -330,7 +330,7 @@ const wordlist: Word[] = [
     hanzi: '由',
     pinyin: 'yóu',
     lesson: 4,
-    type: 'n.',
+    type: 'other',
     definition: '(personal name)',
   },
   {
@@ -601,14 +601,14 @@ const wordlist: Word[] = [
     hanzi: '公冶',
     pinyin: 'gōngyě',
     lesson: 6,
-    type: 'n.',
+    type: 'other',
     definition: `(family name, literally "Duke's Smelter" or "Dukesmith"`,
   },
   {
     hanzi: '長',
     pinyin: 'cháng',
     lesson: 6,
-    type: 'n.',
+    type: 'other',
     definition: '(personal name)',
   },
   {
