@@ -87,10 +87,7 @@ const Drawer = ({
           } as DrawerProperties),
         }}
       >
-        <div
-          ref={handle}
-          className="drawer__handle rounded-t-2xl p-4 text-center"
-        >
+        <div ref={handle} className="drawer__handle">
           {title ? (
             <Toggle
               name="test"
