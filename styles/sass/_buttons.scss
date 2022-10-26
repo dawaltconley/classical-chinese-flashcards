@@ -33,13 +33,21 @@
       cursor: not-allowed;
     }
 
-    &:active,
+    &:active {
+      background-color: var(--theme-br);
+      color: white;
+    }
+
     &--active {
       background-color: var(--theme-br);
+      color: white;
 
-      &,
       &:hover {
-        color: white;
+        background-color: prop.set(
+          --theme-br,
+          $lightness: mix --theme-bg 85%,
+          $saturation: mix --theme-bg 80%
+        );
       }
 
       &:invalid {
@@ -56,14 +64,6 @@
           $lightness: mix --theme-tx 50%
         );
       }
-    }
-
-    &--active:hover {
-      background-color: prop.set(
-        --theme-br,
-        $lightness: mix --theme-bg 85%,
-        $saturation: mix --theme-bg 80%
-      );
     }
 
     &--green {
