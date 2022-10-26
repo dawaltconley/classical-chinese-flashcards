@@ -33,7 +33,7 @@ const shuffle = <T extends any>(arr: T[]): T[] => {
 }
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex-center h-full flex-col">{children}</div>
+  <div className="flex-center h-auto min-h-full flex-col pb-24">{children}</div>
 )
 
 const Home: NextPage = () => {
@@ -120,7 +120,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="items center fixed top-0 left-0 right-0 flex h-16 w-full justify-between p-4">
+      <header className="items center mb-8 flex h-16 w-full justify-between p-4">
         <div className="mx-auto flex items-center justify-between space-x-8">
           <ScoreDisplay
             correct={completed.length}
@@ -131,7 +131,7 @@ const Home: NextPage = () => {
         <ThemeToggle />
       </header>
 
-      <main>
+      <main className="my-auto">
         {currentWord ? (
           <Card word={currentWord} {...{ markCorrect, markIncorrect }} />
         ) : (
