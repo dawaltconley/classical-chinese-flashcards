@@ -71,6 +71,7 @@ const Home: NextPage = () => {
     if (filter) newWords = filterWords(newWords, filter)
     setWords(newWords)
     setCompleted([])
+    setMissed(0)
   }
 
   useEffect(() => {
