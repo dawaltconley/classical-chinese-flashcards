@@ -7,6 +7,7 @@ import Head from 'next/head'
 import wordlist, { Word } from '../data/wordlist'
 import { Card } from '../components/card'
 import { ThemeToggle } from '../components/button'
+import { Drawer } from '../components/settings'
 
 const shuffle = <T extends any>(arr: T[]): T[] => {
   const len = arr.length
@@ -92,6 +93,8 @@ const Home: NextPage = () => {
       <main>
         {<Card word={currentWord} {...{ markCorrect, markIncorrect }} />}
       </main>
+
+      <Drawer />
     </Container>
   )
 }
