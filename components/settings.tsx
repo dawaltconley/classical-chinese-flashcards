@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button, Toggle } from './button'
 import wordlist, { Word } from '../data/wordlist'
 
@@ -142,23 +142,27 @@ const Settings = ({
     }))
   }
 
-  const saveFilters = () => {
-    if (filterWords(words, filters).length) {
-      setError(false)
-      onFilter(filters)
-      // onFilter((words: Word[]) => filterWords(words, filters))
-    } else {
-      setError('Filters must contain at least one word.')
-    }
-  }
+  const validateForm = useCallback(
+    (words: Word[], suppressMessage?: boolean): boolean => {
+      const isValid =
+        filterWords(words, filters).length > 0 || words.length === 0
+      if (isValid) {
+        setError(false)
+      } else {
+        setError(suppressMessage || 'Filters must contain at least one word.')
+      }
+      return isValid
+    },
+    [filters]
+  )
+
+  const resetCards = () => validateForm(wordData) && handleReset(filters)
+
+  const saveFilters = () => validateForm(words) && onFilter(filters)
 
   useEffect(() => {
-    if (filterWords(words, filters).length) {
-      setError(false)
-    } else {
-      setError(true)
-    }
-  }, [words, filters])
+    validateForm(words, true)
+  }, [words, validateForm])
 
   useEffect(() => {
     setFilters(getFilterFromWords(words))
@@ -181,7 +185,7 @@ const Settings = ({
         />
       </div>
       <div className="mt-12 space-x-4 space-y-2 text-center">
-        <Button onClick={() => handleReset(filters)} error={error}>
+        <Button onClick={resetCards} error={error}>
           Reset Cards
         </Button>
         <Button onClick={saveFilters} error={error}>
