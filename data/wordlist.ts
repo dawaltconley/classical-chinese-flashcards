@@ -613,7 +613,7 @@ const wordlist: Word[] = [
   },
   {
     hanzi: '妻',
-    pinyin: 'qí',
+    pinyin: 'qì',
     lesson: 6,
     type: 't.v.',
     definition: 'to give a wife to',
