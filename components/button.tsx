@@ -121,7 +121,6 @@ const ThemeToggle = () => {
 
   const toggle = () => {
     const newTheme = getOtherTheme(theme)
-    console.log({ theme, newTheme, isOverride })
     setTheme(newTheme)
     setIsOverride(true)
   }
