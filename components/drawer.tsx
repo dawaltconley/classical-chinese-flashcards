@@ -69,8 +69,8 @@ const Drawer = ({
   }, [updateDrawerBounds])
 
   useEffect(() => {
-    window.removeEventListener('resize', updateDrawerBounds)
     window.addEventListener('resize', updateDrawerBounds)
+    return () => window.removeEventListener('resize', updateDrawerBounds)
   }, [updateDrawerBounds])
 
   return (
