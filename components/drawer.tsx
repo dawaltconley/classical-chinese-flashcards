@@ -85,6 +85,7 @@ const Drawer = ({
         onClick={() => close()}
       ></div>
       <Draggable
+        nodeRef={drawer}
         axis="y"
         bounds={{ top: boundsTop, bottom: 0 }}
         handle=".drawer__handle"
