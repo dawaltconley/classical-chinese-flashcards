@@ -122,10 +122,8 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
         }}
         onClick={() => flip()}
       >
-        <h1 className="flippable__front card-border bg-theme-bg p-4">
-          {frontContent}
-        </h1>
-        <div className="flippable__back card-border absolute inset-0 bg-theme-bg p-4">
+        <h1 className="flippable__front card p-4">{frontContent}</h1>
+        <div className="flippable__back card absolute inset-0 p-4">
           {backContent}
         </div>
       </button>

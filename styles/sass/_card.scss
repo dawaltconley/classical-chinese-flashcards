@@ -1,3 +1,6 @@
+@use 'sass-themes' as theme;
+@use 'scss-properties' as prop;
+
 @layer components {
   .hanzi {
     --size: min(40vmin, 280px);
@@ -35,7 +38,13 @@
     }
   }
 
-  .card-border {
-    @apply rounded-2xl border-8 border-gray-500/10;
+  .card {
+    @apply rounded-2xl border-8;
+
+    background-color: prop.set(--theme-bg, $mix: lightness --theme-tx 98%);
+    border-color: prop.set(
+      --theme-bg,
+      $mix: (lightness: --theme-tx 95%, saturation: --theme-tx 90%)
+    );
   }
 }
