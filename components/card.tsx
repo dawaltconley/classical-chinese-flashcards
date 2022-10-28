@@ -140,8 +140,8 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
               : '0px',
         }}
       >
-        <div className="flex justify-around text-lg">
-          <p>Rate yourself: </p>
+        <div className="flex justify-center text-lg">
+          <p>Grade yourself: </p>
           <span className="ml-2 inline-block space-x-2">
             <Button
               style="green"
