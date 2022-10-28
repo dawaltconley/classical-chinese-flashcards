@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-hook/resize-observer": "^1.2.6",
     "next": "12.3.1",
     "postcss-flexbugs-fixes": "^5.0.2",
     "react": "18.2.0",

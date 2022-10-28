@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef, CSSProperties } from 'react'
-import useResizeObserver from '@react-hook/resize-observer'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
 import { Toggle } from './button'
 
@@ -69,7 +68,10 @@ const Drawer = ({
     updateDrawerBounds()
   }, [updateDrawerBounds])
 
-  useResizeObserver(drawer, () => updateDrawerBounds())
+  useEffect(() => {
+    window.removeEventListener('resize', updateDrawerBounds)
+    window.addEventListener('resize', updateDrawerBounds)
+  }, [updateDrawerBounds])
 
   return (
     <>
