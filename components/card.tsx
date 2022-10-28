@@ -131,7 +131,7 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
       </button>
       <div
         ref={answerButtons}
-        className="mt-4 overflow-hidden"
+        className="mx-auto mt-4 w-1/2 min-w-[6rem] overflow-hidden"
         style={{
           transitionDuration: flipDur.toString() + 'ms',
           height:
@@ -140,27 +140,21 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
               : '0px',
         }}
       >
-        <div className="flex justify-center text-lg">
-          <p>Grade yourself: </p>
-          <span className="ml-2 inline-block space-x-2">
-            <Button
-              style="green"
-              circle
-              onClick={() => handleAnswer(markCorrect)}
-            >
-              <FontAwesomeIcon icon={faThumbsUp} className="h-[1em] w-[1em]" />
-            </Button>
-            <Button
-              style="red"
-              circle
-              onClick={() => handleAnswer(markIncorrect)}
-            >
-              <FontAwesomeIcon
-                icon={faThumbsDown}
-                className="h-[1em] w-[1em]"
-              />
-            </Button>
-          </span>
+        <div className="flex justify-between space-x-4 text-lg">
+          <Button
+            style="green"
+            circle
+            onClick={() => handleAnswer(markCorrect)}
+          >
+            <FontAwesomeIcon icon={faThumbsUp} className="h-[1em] w-[1em]" />
+          </Button>
+          <Button
+            style="red"
+            circle
+            onClick={() => handleAnswer(markIncorrect)}
+          >
+            <FontAwesomeIcon icon={faThumbsDown} className="h-[1em] w-[1em]" />
+          </Button>
         </div>
       </div>
     </div>
