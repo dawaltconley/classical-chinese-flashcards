@@ -539,6 +539,13 @@ const wordlist: Word[] = [
     lesson: 6,
     type: 'v.',
     definition: 'is-not (negates a nominal sentence)',
+    other: [
+      {
+        lesson: 8,
+        type: 's.v.',
+        definition: 'to be wrong',
+      },
+    ],
   },
   {
     hanzi: '恆',
@@ -661,6 +668,8 @@ const wordlist: Word[] = [
     type: 't.v.',
     definition: 'using, by means of, in order to',
   },
+
+  // Lesson 7
   {
     hanzi: '士',
     pinyin: 'shì',
@@ -807,6 +816,13 @@ const wordlist: Word[] = [
     lesson: 7,
     type: 'conj.',
     definition: 'and (for nouns)',
+    other: [
+      {
+        lesson: 8,
+        type: 'g.p.',
+        definition: '→ question',
+      },
+    ],
   },
   {
     hanzi: '所',
@@ -835,6 +851,188 @@ const wordlist: Word[] = [
     lesson: 7,
     type: 'other',
     definition: 'is it not…?',
+  },
+
+  // Lesson 8
+  {
+    hanzi: '一',
+    pinyin: 'yī',
+    lesson: 8,
+    type: 'n.',
+    definition: 'one',
+  },
+  {
+    hanzi: '言',
+    pinyin: 'yán',
+    lesson: 8,
+    type: 'n.',
+    definition: 'words',
+  },
+  {
+    hanzi: '恕',
+    pinyin: 'shù',
+    lesson: 8,
+    type: 'n.',
+    definition: 'reciprocity',
+  },
+  {
+    hanzi: '門人',
+    pinyin: 'ménrén',
+    lesson: 8,
+    type: 'n.',
+    definition: 'disciples (gate people)',
+  },
+  {
+    hanzi: '忠',
+    pinyin: 'zhōng',
+    lesson: 8,
+    type: 'n.',
+    definition: 'loyalty',
+  },
+  {
+    hanzi: '予',
+    pinyin: 'yú',
+    lesson: 8,
+    type: 'pron.',
+    definition: 'I',
+  },
+  {
+    hanzi: '何',
+    pinyin: 'hé',
+    lesson: 8,
+    type: 'pron.',
+    definition: 'what',
+  },
+  {
+    hanzi: '學',
+    pinyin: 'xué',
+    lesson: 8,
+    type: 't.v.',
+    definition: 'to study',
+    other: [
+      {
+        type: 's.v.',
+        definition: 'to be learned',
+      },
+    ],
+  },
+  {
+    hanzi: '識',
+    pinyin: 'zhì',
+    lesson: 8,
+    type: 't.v.',
+    definition: 'to remember',
+  },
+  {
+    hanzi: '貫',
+    pinyin: 'guàn',
+    lesson: 8,
+    type: 't.v.',
+    definition: 'to bind together',
+  },
+  {
+    hanzi: '行',
+    pinyin: 'xíng',
+    lesson: 8,
+    type: 't.v.',
+    definition: 'to put into effect',
+  },
+  {
+    hanzi: '施',
+    pinyin: 'shī',
+    lesson: 8,
+    type: 't.v.',
+    definition: 'to bestow (something on someone)',
+  },
+  {
+    hanzi: '唯',
+    pinyin: 'wéi',
+    lesson: 8,
+    type: 't.v.',
+    definition: 'is-so, yes (agreeing)',
+  },
+  {
+    hanzi: '然',
+    pinyin: 'rán',
+    lesson: 8,
+    type: 's.v.',
+    definition: 'to be so',
+  },
+  {
+    hanzi: '出',
+    pinyin: 'chū',
+    lesson: 8,
+    type: 's.v.',
+    definition: 'to be out',
+    other: [
+      {
+        type: 'v.',
+        definition: 'to go in',
+      },
+    ],
+  },
+  {
+    hanzi: '多',
+    pinyin: 'duō',
+    lesson: 8,
+    type: 'adv.',
+    definition: 'disparately',
+  },
+  {
+    hanzi: '勿',
+    pinyin: 'wù',
+    lesson: 8,
+    type: 'adv.',
+    definition: 'do not…it (imperative)',
+  },
+  {
+    hanzi: '賜',
+    pinyin: 'cì',
+    lesson: 8,
+    type: 'other',
+    definition: '(name)',
+  },
+  {
+    hanzi: '子貢',
+    pinyin: 'zǐgòng',
+    lesson: 8,
+    type: 'other',
+    definition: '(name)',
+  },
+  {
+    hanzi: '終身',
+    pinyin: 'zhōngshēn',
+    lesson: 8,
+    type: 'other',
+    definition: 'one’s whole life',
+  },
+  {
+    hanzi: '其⋯⋯乎',
+    pinyin: 'qí…hū',
+    lesson: 8,
+    type: 'other',
+    definition: 'is it not…?',
+  },
+  {
+    hanzi: '參',
+    pinyin: 'shēn',
+    lesson: 8,
+    type: 'other',
+    definition: '(name)',
+  },
+  {
+    hanzi: '夫子',
+    pinyin: 'fūzǐ',
+    lesson: 8,
+    type: 'other',
+    definition: 'Master',
+  },
+  {
+    hanzi: '而已矣',
+    pinyin: 'éryǐyǐ',
+    lesson: 8,
+    type: 'other',
+    definition: 'and that is all',
   },
 ]
 
