@@ -9,7 +9,7 @@ type Word = {
 }
 
 type WordVariant = Pick<Word, 'definition'> &
-  Partial<Pick<Word, 'pinyin' | 'type'>>
+  Partial<Pick<Word, 'pinyin' | 'type' | 'lesson'>>
 
 type WordClass =
   | 'n.'
