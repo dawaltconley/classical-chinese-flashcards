@@ -6,10 +6,11 @@ type Word = {
   definition: string
   other?: WordVariant[]
   simplified?: string
+  bonus?: boolean
 }
 
 type WordVariant = Pick<Word, 'definition'> &
-  Partial<Pick<Word, 'pinyin' | 'type' | 'lesson'>>
+  Partial<Pick<Word, 'pinyin' | 'type' | 'lesson' | 'bonus'>>
 
 type WordClass =
   | 'n.'
@@ -117,6 +118,14 @@ const wordlist: Word[] = [
     lesson: 1,
     type: 's.v.',
     definition: 'to be far',
+  },
+  {
+    bonus: true,
+    hanzi: '儒',
+    pinyin: 'rú',
+    lesson: 1,
+    type: 'n.',
+    definition: 'the followers of Kǒngzǐ',
   },
 
   // Lesson 2
@@ -239,6 +248,14 @@ const wordlist: Word[] = [
     type: 'adv.',
     definition: 'not (negates verbs or verbal phrases)',
   },
+  {
+    bonus: true,
+    hanzi: '諡',
+    pinyin: 'shì',
+    lesson: 2,
+    type: 'n.',
+    definition: 'honorific, posthumous title',
+  },
 
   // Lesson 3
   {
@@ -357,6 +374,14 @@ const wordlist: Word[] = [
     lesson: 3,
     type: 't.v.',
     definition: 'to delight in',
+    other: [
+      {
+        bonus: true,
+        pinyin: 'yuè',
+        type: 'n.',
+        definition: 'music',
+      },
+    ],
   },
   {
     hanzi: '水',
@@ -372,6 +397,23 @@ const wordlist: Word[] = [
     lesson: 3,
     type: 'n.',
     definition: 'mountains',
+  },
+  {
+    bonus: true,
+    hanzi: '姓',
+    pinyin: 'xìng',
+    lesson: 3,
+    type: 'n.',
+    definition: 'family name',
+  },
+  {
+    bonus: true,
+    hanzi: '讀音',
+    pinyin: 'dúyīn',
+    lesson: 3,
+    type: 'n.',
+    definition:
+      'reading pronunciation (an alternate tone that only applies to a word in some cases)',
   },
 
   // Lesson 4
@@ -488,6 +530,37 @@ const wordlist: Word[] = [
     type: 's.v.',
     definition: 'to be strong, to be powerful',
   },
+  {
+    bonus: true,
+    hanzi: '弟子',
+    pinyin: 'dìzǐ',
+    lesson: 4,
+    type: 'n.',
+    definition: 'disciple',
+  },
+  {
+    bonus: true,
+    hanzi: '字',
+    pinyin: 'zì',
+    lesson: 4,
+    type: 'n.',
+    definition: 'style, courtesy name',
+  },
+  {
+    bonus: true,
+    hanzi: '女',
+    pinyin: 'nǚ',
+    lesson: 4,
+    type: 'n.',
+    definition: 'woman',
+    other: [
+      {
+        pinyin: 'rǔ',
+        type: 'pron.',
+        definition: 'possible phonetic loan for 汝',
+      },
+    ],
+  },
 
   // Lesson 5
   {
@@ -574,6 +647,14 @@ const wordlist: Word[] = [
     lesson: 5,
     type: 't.v.',
     definition: 'to be fond of',
+    other: [
+      {
+        bonus: true,
+        pinyin: 'hǎo',
+        type: 's.v.',
+        definition: 'to be good, to be pleasing',
+      },
+    ],
   },
 
   // Lesson 6
@@ -638,6 +719,11 @@ const wordlist: Word[] = [
       {
         type: 't.v.',
         definition: 'to give a name to',
+      },
+      {
+        bonus: true,
+        lesson: 3,
+        definition: 'given name',
       },
     ],
   },
@@ -757,6 +843,38 @@ const wordlist: Word[] = [
     lesson: 6,
     type: 'v.',
     definition: 'using, by means of, in order to',
+  },
+  {
+    bonus: true,
+    hanzi: '忍',
+    pinyin: 'rěn',
+    lesson: 6,
+    type: 's.v.',
+    definition: 'to endure',
+  },
+  {
+    bonus: true,
+    hanzi: '孰',
+    pinyin: 'shú',
+    lesson: 6,
+    type: 'pron.',
+    definition: 'what…? (interrogative pronoun)',
+  },
+  {
+    bonus: true,
+    hanzi: '常',
+    pinyin: 'cháng',
+    lesson: 6,
+    type: 's.v.',
+    definition: 'constant',
+  },
+  {
+    bonus: true,
+    hanzi: '天地',
+    pinyin: 'tiāndì',
+    lesson: 6,
+    type: 'n.',
+    definition: 'Heaven and Earth; the universe',
   },
 
   // Lesson 7
@@ -956,6 +1074,22 @@ const wordlist: Word[] = [
     type: 't.v.',
     definition: 'to forsake, to abandon',
   },
+  {
+    bonus: true,
+    hanzi: '土',
+    pinyin: 'tǔ',
+    lesson: 7,
+    type: 'n.',
+    definition: 'earth',
+  },
+  {
+    bonus: true,
+    hanzi: '亦',
+    pinyin: 'yǐ',
+    lesson: 7,
+    type: 'g.p.',
+    definition: 'also, particularly, only (emphatic particle)',
+  },
 
   // Lesson 8
   {
@@ -1143,6 +1277,32 @@ const wordlist: Word[] = [
     lesson: 8,
     type: 'other',
     definition: 'and that is all',
+  },
+  {
+    bonus: true,
+    hanzi: '歟',
+    pinyin: 'yǔ',
+    lesson: 8,
+    type: 'g.p.',
+    definition:
+      'alternate form of 與 (comes at the end of a sentence, makes it a question)',
+  },
+  {
+    bonus: true,
+    hanzi: '矣',
+    pinyin: 'yǐ',
+    lesson: 8,
+    type: 'g.p.',
+    definition:
+      'V-ed, already; truly, really (perfective aspect, indicates an action is complete in time or degree)',
+  },
+  {
+    bonus: true,
+    hanzi: '反切',
+    pinyin: 'fǎnqiè',
+    lesson: 8,
+    type: 'n.',
+    definition: 'a system to represent the pronunciation of Chinese characters',
   },
 ]
 
