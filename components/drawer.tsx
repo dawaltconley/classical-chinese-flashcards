@@ -25,7 +25,7 @@ const Drawer = ({
   const [handleHeight, setHandleHeight] = useState(0)
   const [drawerHeight, setDrawerHeight] = useState(0)
   const [boundsTop, setBoundsTop] = useState(0)
-  const [drawerTop, setDrawerTop] = useState(0)
+  const [drawerBottom, setDrawerBottom] = useState(0)
   const [isBeingDragged, setIsBeingDragged] = useState(false)
 
   const open = () => setIsOpen(true)
@@ -61,7 +61,7 @@ const Drawer = ({
     setHandleHeight(handleHeight)
     setDrawerHeight(bodyHeight)
     setBoundsTop(bodyHeight * -1)
-    setDrawerTop(document.documentElement.clientHeight - handleHeight)
+    setDrawerBottom(bodyHeight * -1)
   }, [handle, body])
 
   useEffect(() => {
@@ -97,7 +97,8 @@ const Drawer = ({
           ref={drawer}
           className="drawer"
           style={{
-            top: drawerTop ? drawerTop + 'px' : undefined,
+            top: 'auto',
+            bottom: drawerBottom ? drawerBottom + 'px' : undefined,
             transitionDuration: isBeingDragged ? '0s' : '500ms',
             transitionProperty: 'transform',
             transitionTimingFunction: 'ease-out',
