@@ -1327,7 +1327,8 @@ const wordlist: Word[] = [
   },
   {
     hanzi: '則',
-    pinyin: '则',
+    simplified: '则',
+    pinyin: 'zé',
     lesson: 9,
     type: 'g.p.',
     definition: '(contrastive topic marker)',
