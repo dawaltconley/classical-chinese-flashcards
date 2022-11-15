@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button, Toggle } from './button'
 import wordlist, { Word } from '../data/wordlist'
 
@@ -117,9 +117,6 @@ const filterWords = (words: Word[], filters: WordFilter): Word[] =>
     return true
   })
 
-const validateForm = (words: Word[], filters: WordFilter) =>
-  filterWords(words, filters).length > 0 || words.length === 0
-
 // TODO: should revert to old filters if drawer is closed
 // without current settings being applied
 const Settings = ({
@@ -138,8 +135,7 @@ const Settings = ({
 
   const [options] = useState(getFilterFromWords(wordData))
   const [filters, setFilters] = useState(getFilterFromWords(words))
-  const [applyError, setApplyError] = useState<boolean | string>(false)
-  const [resetError, setResetError] = useState<boolean | string>(false)
+  const [error, setError] = useState<boolean | string>(false)
 
   const handleFilter = (attr: keyof Word, filtered: string[]) => {
     setFilters(filters => ({
@@ -148,20 +144,28 @@ const Settings = ({
     }))
   }
 
-  const resetCards = () =>
-    validateForm(wordData, filters)
-      ? handleReset(filters)
-      : setResetError('Filters must contain at least one word.')
+  const validateForm = useCallback(
+    (message?: string): boolean => {
+      const isValid = filterWords(wordData, filters).length > 0
+      if (isValid) {
+        setError(false)
+      } else {
+        setError(message ?? true)
+      }
+      return isValid
+    },
+    [wordData, filters]
+  )
 
-  const saveFilters = () =>
-    validateForm(words, filters)
-      ? onFilter(filters)
-      : setApplyError('Filters must contain at least one word.')
+  const filterError = 'Filters must contain at least one word.'
+
+  const resetCards = () => validateForm(filterError) && handleReset(filters)
+
+  const saveFilters = () => validateForm(filterError) && onFilter(filters)
 
   useEffect(() => {
-    setResetError(!validateForm(wordData, filters))
-    setApplyError(!validateForm(words, filters))
-  }, [words, wordData, filters])
+    validateForm()
+  }, [validateForm])
 
   useEffect(() => {
     setFilters(getFilterFromWords(words))
@@ -184,10 +188,10 @@ const Settings = ({
         />
       </div>
       <div className="mt-12 space-x-4 space-y-2 text-center">
-        <Button onClick={resetCards} error={resetError}>
+        <Button onClick={resetCards} error={error}>
           Reset Cards
         </Button>
-        <Button onClick={saveFilters} error={applyError}>
+        <Button onClick={saveFilters} error={error}>
           Apply Filters
         </Button>
       </div>
