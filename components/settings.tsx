@@ -1,6 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Button, Toggle } from './button'
-import wordlist, { Word } from '../data/wordlist'
+import wordlist, {
+  Word,
+  WordFilter,
+  allWordsFilter,
+  getFilterFromWords,
+  filterWords,
+} from '../data/wordlist'
 
 type FilterMap = {
   [item: string]: boolean
@@ -82,41 +88,6 @@ const FilterList = ({
   )
 }
 
-type WordFilter = Pick<
-  {
-    [Attribute in keyof Word]: string[]
-  },
-  'lesson' | 'type'
->
-
-const getOptionsFromAttr = (items: Word[], attr: keyof Word): string[] => {
-  let options: string[] = []
-  for (let item of items) {
-    let value = item[attr]?.toString()
-    if (value && !options.some(opt => opt == value)) {
-      options.push(value)
-    }
-  }
-  return options
-}
-
-const getFilterFromWords = (words: Word[]): WordFilter => ({
-  lesson: getOptionsFromAttr(words, 'lesson'),
-  type: getOptionsFromAttr(words, 'type'),
-})
-
-const filterWords = (words: Word[], filters: WordFilter): Word[] =>
-  words.filter(word => {
-    for (let str in filters) {
-      let attr = str as keyof WordFilter
-      let valid = filters[attr]
-      let value = word[attr]?.toString()
-      if (value === undefined) return false
-      if (!valid?.some(v => v == value)) return false
-    }
-    return true
-  })
-
 const Settings = ({
   words,
   wordData = wordlist,
@@ -133,7 +104,7 @@ const Settings = ({
   // options describe all possible words;
   // filters describe only selected words
 
-  const [options] = useState(getFilterFromWords(wordData))
+  const [options] = useState(allWordsFilter)
   const [filters, setFilters] = useState(getFilterFromWords(words))
   const [error, setError] = useState<boolean | string>(false)
 
@@ -176,8 +147,8 @@ const Settings = ({
       <div className="space-y-2">
         <FilterList
           name="Lessons"
-          options={options.lesson}
-          include={filters.lesson}
+          options={options.lesson.map(n => n.toString())}
+          include={filters.lesson.map(n => n.toString())}
           onFilter={filtered => handleFilter('lesson', filtered)}
         />
         <FilterList
@@ -200,6 +171,3 @@ const Settings = ({
 }
 
 export default Settings
-
-export { filterWords }
-export type { WordFilter }

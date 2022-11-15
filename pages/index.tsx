@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import wordlist, { Word } from '../data/wordlist'
+import wordlist, { filterWords, Word, WordFilter } from '../data/wordlist'
 import { Card } from '../components/card'
 import { Button, ThemeToggle } from '../components/button'
 import { ScoreDisplay } from '../components/score'
 import Drawer from '../components/drawer'
-import Settings, { filterWords, WordFilter } from '../components/settings'
+import Settings from '../components/settings'
 
 interface SaveGame {
   words: Word[]

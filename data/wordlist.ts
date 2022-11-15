@@ -2,7 +2,7 @@ type Word = {
   hanzi: string
   pinyin: string
   type: WordClass
-  lesson: number
+  lesson: LessonNumber
   definition: string
   other?: WordVariant[]
   simplified?: string
@@ -11,16 +11,21 @@ type Word = {
 type WordVariant = Pick<Word, 'definition'> &
   Partial<Pick<Word, 'pinyin' | 'type' | 'lesson'>>
 
-type WordClass =
-  | 'n.'
-  | 'pron.'
-  | 'v.'
-  | 't.v.'
-  | 's.v.'
-  | 'adv.'
-  | 'conj.'
-  | 'g.p.'
-  | 'other'
+type LessonNumber = typeof allLessons[number]
+const allLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
+
+type WordClass = typeof allClasses[number]
+const allClasses = [
+  'n.',
+  'pron.',
+  'v.',
+  't.v.',
+  's.v.',
+  'adv.',
+  'conj.',
+  'g.p.',
+  'other',
+] as const
 
 const wcDict: Record<WordClass, string> = {
   'n.': 'noun',
@@ -32,9 +37,52 @@ const wcDict: Record<WordClass, string> = {
   'conj.': 'conjunction',
   'g.p.': 'grammatical particle',
   other: 'other',
-}
+} as const
 
 const expandWordClass = (wc: WordClass): string => wcDict[wc]
+
+type WordFilter = Pick<
+  {
+    [Attribute in keyof Word]: Word[Attribute][]
+  },
+  'lesson' | 'type'
+>
+
+const allWordsFilter: WordFilter = {
+  lesson: Array.from(allLessons),
+  type: Array.from(allClasses),
+}
+
+function getOptionsFromAttr<Attribute extends keyof Word>(
+  items: Word[],
+  attr: Attribute
+): Word[Attribute][] {
+  let options: Word[Attribute][] = []
+  for (let item of items) {
+    let value = item[attr]
+    if (value && !options.some(opt => opt == value)) {
+      options.push(value)
+    }
+  }
+  return options
+}
+
+const getFilterFromWords = (words: Word[]): WordFilter => ({
+  lesson: getOptionsFromAttr(words, 'lesson'),
+  type: getOptionsFromAttr(words, 'type'),
+})
+
+const filterWords = (words: Word[], filters: WordFilter): Word[] =>
+  words.filter(word => {
+    for (let str in filters) {
+      let attr = str as keyof WordFilter
+      let valid = filters[attr]
+      let value = word[attr]?.toString()
+      if (value === undefined) return false
+      if (!valid?.some(v => v == value)) return false
+    }
+    return true
+  })
 
 const wordlist: Word[] = [
   // Lesson 1
@@ -1492,6 +1540,13 @@ const wordlist: Word[] = [
 
 export default wordlist
 
-export { expandWordClass }
+export {
+  allLessons,
+  allClasses,
+  expandWordClass,
+  allWordsFilter,
+  getFilterFromWords,
+  filterWords,
+}
 
-export type { Word, WordClass, WordVariant }
+export type { Word, WordClass, WordVariant, WordFilter }
