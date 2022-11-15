@@ -117,18 +117,18 @@ const filterWords = (words: Word[], filters: WordFilter): Word[] =>
     return true
   })
 
-// TODO: should revert to old filters if drawer is closed
-// without current settings being applied
 const Settings = ({
   words,
   wordData = wordlist,
   onFilter,
   handleReset,
+  isActive,
 }: {
   words: Word[]
   wordData?: Word[]
   onFilter: (filter: WordFilter) => void
   handleReset: (filter: WordFilter) => void
+  isActive: boolean
 }) => {
   // options describe all possible words;
   // filters describe only selected words
@@ -169,7 +169,7 @@ const Settings = ({
 
   useEffect(() => {
     setFilters(getFilterFromWords(words))
-  }, [words])
+  }, [words, isActive])
 
   return (
     <>

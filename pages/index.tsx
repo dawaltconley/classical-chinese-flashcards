@@ -145,6 +145,7 @@ const Home: NextPage = () => {
             words={words}
             onFilter={handleFilter}
             handleReset={filter => resetFlashcards(filter)}
+            isActive={drawerOpen}
           />
         </div>
       </Drawer>
