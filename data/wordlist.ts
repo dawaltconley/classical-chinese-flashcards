@@ -58,6 +58,11 @@ const wordlist: Word[] = [
         lesson: 6,
         definition: 'daughter',
       },
+      {
+        lesson: 10,
+        type: 'pron.',
+        definition: 'you (honorific second-person pronoun; contrast 汝 rǔ)',
+      },
     ],
   },
   {
@@ -338,6 +343,11 @@ const wordlist: Word[] = [
       {
         type: 't.v.',
         definition: 'to regard as peaceful',
+      },
+      {
+        lesson: 10,
+        type: 'adv.',
+        definition: 'how…? from where…?',
       },
     ],
   },
@@ -866,6 +876,13 @@ const wordlist: Word[] = [
     lesson: 7,
     type: 's.v.',
     definition: 'to stop, to be ended',
+    other: [
+      {
+        lesson: 10,
+        type: 'adv.',
+        definition: 'already',
+      },
+    ],
   },
   {
     hanzi: '富',
@@ -1339,6 +1356,137 @@ const wordlist: Word[] = [
     lesson: 9,
     type: 'adv.',
     definition: 'seldom',
+  },
+
+  // Lesson 10
+  {
+    hanzi: '莊',
+    simplified: '庄',
+    pinyin: 'zhuāng',
+    lesson: 10,
+    type: 'other',
+    definition: '(family name)',
+  },
+  {
+    hanzi: '惠',
+    pinyin: 'huì',
+    lesson: 10,
+    type: 'other',
+    definition: '(family name)',
+  },
+  {
+    hanzi: '遊',
+    simplified: '游',
+    pinyin: 'yóu',
+    lesson: 10,
+    type: 'v.',
+    definition: 'to roam, to wander',
+  },
+  {
+    hanzi: '濠',
+    pinyin: 'háo',
+    lesson: 10,
+    type: 'other',
+    definition: '(name of a river; 濠。水名也。)',
+  },
+  {
+    hanzi: '梁',
+    pinyin: 'liáng',
+    lesson: 10,
+    type: 'n.',
+    definition: 'roof beam, structural beam',
+    other: [{ definition: 'bridge' }],
+  },
+  {
+    hanzi: '上',
+    pinyin: 'shàng',
+    lesson: 10,
+    type: 's.v.',
+    definition: 'to be above (contrast 下 xià)',
+  },
+  {
+    hanzi: '條',
+    pinyin: 'tiáo',
+    lesson: 10,
+    type: 'n.',
+    definition: 'freshwater minnow',
+  },
+  {
+    hanzi: '魚',
+    simplified: '鱼',
+    pinyin: 'yú',
+    lesson: 10,
+    type: 'n.',
+    definition: 'fish',
+  },
+  {
+    hanzi: '從容',
+    pinyin: 'cōngróng',
+    lesson: 10,
+    type: 's.v.',
+    definition: 'to be easygoing',
+  },
+  {
+    hanzi: '我',
+    pinyin: 'wǒ',
+    lesson: 10,
+    type: 'pron.',
+    definition: 'I, me',
+    other: [{ definition: 'my, mine' }],
+  },
+  {
+    hanzi: '請',
+    simplified: '请',
+    pinyin: 'qǐng',
+    lesson: 10,
+    type: 't.v.',
+    definition: 'to request, to ask, to invite',
+    other: [
+      {
+        type: 'adv.',
+        definition: 'please do…',
+      },
+    ],
+  },
+  {
+    hanzi: '循',
+    pinyin: 'xún',
+    lesson: 10,
+    type: 't.v.',
+    definition: 'follow, abide by',
+  },
+  {
+    hanzi: '云者',
+    pinyin: 'yúnzhě',
+    lesson: 10,
+    type: 'other',
+    definition: 'was said (used to mark the end of a quotation or paraphrase)',
+  },
+  {
+    hanzi: '全',
+    pinyin: 'quán',
+    lesson: 10,
+    type: 's.v.',
+    definition: 'to be complete, to be whole',
+    other: [
+      {
+        type: 'adv.',
+        definition: 'all',
+      },
+    ],
+  },
+  {
+    hanzi: '既',
+    pinyin: 'jì',
+    lesson: 10,
+    type: 's.v.',
+    definition: 'to be done',
+    other: [
+      {
+        type: 'adv.',
+        definition: 'already, since',
+      },
+    ],
   },
 ]
 
