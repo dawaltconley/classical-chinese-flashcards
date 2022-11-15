@@ -7,6 +7,8 @@ interface DrawerProperties extends CSSProperties {
   '--background-color'?: string
 }
 
+const drawerTransition = '500ms'
+
 const Drawer = ({
   title,
   isOpen,
@@ -79,7 +81,7 @@ const Drawer = ({
         className={`drawer__lightbox
           ${isOpen ? 'drawer__lightbox--active' : ''}`}
         style={{
-          transitionDuration: '500ms',
+          transitionDuration: drawerTransition,
           pointerEvents: isOpen ? undefined : 'none',
         }}
         onClick={() => close()}
@@ -99,7 +101,7 @@ const Drawer = ({
           style={{
             top: 'auto',
             bottom: drawerBottom ? drawerBottom + 'px' : undefined,
-            transitionDuration: isBeingDragged ? '0s' : '500ms',
+            transitionDuration: isBeingDragged ? '0s' : drawerTransition,
             transitionProperty: 'transform',
             transitionTimingFunction: 'ease-out',
             ...({
