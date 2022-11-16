@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 
-import type { Word, WordVariant } from '../data/wordlist'
+import type { Word, WordVariant } from '../types/words'
 import { Button } from './button'
 
 const WordHanzi = ({ word }: { word: Word }) => (

@@ -1,12 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Button, Toggle } from './button'
-import wordlist, {
-  Word,
-  WordFilter,
-  allWordsFilter,
-  getFilterFromWords,
-  filterWords,
-} from '../data/wordlist'
+import wordlist from '../data/wordlist'
+import { Word, WordFilter } from '../types/words'
+import { allWordsFilter, getFilterFromWords, filterWords } from '../utils/words'
 
 type FilterMap = {
   [item: string]: boolean
