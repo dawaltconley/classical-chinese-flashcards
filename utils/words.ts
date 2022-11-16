@@ -1,5 +1,11 @@
 import { allLessons, allClasses } from '../data/wordlist'
-import { Word, WordClass, WordFilter } from '../types/words'
+import {
+  Word,
+  WordClass,
+  WordFilter,
+  WordVariant,
+  VariantFilter,
+} from '../types/words'
 
 const wcDict: Record<WordClass, string> = {
   'n.': 'noun',
@@ -39,16 +45,29 @@ const getFilterFromWords = (words: Word[]): WordFilter => ({
   type: getOptionsFromAttr(words, 'type'),
 })
 
-const filterWords = (words: Word[], filters: WordFilter): Word[] =>
-  words.filter(word => {
-    for (let str in filters) {
-      let attr = str as keyof WordFilter
-      let valid = filters[attr]
-      let value = word[attr]?.toString()
-      if (value === undefined) return false
-      if (!valid?.some(v => v == value)) return false
-    }
-    return true
-  })
+function filterMatch(w: Word, f: WordFilter): boolean
+function filterMatch(w: WordVariant, f: VariantFilter): boolean
+function filterMatch(
+  word: Word | WordVariant,
+  filters: WordFilter | VariantFilter
+): boolean {
+  for (let str in filters) {
+    let attr = str as keyof typeof filters
+    let valid = filters[attr]
+    let value = word[attr]?.toString()
+    if (value === undefined) return false
+    if (!valid?.some(v => v == value)) return false
+  }
+  return true
+}
 
-export { expandWordClass, allWordsFilter, getFilterFromWords, filterWords }
+const filterWords = (words: Word[], filters: WordFilter): Word[] =>
+  words.filter(word => filterMatch(word, filters))
+
+export {
+  expandWordClass,
+  allWordsFilter,
+  getFilterFromWords,
+  filterMatch,
+  filterWords,
+}
