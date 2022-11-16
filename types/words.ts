@@ -23,4 +23,16 @@ type WordFilter = Pick<
   'lesson' | 'type'
 >
 
-export type { Word, WordVariant, LessonNumber, WordClass, WordFilter }
+type VariantFilter = Pick<
+  WordFilter,
+  Extract<keyof WordFilter, keyof WordVariant>
+>
+
+export type {
+  Word,
+  WordVariant,
+  LessonNumber,
+  WordClass,
+  WordFilter,
+  VariantFilter,
+}
