@@ -135,7 +135,11 @@ const Home: NextPage = () => {
 
       <main className="my-auto">
         {currentWord ? (
-          <Card word={currentWord} {...{ markCorrect, markIncorrect }} />
+          <Card
+            word={currentWord}
+            filters={filter || undefined}
+            {...{ markCorrect, markIncorrect }}
+          />
         ) : (
           <Button onClick={() => resetFlashcards(filter)}>Reset</Button>
         )}

@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 
-import type { Word, WordVariant } from '../types/words'
+import type { Word, WordVariant, WordFilter } from '../types/words'
+import { filterMatch } from '../utils/words'
 import { Button } from './button'
 
 const WordHanzi = ({ word }: { word: Word }) => (
@@ -11,40 +12,78 @@ const WordHanzi = ({ word }: { word: Word }) => (
   </div>
 )
 
-const WordDefinition = ({
-  word,
-  variant,
-}: {
-  word: Word
-  variant?: WordVariant
-}) => (
+type Definition = WordVariant & Required<Pick<WordVariant, 'type' | 'lesson'>>
+
+const WordDefinition = ({ definition: d }: { definition: Definition }) => (
   <li className="table-row">
-    <abbr className="table-cell pr-2 text-right italic">
-      {variant?.type || word.type}
-    </abbr>
+    <abbr className="table-cell pr-2 text-right italic">{d.type}</abbr>
     <span className="table-cell">
-      {' ' + (variant?.definition || word.definition)}
-      {/* variant?.pinyin && ` (${variant.pinyin})` */}
-      {variant?.pinyin && (
-        <span className="ml-2 font-bold">({variant.pinyin})</span>
-      )}
+      {' ' + d.definition}
+      {d.pinyin && <span className="ml-2 font-bold">{d.pinyin}</span>}
     </span>
   </li>
 )
 
-const WordInfo = ({ word }: { word: Word }) => {
+/** returns a list of complete word variants based on a word's multiple meanings */
+const getWordDefinitions = (word: Word): Definition[] => {
+  const baseDefinition: Definition = {
+    type: word.type,
+    lesson: word.lesson,
+    definition: word.definition,
+  }
+  return [
+    baseDefinition,
+    ...(word.other ?? []).map(variant => ({
+      ...baseDefinition,
+      ...variant,
+    })),
+  ]
+}
+
+const WordInfo = ({ word, filters }: { word: Word; filters?: WordFilter }) => {
+  const defList1 = useRef<HTMLOListElement>(null)
+  const defList2 = useRef<HTMLOListElement>(null)
+
+  const definitions: JSX.Element[] = []
+  const otherDefinitions: JSX.Element[] = []
+  getWordDefinitions(word).forEach((def, i) => {
+    const component = <WordDefinition key={i} definition={def} />
+    if (!filters || filterMatch(def, filters)) {
+      definitions.push(component)
+    } else {
+      otherDefinitions.push(component)
+    }
+  })
+
+  // align the columns in the two definition lists
+  useEffect(() => {
+    const selector = 'abbr.table-cell'
+    const col1 = defList1.current?.querySelector<HTMLElement>(selector)
+    const col2 = defList2.current?.querySelector<HTMLElement>(selector)
+    if (!col1 || !col2) return
+
+    const width = Math.max(col1.clientWidth, col2.clientWidth)
+    col1.style.width = `${width}px`
+    col2.style.width = `${width}px`
+  }, [])
+
   return (
     <div className="flex h-full w-full overflow-y-auto">
-      <div className="m-auto text-left font-serif">
-        <p className="mb-2 text-center text-xl font-bold">{word.pinyin}</p>
-        <ol className="list-decimal leading-snug">
-          <WordDefinition key={'main'} word={word} />
-          {word.other
-            ? word.other.map((variant, i) => (
-                <WordDefinition key={i} {...{ word, variant }} />
-              ))
-            : null}
+      <div className="m-auto table text-left font-serif">
+        <p className="mb-2 block text-center text-xl font-bold">
+          {word.pinyin}
+        </p>
+        <ol ref={defList1} className="list-decimal leading-snug">
+          {definitions}
         </ol>
+        {otherDefinitions.length > 0 && (
+          <>
+            <p className="my-2 text-center italic">also…</p>
+            <ol ref={defList2} className="list-decimal leading-snug">
+              {otherDefinitions}
+            </ol>
+          </>
+        )}
       </div>
     </div>
   )
@@ -52,10 +91,11 @@ const WordInfo = ({ word }: { word: Word }) => {
 
 interface CardProps {
   word: Word
+  filters?: WordFilter
   markCorrect: () => void
   markIncorrect: () => void
 }
-const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
+const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
   const defaultDur = 500
 
   const [isFlipped, setIsFlipped] = useState(false)
@@ -64,7 +104,9 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
   const [flipDur, setFlipDur] = useState(defaultDur)
 
   const [frontContent, setFrontContent] = useState(<WordHanzi word={word} />)
-  const [backContent, setBackContent] = useState(<WordInfo word={word} />)
+  const [backContent, setBackContent] = useState(
+    <WordInfo word={word} filters={filters} />
+  )
 
   const answerButtons = useRef<HTMLDivElement>(null)
 
@@ -107,7 +149,7 @@ const Card = ({ word, markCorrect, markIncorrect }: CardProps) => {
     setFlipDur(defaultDur)
     setIsFlipping(true)
     setTimeout(() => {
-      setBackContent(<WordInfo word={word} />)
+      setBackContent(<WordInfo word={word} filters={filters} />)
       setIsFlipping(false)
     }, defaultDur)
   }, [word])
