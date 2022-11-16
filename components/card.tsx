@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 
 import type { Word, WordVariant, WordFilter } from '../types/words'
-import { filterMatch } from '../utils/words'
+import { filterMatch, expandWordClass } from '../utils/words'
 import { Button } from './button'
 
 const WordHanzi = ({ word }: { word: Word }) => (
@@ -16,7 +16,12 @@ type Definition = WordVariant & Required<Pick<WordVariant, 'type' | 'lesson'>>
 
 const WordDefinition = ({ definition: d }: { definition: Definition }) => (
   <li className="table-row">
-    <abbr className="table-cell pr-2 text-right italic">{d.type}</abbr>
+    <abbr
+      title={expandWordClass(d.type)}
+      className="table-cell pr-2 text-right italic"
+    >
+      {d.type}
+    </abbr>
     <span className="table-cell">
       {' ' + d.definition}
       {d.pinyin && <span className="ml-2 font-bold">{d.pinyin}</span>}
@@ -70,18 +75,21 @@ const WordInfo = ({ word, filters }: { word: Word; filters?: WordFilter }) => {
   return (
     <div className="flex h-full w-full overflow-y-auto">
       <div className="m-auto table text-left font-serif">
-        <p className="mb-2 block text-center text-xl font-bold">
+        <dfn
+          title={word.hanzi}
+          className="mb-2 block text-center text-xl font-bold"
+        >
           {word.pinyin}
-        </p>
-        <ol ref={defList1} className="list-decimal leading-snug">
+        </dfn>
+        <ul ref={defList1} className="list-decimal leading-snug">
           {definitions}
-        </ol>
+        </ul>
         {otherDefinitions.length > 0 && (
           <>
             <p className="my-2 text-center italic">also…</p>
-            <ol ref={defList2} className="list-decimal leading-snug">
+            <ul ref={defList2} className="list-decimal leading-snug">
               {otherDefinitions}
-            </ol>
+            </ul>
           </>
         )}
       </div>
