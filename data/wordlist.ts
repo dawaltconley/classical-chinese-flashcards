@@ -1419,6 +1419,13 @@ const wordlist: Word[] = [
     definition: 'follow, abide by',
   },
   {
+    hanzi: '云',
+    pinyin: 'yún',
+    lesson: 10,
+    type: 't.v.',
+    definition: 'to say (often embedded quote)',
+  },
+  {
     hanzi: '云者',
     pinyin: 'yúnzhě',
     lesson: 10,
