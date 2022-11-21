@@ -1407,7 +1407,6 @@ const wordlist: Word[] = [
     definition: 'to request, to ask, to invite',
     other: [
       {
-        type: 'adv.',
         definition: 'please do…',
       },
     ],
@@ -1443,8 +1442,8 @@ const wordlist: Word[] = [
     hanzi: '既',
     pinyin: 'jì',
     lesson: 10,
-    type: 's.v.',
-    definition: 'to be done',
+    type: 'adv.',
+    definition: 'completely, fully, wholly',
     other: [
       {
         type: 'adv.',
