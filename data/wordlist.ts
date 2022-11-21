@@ -1369,7 +1369,7 @@ const wordlist: Word[] = [
     definition: 'to be above (contrast 下 xià)',
   },
   {
-    hanzi: '條',
+    hanzi: '鯈',
     pinyin: 'tiáo',
     lesson: 10,
     type: 'n.',
