@@ -1,3 +1,8 @@
+import { allLessons, allClasses } from '../data/wordlist'
+
+type LessonNumber = typeof allLessons[number]
+type WordClass = typeof allClasses[number]
+
 type Word = {
   hanzi: string
   pinyin: string
@@ -11,22 +16,6 @@ type Word = {
 type WordVariant = Pick<Word, 'definition'> &
   Partial<Pick<Word, 'pinyin' | 'type' | 'lesson'>>
 
-type LessonNumber = typeof allLessons[number]
-const allLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
-
-type WordClass = typeof allClasses[number]
-const allClasses = [
-  'n.',
-  'pron.',
-  'v.',
-  't.v.',
-  's.v.',
-  'adv.',
-  'conj.',
-  'g.p.',
-  'other',
-] as const
-
 type WordFilter = Pick<
   {
     [Attribute in keyof Word]: Word[Attribute][]
@@ -34,5 +23,4 @@ type WordFilter = Pick<
   'lesson' | 'type'
 >
 
-export { allLessons, allClasses }
 export type { Word, WordVariant, LessonNumber, WordClass, WordFilter }

@@ -1,5 +1,19 @@
 import { Word } from '../types/words'
 
+const allLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
+
+const allClasses = [
+  'n.',
+  'pron.',
+  'v.',
+  't.v.',
+  's.v.',
+  'adv.',
+  'conj.',
+  'g.p.',
+  'other',
+] as const
+
 const wordlist: Word[] = [
   // Lesson 1
   {
@@ -1461,3 +1475,5 @@ const wordlist: Word[] = [
 ]
 
 export default wordlist
+
+export { allLessons, allClasses }

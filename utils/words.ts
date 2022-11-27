@@ -1,10 +1,5 @@
-import {
-  allLessons,
-  allClasses,
-  Word,
-  WordClass,
-  WordFilter,
-} from '../types/words'
+import { allLessons, allClasses } from '../data/wordlist'
+import { Word, WordClass, WordFilter } from '../types/words'
 
 const wcDict: Record<WordClass, string> = {
   'n.': 'noun',
