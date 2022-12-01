@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Button, Toggle } from './button'
 import wordlist from '../data/wordlist'
 import { Word, WordFilter } from '../types/words'
-import { allWordsFilter, getFilterFromWords, filterWords } from '../utils/words'
+import { allWordsFilter, filterWords } from '../utils/words'
 
 type FilterMap = {
   [item: string]: boolean
@@ -85,23 +85,20 @@ const FilterList = ({
 }
 
 const Settings = ({
-  words,
   wordData = wordlist,
+  activeFilters = allWordsFilter,
   onFilter,
   handleReset,
   isActive,
 }: {
-  words: Word[]
   wordData?: Word[]
+  activeFilters?: WordFilter
   onFilter: (filter: WordFilter) => void
   handleReset: (filter: WordFilter) => void
   isActive: boolean
 }) => {
-  // options describe all possible words;
-  // filters describe only selected words
-
-  const [options] = useState(allWordsFilter)
-  const [filters, setFilters] = useState(getFilterFromWords(words))
+  // filters describe currently selected words, whether or not applied
+  const [filters, setFilters] = useState(activeFilters)
   const [error, setError] = useState<boolean | string>(false)
 
   const handleFilter = (attr: keyof Word, filtered: string[]) => {
@@ -134,22 +131,23 @@ const Settings = ({
     validateForm()
   }, [validateForm])
 
+  // reset to active filters when settings becomes inactive
   useEffect(() => {
-    setFilters(getFilterFromWords(words))
-  }, [words, isActive])
+    if (!isActive) setFilters(activeFilters)
+  }, [isActive, activeFilters])
 
   return (
     <>
       <div className="space-y-2">
         <FilterList
           name="Lessons"
-          options={options.lesson.map(n => n.toString())}
+          options={allWordsFilter.lesson.map(n => n.toString())}
           include={filters.lesson.map(n => n.toString())}
           onFilter={filtered => handleFilter('lesson', filtered)}
         />
         <FilterList
           name="Types"
-          options={options.type}
+          options={allWordsFilter.type}
           include={filters.type}
           onFilter={filtered => handleFilter('type', filtered)}
         />

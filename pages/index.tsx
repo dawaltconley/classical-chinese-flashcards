@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 import wordlist from '../data/wordlist'
 import { Word, WordFilter } from '../types/words'
-import { filterWords } from '../utils/words'
+import { filterWords, allWordsFilter } from '../utils/words'
 import { Card } from '../components/card'
 import { Button, ThemeToggle } from '../components/button'
 import { ScoreDisplay } from '../components/score'
@@ -148,7 +148,7 @@ const Home: NextPage = () => {
       <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>
         <div className="mx-auto max-w-md px-4">
           <Settings
-            words={words}
+            activeFilters={filter || allWordsFilter}
             onFilter={handleFilter}
             handleReset={filter => resetFlashcards(filter)}
             isActive={drawerOpen}
