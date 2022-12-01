@@ -14,6 +14,9 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@400;700&display=swap"
           rel="stylesheet"
         />
+
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="application-name" content="Classical Chinese Flashcards" />
       </Head>
       <body>
         <Main />
