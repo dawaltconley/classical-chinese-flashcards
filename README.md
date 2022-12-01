@@ -6,8 +6,16 @@ Everyone](https://hackettpublishing.com/classical-chinese-for-everyone). I
 wrote it to help myself learn the material and I hope it will assist others in 
 doing the same.
 
-Lesson numbers in the app's settings correspond to the lessons of the book. I 
-am updating the vocab as I work through it.
+## Filtering
+
+You can filter vocabulary using the "Filters" drawer at the bottom of the 
+screen. Flashcards will be included if they match _any_ selected filter in 
+_all_ filter categories (lessons, types, etc.). Lesson numbers correspond to 
+the lessons of the book.
+
+"Apply Filters" will apply updated filters to the remaining words without 
+changing your progress. "Reset Cards" will clear your progress and apply 
+updated filters to a fresh set of characters.
 
 ## Contributing
 
