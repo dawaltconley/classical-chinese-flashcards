@@ -25,10 +25,10 @@ const WordDefinition = ({ definition: d }: { definition: Definition }) => (
     >
       {d.type}
     </abbr>
-    <span className="table-cell">
+    <div className="hyphens-auto table-cell">
       {' ' + d.definition}
       {d.pinyin && <span className="ml-2 font-bold">{d.pinyin}</span>}
-    </span>
+    </div>
   </li>
 )
 
