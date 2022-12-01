@@ -1,6 +1,6 @@
 import { Word } from '../types/words'
 
-const allLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
+const allLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] as const
 
 const allClasses = [
   'n.',
@@ -895,6 +895,11 @@ const wordlist: Word[] = [
         type: 'g.p.',
         definition: '(comes at the end of a sentence, makes it a question)',
       },
+      {
+        lesson: 13,
+        type: 'g.p.',
+        definition: '(sentence-final exclamatory)',
+      },
     ],
   },
   {
@@ -1356,6 +1361,13 @@ const wordlist: Word[] = [
     lesson: 9,
     type: 'g.p.',
     definition: '(contrastive topic marker)',
+    other: [
+      {
+        lesson: 13,
+        type: 'conj.',
+        definition: 'then',
+      },
+    ],
   },
   {
     hanzi: '罕',
@@ -1627,6 +1639,13 @@ const wordlist: Word[] = [
     lesson: 11,
     type: 'n.',
     definition: 'dream',
+    other: [
+      {
+        lesson: 13,
+        type: 't.v.',
+        definition: 'to dream',
+      },
+    ],
   },
   {
     hanzi: '胡為',
@@ -1856,6 +1875,114 @@ const wordlist: Word[] = [
     type: 'n.',
     definition: 'book, writings',
     other: [{ definition: 'the Documents' }],
+  },
+
+  // Lesson 13
+  {
+    hanzi: '昔者',
+    pinyin: 'xī zhě',
+    lesson: 13,
+    type: 'adv.',
+    definition: 'in the past, once upon a time',
+  },
+  {
+    hanzi: '周',
+    pinyin: 'zhōu',
+    lesson: 13,
+    type: 'other',
+    definition: '(personal name)',
+  },
+  {
+    hanzi: '胡蝶',
+    pinyin: 'húdíe',
+    lesson: 13,
+    type: 'n.',
+    definition: 'butterfly',
+  },
+  {
+    hanzi: '栩栩',
+    pinyin: 'xǔxǔ',
+    lesson: 13,
+    type: 's.v.',
+    definition: 'to be lively',
+  },
+  {
+    hanzi: '喻',
+    pinyin: 'yù',
+    lesson: 13,
+    type: 't.v.',
+    definition: 'to understand',
+  },
+  {
+    hanzi: '適',
+    pinyin: 'shì',
+    lesson: 13,
+    type: 't.v.',
+    definition: 'to satisfy',
+  },
+  {
+    hanzi: '志',
+    pinyin: 'zhì',
+    lesson: 13,
+    type: 'n.',
+    definition: 'intentions, goals',
+  },
+  {
+    hanzi: '俄',
+    pinyin: 'é',
+    lesson: 13,
+    type: 's.v.',
+    definition: 'to be sudden',
+  },
+  {
+    hanzi: '覺',
+    simplified: '觉',
+    pinyin: 'jué',
+    lesson: 13,
+    type: 's.v.',
+    definition: 'to be conscious',
+  },
+  {
+    hanzi: '蘧蘧',
+    pinyin: 'qúqú',
+    lesson: 13,
+    type: 's.v.',
+    definition: 'to be sudden',
+  },
+  {
+    hanzi: '必',
+    pinyin: 'bì',
+    lesson: 13,
+    type: 'adv.',
+    definition: 'must, necessarily',
+  },
+  {
+    hanzi: '分',
+    pinyin: 'fēn',
+    lesson: 13,
+    type: 'n.',
+    definition: 'distinction',
+  },
+  {
+    hanzi: '此',
+    pinyin: 'cǐ',
+    lesson: 13,
+    type: 'n.',
+    definition: 'this',
+  },
+  {
+    hanzi: '之謂',
+    pinyin: 'zhī wèi',
+    lesson: 13,
+    type: 'other',
+    definition: 'is what is called',
+  },
+  {
+    hanzi: '化',
+    pinyin: 'huà',
+    lesson: 13,
+    type: 'n.',
+    definition: 'transformation',
   },
 ]
 
