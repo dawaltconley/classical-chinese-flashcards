@@ -12,6 +12,7 @@ export default function Document() {
         />
 
         <link rel="manifest" href="/manifest.json" />
+        <meta name="application-name" content="Classical Chinese Flashcards" />
       </Head>
       <body>
         <Main />
