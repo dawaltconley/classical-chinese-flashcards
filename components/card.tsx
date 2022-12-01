@@ -7,7 +7,10 @@ import { filterMatch, expandWordClass } from '../utils/words'
 import { Button } from './button'
 
 const WordHanzi = ({ word }: { word: Word }) => (
-  <div className="hanzi overflow-hidden whitespace-nowrap font-serif">
+  <div
+    lang="zh-Hant"
+    className="hanzi overflow-hidden whitespace-nowrap font-serif"
+  >
     {word.hanzi}
   </div>
 )
