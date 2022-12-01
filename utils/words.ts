@@ -26,25 +26,6 @@ const allWordsFilter: WordFilter = {
   type: Array.from(allClasses),
 }
 
-function getOptionsFromAttr<Attribute extends keyof Word>(
-  items: Word[],
-  attr: Attribute
-): Word[Attribute][] {
-  let options: Word[Attribute][] = []
-  for (let item of items) {
-    let value = item[attr]
-    if (value && !options.some(opt => opt == value)) {
-      options.push(value)
-    }
-  }
-  return options
-}
-
-const getFilterFromWords = (words: Word[]): WordFilter => ({
-  lesson: getOptionsFromAttr(words, 'lesson'),
-  type: getOptionsFromAttr(words, 'type'),
-})
-
 /** determines whether a filter matches a specific word */
 function filterMatch(w: Word, f: WordFilter): boolean
 function filterMatch(w: WordVariant, f: VariantFilter): boolean
@@ -76,10 +57,4 @@ function filterMatch(
 const filterWords = (words: Word[], filters: WordFilter): Word[] =>
   words.filter(word => filterMatch(word, filters))
 
-export {
-  expandWordClass,
-  allWordsFilter,
-  getFilterFromWords,
-  filterMatch,
-  filterWords,
-}
+export { expandWordClass, allWordsFilter, filterMatch, filterWords }
