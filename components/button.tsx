@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSunBright, faMoon } from '@fortawesome/pro-light-svg-icons'
 import { useState, useEffect, useRef } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import themes, { Theme, themeClasses, getOtherTheme } from '../data/themes'
+import Head from 'next/head'
+import dynamic from 'next/dynamic'
 
 type ButtonStyle = 'default' | 'green' | 'red'
 type Button = (props: {
@@ -93,45 +96,58 @@ const Toggle = ({
   )
 }
 
-type Theme = 'light' | 'dark'
-const themeClasses: Record<Theme, string> = {
-  light: 'theme-light',
-  dark: 'theme-dark',
-}
-
-const getOtherTheme = (theme: Theme) => (theme === 'light' ? 'dark' : 'light')
-
-const ThemeToggle = () => {
-  const [theme, setTheme] = useState<Theme>('light')
-  const [isOverride, setIsOverride] = useState(false)
-
+const useTheme = () => {
+  const [manual, setManual] = useState<Theme>()
   const prefersDark = useMediaQuery({ query: '(prefers-color-scheme : dark)' })
 
-  useEffect(() => {
-    if (isOverride) {
-      document.body.classList.remove(themeClasses[getOtherTheme(theme)])
-      document.body.classList.add(themeClasses[theme])
-    }
-  }, [theme, isOverride])
+  const theme: Theme = manual || (prefersDark ? 'dark' : 'light')
 
   useEffect(() => {
-    const pref = prefersDark ? 'dark' : 'light'
-    if (!isOverride) setTheme(pref)
-  }, [prefersDark, isOverride])
+    if (manual) {
+      document.body.classList.remove(themeClasses[getOtherTheme(manual)])
+      document.body.classList.add(themeClasses[manual])
+    }
+  }, [manual])
+
+  return [theme, setManual] as const
+}
+
+// disable ssr to avoid mismatch when user prefers dark theme
+const ThemeIcon = dynamic(
+  async () =>
+    function ThemeIcon({ theme }: { theme: Theme }) {
+      return (
+        <FontAwesomeIcon
+          className="aspect-square h-full w-full"
+          icon={theme === 'dark' ? faMoon : faSunBright}
+        />
+      )
+    },
+  { ssr: false }
+)
+
+const ThemeToggle = ({
+  handleToggle,
+}: {
+  handleToggle?: (newTheme: Theme) => void
+}) => {
+  const [theme, setTheme] = useTheme()
 
   const toggle = () => {
     const newTheme = getOtherTheme(theme)
     setTheme(newTheme)
-    setIsOverride(true)
+    if (handleToggle) handleToggle(newTheme)
   }
 
   return (
-    <button className="aspect-square h-full" onClick={toggle}>
-      <FontAwesomeIcon
-        className="aspect-square h-full w-full"
-        icon={theme === 'dark' ? faMoon : faSunBright}
-      />
-    </button>
+    <>
+      <Head>
+        <meta name="theme-color" content={themes[theme].bg} />
+      </Head>
+      <button className="aspect-square h-full" onClick={toggle}>
+        <ThemeIcon theme={theme} />
+      </button>
+    </>
   )
 }
 
