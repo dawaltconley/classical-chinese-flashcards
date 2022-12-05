@@ -3,7 +3,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import wordlist from '../data/wordlist'
+import themes from '../data/themes'
 import { Word, WordFilter } from '../types/words'
+import { Theme } from '../types/themes'
 import { filterWords, allWordsFilter } from '../utils/words'
 import { Card } from '../components/card'
 import { Button, ThemeToggle } from '../components/button'
@@ -43,6 +45,7 @@ const Home: NextPage = () => {
   const [completed, setCompleted] = useState<Word[]>([])
   const [missed, setMissed] = useState(0)
   const [filter, setFilter] = useState<WordFilter | null>(null)
+  const [themeColor, setThemeColor] = useState<string | null>(null)
   const currentWord = words[0]
 
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -120,6 +123,7 @@ const Home: NextPage = () => {
           content='Flashcards for vocab in Van Norden&apos;s "Classical Chinese for Everyone"'
         />
         <link rel="icon" href="/favicon.ico" />
+        {themeColor && <meta name="theme-color" content={themeColor} />}
       </Head>
 
       <header className="items center mb-8 flex h-16 w-full justify-between p-4">
@@ -130,7 +134,9 @@ const Home: NextPage = () => {
             remaining={words.length}
           />
         </div>
-        <ThemeToggle />
+        <ThemeToggle
+          handleToggle={newTheme => setThemeColor(themes[newTheme].bg)}
+        />
       </header>
 
       <main className="my-auto">

@@ -1,11 +1,11 @@
-@use 'tailwind' as tw;
-@use 'sass-themes' as theme;
+@use 'sass:map';
+@use 'sass-themes';
 
-$dark: tw.color(gray, 900);
+$theme-colors: require('./styles/themes.js', $parseUnquotedStrings: true);
 
 @layer utilities {
   .theme-light {
-    @include theme.create($bg: white, $tx: $dark, $br: tw.color(blue, 600));
+    @include sass-themes.create(map.get($theme-colors, 'light'));
 
     --theme-green: theme('colors.green.800');
     --theme-red: theme('colors.red.800');
@@ -19,7 +19,7 @@ $dark: tw.color(gray, 900);
   }
 
   .theme-dark {
-    @include theme.create($bg: $dark, $tx: white, $br: tw.color(blue, 700));
+    @include sass-themes.create(map.get($theme-colors, 'dark'));
 
     --theme-green: theme('colors.green.400');
     --theme-red: theme('colors.red.400');

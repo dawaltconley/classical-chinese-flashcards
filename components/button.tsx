@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSunBright, faMoon } from '@fortawesome/pro-light-svg-icons'
 import { useState, useEffect, useRef } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import { Theme, themeClasses } from '../types/themes'
 
 type ButtonStyle = 'default' | 'green' | 'red'
 type Button = (props: {
@@ -93,15 +94,13 @@ const Toggle = ({
   )
 }
 
-type Theme = 'light' | 'dark'
-const themeClasses: Record<Theme, string> = {
-  light: 'theme-light',
-  dark: 'theme-dark',
-}
-
 const getOtherTheme = (theme: Theme) => (theme === 'light' ? 'dark' : 'light')
 
-const ThemeToggle = () => {
+const ThemeToggle = ({
+  handleToggle,
+}: {
+  handleToggle?: (newTheme: Theme) => void
+}) => {
   const [theme, setTheme] = useState<Theme>('light')
   const [isOverride, setIsOverride] = useState(false)
 
@@ -123,6 +122,7 @@ const ThemeToggle = () => {
     const newTheme = getOtherTheme(theme)
     setTheme(newTheme)
     setIsOverride(true)
+    if (handleToggle) handleToggle(newTheme)
   }
 
   return (
