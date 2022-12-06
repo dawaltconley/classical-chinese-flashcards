@@ -1517,7 +1517,7 @@ const wordlist: Word[] = [
   // Lesson 11
   {
     hanzi: '床',
-    pinyin: 'chuāng',
+    pinyin: 'chuáng',
     lesson: 11,
     type: 'n.',
     definition: 'bed',
