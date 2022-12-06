@@ -169,7 +169,7 @@ const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
     <div className="context-3d">
       <button
         className={`flippable ${isFlipped ? 'flippable--flipped' : ''}
-          flex-center relative mx-auto`}
+          flex-center tap-highlight-none relative mx-auto`}
         style={{
           transitionDuration: flipDur.toString() + 'ms',
         }}

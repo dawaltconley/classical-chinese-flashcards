@@ -28,4 +28,7 @@
   .hyphens-auto {
     hyphens: auto;
   }
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
