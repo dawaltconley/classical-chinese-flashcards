@@ -560,7 +560,7 @@ const wordlist: Word[] = [
     hanzi: '得而',
     pinyin: 'dé ér',
     lesson: 5,
-    type: 's.v.',
+    type: 'other',
     definition: 'to succeed in V-ing',
   },
   {
