@@ -2212,6 +2212,16 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
+pinyin-split@^1.170.0:
+  version "1.170.0"
+  resolved "https://registry.yarnpkg.com/pinyin-split/-/pinyin-split-1.170.0.tgz#f4fc245a381fd696d0f65e974f1d81b739c85625"
+  integrity sha512-7hlVgPSxAg2qDrStiOJy0kSWT1/uxo5jw0FPdqr/yIS1ugR3YXawRR6LWrkBOQCe+FSci1mr4Z1MOiCEG3gi4Q==
+
+pinyin-utils@^2.32.0:
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/pinyin-utils/-/pinyin-utils-2.32.0.tgz#fb869b5b967a514a75b37dc8d0ea287d2e259786"
+  integrity sha512-jgPlD0lhF9GCxhFkUD+KZ0NEHw3QCIGX1n11DPmPvvgqvrX3YUdlp2p7bdrbejnjmzNK+BJaDwG9uyApw3xL8Q==
+
 pirates@^4.0.1:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.6.tgz#3018ae32ecfcff6c29ba2267cbf21166ac1f36b9"

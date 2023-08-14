@@ -1,4 +1,6 @@
 import type { Word } from '../../types/words'
+import { markToNumber } from 'pinyin-utils'
+import pinyinSplit from 'pinyin-split'
 import wordlist from '../../data/wordlist'
 import { getDefinitions } from '../../utils/words'
 
@@ -31,9 +33,14 @@ const getDefinition = (word: Word): string =>
     )
     .join('\ueab1') // pleco newline char
 
+const getNumberedPinyin = ({ pinyin }: Word): string =>
+  pinyinSplit(pinyin)
+    .map(p => markToNumber(p))
+    .join('')
+
 const toFlashcard = (word: Word): Flashcard => ({
   hanzi: word.hanzi,
-  pinyin: word.pinyin,
+  pinyin: getNumberedPinyin(word),
   definition: getDefinition(word),
 })
 
