@@ -19,17 +19,29 @@ const wcDict: Record<WordClass, string> = {
   other: 'other',
 } as const
 
-const expandWordClass = (wc: WordClass): string => wcDict[wc]
+export const expandWordClass = (wc: WordClass): string => wcDict[wc]
 
-const allWordsFilter: WordFilter = {
+export const allWordsFilter: WordFilter = {
   lesson: Array.from(allLessons),
   type: Array.from(allClasses),
 }
 
+export const completeVariant = (
+  word: Word,
+  variant?: WordVariant
+): Omit<Word, 'other'> => {
+  let definition = { ...word, ...variant }
+  delete definition.other
+  return definition
+}
+
+export const getDefinitions = (word: Word): Word[] =>
+  [word, ...(word.other ?? [])].map(v => completeVariant(word, v))
+
 /** determines whether a filter matches a specific word */
-function filterMatch(w: Word, f: WordFilter): boolean
-function filterMatch(w: WordVariant, f: VariantFilter): boolean
-function filterMatch(
+export function filterMatch(w: Word, f: WordFilter): boolean
+export function filterMatch(w: WordVariant, f: VariantFilter): boolean
+export function filterMatch(
   word: Word | WordVariant,
   filters: WordFilter | VariantFilter
 ): boolean {
@@ -43,18 +55,14 @@ function filterMatch(
   if ('other' in word) {
     // check if ALL filters match ANY word variant
     variantMatch =
-      word.other?.some(variant => {
-        let completeVariant = { ...word, ...variant }
-        delete completeVariant.other
-        return filterMatch(completeVariant, filters)
-      }) ?? false
+      word.other?.some(variant =>
+        filterMatch(completeVariant(word, variant), filters)
+      ) ?? false
   }
 
   // false if no complete match in word or variants
   return wordMatch || variantMatch
 }
 
-const filterWords = (words: Word[], filters: WordFilter): Word[] =>
+export const filterWords = (words: Word[], filters: WordFilter): Word[] =>
   words.filter(word => filterMatch(word, filters))
-
-export { expandWordClass, allWordsFilter, filterMatch, filterWords }
