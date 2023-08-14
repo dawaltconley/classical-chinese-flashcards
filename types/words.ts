@@ -1,7 +1,7 @@
 import { allLessons, allClasses } from '../data/wordlist'
 
-type LessonNumber = typeof allLessons[number]
-type WordClass = typeof allClasses[number]
+type LessonNumber = (typeof allLessons)[number]
+type WordClass = (typeof allClasses)[number]
 
 type Word = {
   hanzi: string
@@ -11,10 +11,11 @@ type Word = {
   definition: string
   other?: WordVariant[]
   simplified?: string
+  bonus?: boolean
 }
 
 type WordVariant = Pick<Word, 'definition'> &
-  Partial<Pick<Word, 'pinyin' | 'type' | 'lesson'>>
+  Partial<Pick<Word, 'pinyin' | 'type' | 'lesson' | 'bonus'>>
 
 type WordFilter = Pick<
   {
