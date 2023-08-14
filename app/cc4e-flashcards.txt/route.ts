@@ -17,7 +17,7 @@ interface Category {
 const getCategories = (word: Word): Category[] =>
   getDefinitions(word)
     .map<Category>(({ lesson }) => ({
-      name: `Classical Chinese For Everyone/Lesson ${lesson}`,
+      name: `// Classical Chinese For Everyone/Lesson ${lesson}`,
       order: lesson,
       cards: [],
     }))
