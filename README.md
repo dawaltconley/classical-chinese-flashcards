@@ -17,6 +17,13 @@ the lessons of the book.
 changing your progress. "Reset Cards" will clear your progress and apply 
 updated filters to a fresh set of characters.
 
+## Using with Pleco
+
+If you prefer to use [Pleco](https://www.pleco.com/) as your flashcard app, you 
+can download a compatible flashcard text file from 
+[/cc4e-flashcards.txt](https://classical-chinese-flashcards.netlify.app/cc4e-flashcards.txt)
+and import it with the Pleco app. 
+
 ## Contributing
 
 If you are just interested in updating the vocab, all of that is located in 
