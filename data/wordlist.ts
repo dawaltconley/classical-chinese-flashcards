@@ -1338,6 +1338,23 @@ const wordlist: Word[] = [
   },
   {
     bonus: true,
+    hanzi: '弗',
+    pinyin: 'fú',
+    lesson: 8,
+    type: 'adv.',
+    definition:
+      'does not…it (like 不 but often with an implied verb object or perfective aspect)',
+  },
+  {
+    bonus: true,
+    hanzi: '毋',
+    pinyin: 'wú',
+    lesson: 8,
+    type: 'adv.',
+    definition: 'do not (like 勿 but without an implied verb object)',
+  },
+  {
+    bonus: true,
     hanzi: '反切',
     pinyin: 'fǎnqiè',
     lesson: 8,
@@ -1534,6 +1551,65 @@ const wordlist: Word[] = [
     lesson: 9,
     type: 'adv.',
     definition: 'seldom',
+  },
+  {
+    bonus: true,
+    hanzi: '朱熹',
+    pinyin: 'zhūxī',
+    lesson: 9,
+    type: 'other',
+    definition: '(name)',
+  },
+  {
+    bonus: true,
+    hanzi: '朱熹',
+    pinyin: 'zhūxī',
+    lesson: 9,
+    type: 'other',
+    definition: '(name)',
+  },
+  {
+    bonus: true,
+    hanzi: '氣',
+    pinyin: 'qì',
+    lesson: 9,
+    type: 'n.',
+    definition:
+      'ether, material force, psychophysical stuff (metaphysical complement to 理)',
+  },
+  {
+    bonus: true,
+    hanzi: '孟子',
+    pinyin: 'mèngzǐ',
+    lesson: 9,
+    type: 'other',
+    definition: '(name)',
+  },
+  {
+    bonus: true,
+    hanzi: '易經',
+    pinyin: 'yìjīng',
+    lesson: 9,
+    type: 'other',
+    definition: 'the Classic of Changes (I Ching)',
+  },
+  {
+    bonus: true,
+    hanzi: '陰',
+    pinyin: 'yīn',
+    lesson: 9,
+    type: 'n.',
+    definition:
+      '(one half of yin-yang metaphysics, manifested in things that are dark, passive, falling, moist, feminine, etc.)',
+  },
+  {
+    bonus: true,
+    hanzi: '陽',
+    pinyin: 'yáng',
+    lesson: 9,
+    type: 'n.',
+    definition:
+      '(one half of yin-yang metaphysics, manifested in things that are light, active, rising, dry, masculine, etc.)',
   },
 
   // Lesson 10
@@ -1878,6 +1954,15 @@ const wordlist: Word[] = [
     type: 'n.',
     definition: 'pillar',
   },
+  {
+    bonus: true,
+    hanzi: '李白',
+    pinyin: 'lǐbái',
+    lesson: 9,
+    type: 'other',
+    definition: '(name of a great poet)',
+  },
+  // much more to add here
 
   // Lesson 12
   {
