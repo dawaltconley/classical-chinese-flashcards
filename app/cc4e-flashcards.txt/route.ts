@@ -25,13 +25,22 @@ const getCategories = (word: Word): Category[] =>
     }))
     .filter((cat, i, arr) => arr.findIndex(c => c.name === cat.name) === i)
 
-const getDefinition = (word: Word): string =>
-  getDefinitions(word)
+const getDefinition = (word: Word): string => {
+  const defs = getDefinitions(word)
+  const lessons = defs
+    .map(d => d.lesson)
+    .filter((l, i, arr) => arr.indexOf(l) === i)
+
+  let text: string = defs
     .map(
       ({ type, definition, pinyin }) =>
-        `${type} ${definition}` + (pinyin !== word.pinyin ? ` (${pinyin})` : '')
+        `\ueab2${type}\ueab3 ${definition}` +
+        (pinyin !== word.pinyin ? ` (${pinyin})` : '')
     )
     .join('\ueab1') // pleco newline char
+  text += `\ueab1\ueab1\ueab2Lessons\ueab3 ${lessons.join(', ')}`
+  return text
+}
 
 const getNumberedPinyin = ({ pinyin }: Word): string =>
   pinyinSplit(pinyin)
