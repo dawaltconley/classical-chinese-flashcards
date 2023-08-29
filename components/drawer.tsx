@@ -99,7 +99,7 @@ const Drawer = ({
           ref={drawer}
           className="drawer"
           style={{
-            top: 'auto',
+            top: drawerBottom ? 'auto' : '100%',
             bottom: drawerBottom ? drawerBottom + 'px' : undefined,
             transitionDuration: isBeingDragged ? '0s' : drawerTransition,
             transitionProperty: 'transform',
