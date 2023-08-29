@@ -2,24 +2,26 @@ import { useState, useEffect, useCallback, useRef, CSSProperties } from 'react'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
 import { Toggle } from './button'
 
-interface DrawerProperties extends CSSProperties {
+interface DrawerCSSProperties extends CSSProperties {
   '--handle-height'?: string
   '--background-color'?: string
 }
 
-const drawerTransition = '500ms'
+interface DrawerProps {
+  title?: string
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  transitionDuration?: number
+  children?: React.ReactNode
+}
 
 const Drawer = ({
   title,
   isOpen,
   setIsOpen,
+  transitionDuration = 500,
   children,
-}: {
-  title?: string
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  children?: React.ReactNode
-}) => {
+}: DrawerProps) => {
   const drawer = useRef<HTMLDivElement>(null)
   const handle = useRef<HTMLDivElement>(null)
   const body = useRef<HTMLDivElement>(null)
@@ -29,6 +31,8 @@ const Drawer = ({
   const [boundsTop, setBoundsTop] = useState(0)
   const [drawerBottom, setDrawerBottom] = useState(0)
   const [isBeingDragged, setIsBeingDragged] = useState(false)
+
+  const drawerTransition = transitionDuration + 'ms'
 
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
@@ -68,9 +72,6 @@ const Drawer = ({
 
   useEffect(() => {
     updateDrawerBounds()
-  }, [updateDrawerBounds])
-
-  useEffect(() => {
     window.addEventListener('resize', updateDrawerBounds)
     return () => window.removeEventListener('resize', updateDrawerBounds)
   }, [updateDrawerBounds])
@@ -106,7 +107,7 @@ const Drawer = ({
             transitionTimingFunction: 'ease-out',
             ...({
               '--handle-height': handleHeight ? handleHeight + 'px' : null,
-            } as DrawerProperties),
+            } as DrawerCSSProperties),
           }}
         >
           <div ref={handle} className="drawer__handle">
