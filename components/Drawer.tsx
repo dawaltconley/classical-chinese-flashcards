@@ -115,8 +115,8 @@ const Drawer = ({
               <Toggle
                 name="test"
                 text={title}
+                state={isOpen}
                 onToggle={() => toggle()}
-                watchState={isOpen}
               />
             ) : null}
           </div>

@@ -68,16 +68,16 @@ const FilterList = ({
         <Toggle
           name={`${name} filter all`}
           text="Select all"
+          state={Object.values(filtered).every(Boolean)}
           onToggle={state => (state ? selectAll() : selectNone())}
-          watchState={Object.values(filtered).every(Boolean)}
         />
         {options.map(option => (
           <Toggle
             key={`${name} filter ${option}`}
             name={`${name} filter ${option}`}
             text={option}
+            state={filtered[option]}
             onToggle={state => handleToggle(option, state)}
-            watchState={filtered[option]}
           />
         ))}
       </div>
