@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, CSSProperties } from 'react'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
-import { Toggle } from './button'
+import Toggle from './Toggle'
 
 interface DrawerCSSProperties extends CSSProperties {
   '--handle-height'?: string

@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 
-interface ScoreDisplayProps {
+export interface ScoreDisplayProps {
   correct: number
   incorrect: number
   remaining: number
 }
+
 const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
   <>
     <span className="text-theme-green">
@@ -26,4 +27,4 @@ const ScoreDisplay = ({ correct, incorrect, remaining }: ScoreDisplayProps) => (
   </>
 )
 
-export { ScoreDisplay }
+export default ScoreDisplay

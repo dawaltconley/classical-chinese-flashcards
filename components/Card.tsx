@@ -4,7 +4,7 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 
 import type { Word, WordVariant, WordFilter } from '../types/words'
 import { filterMatch, expandWordClass } from '../utils/words'
-import { Button } from './button'
+import Button from './Button'
 
 const WordHanzi = ({ word }: { word: Word }) => (
   <div
@@ -25,7 +25,7 @@ const WordDefinition = ({ definition: d }: { definition: Definition }) => (
     >
       {d.type}
     </abbr>
-    <div className="hyphens-auto table-cell">
+    <div className="table-cell hyphens-auto">
       {' ' + d.definition}
       {d.pinyin && <span className="ml-2 font-bold">{d.pinyin}</span>}
     </div>
@@ -100,12 +100,13 @@ const WordInfo = ({ word, filters }: { word: Word; filters?: WordFilter }) => {
   )
 }
 
-interface CardProps {
+export interface CardProps {
   word: Word
   filters?: WordFilter
   markCorrect: () => void
   markIncorrect: () => void
 }
+
 const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
   const defaultDur = 500
 
@@ -212,5 +213,4 @@ const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
   )
 }
 
-export { Card }
-export type { CardProps }
+export default Card

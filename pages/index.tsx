@@ -5,11 +5,12 @@ import Head from 'next/head'
 import wordlist from '../data/wordlist'
 import { Word, WordFilter } from '../types/words'
 import { filterWords, allWordsFilter } from '../utils/words'
-import { Card } from '../components/card'
-import { Button, ThemeToggle } from '../components/button'
-import { ScoreDisplay } from '../components/score'
-import Drawer from '../components/drawer'
-import Settings from '../components/settings'
+import Card from '../components/Card'
+import Button from '../components/Button'
+import ThemeToggle from '../components/ThemeToggle'
+import ScoreDisplay from '../components/Score'
+import Drawer from '../components/Drawer'
+import Filters from '../components/Filters'
 
 interface SaveGame {
   words: Word[]
@@ -147,7 +148,7 @@ const Home: NextPage = () => {
 
       <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>
         <div className="mx-auto max-w-md px-4">
-          <Settings
+          <Filters
             activeFilters={filter || allWordsFilter}
             onFilter={handleFilter}
             handleReset={filter => resetFlashcards(filter)}

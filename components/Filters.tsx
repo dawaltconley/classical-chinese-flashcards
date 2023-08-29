@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Button, Toggle } from './button'
+import Button from './Button'
+import Toggle from './Toggle'
 import wordlist from '../data/wordlist'
 import { Word, WordFilter } from '../types/words'
 import { allWordsFilter, filterWords } from '../utils/words'
@@ -30,7 +31,7 @@ const FilterList = ({
 }: {
   name: string
   options: string[]
-  include?: typeof options[number][]
+  include?: (typeof options)[number][]
   onFilter: (options: string[]) => void
 }) => {
   const [filtered, setFiltered] = useState<FilterMap>(
@@ -84,19 +85,21 @@ const FilterList = ({
   )
 }
 
-const Settings = ({
-  wordData = wordlist,
-  activeFilters = allWordsFilter,
-  onFilter,
-  handleReset,
-  isActive,
-}: {
+export interface FiltersProps {
   wordData?: Word[]
   activeFilters?: WordFilter
   onFilter: (filter: WordFilter) => void
   handleReset: (filter: WordFilter) => void
   isActive: boolean
-}) => {
+}
+
+const Filters = ({
+  wordData = wordlist,
+  activeFilters = allWordsFilter,
+  onFilter,
+  handleReset,
+  isActive,
+}: FiltersProps) => {
   // filters describe currently selected words, whether or not applied
   const [filters, setFilters] = useState(activeFilters)
   const [error, setError] = useState<boolean | string>(false)
@@ -164,4 +167,4 @@ const Settings = ({
   )
 }
 
-export default Settings
+export default Filters
