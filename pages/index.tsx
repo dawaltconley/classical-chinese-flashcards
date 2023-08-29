@@ -16,7 +16,7 @@ interface SaveGame {
   words: Word[]
   completed: Word[]
   missed: number
-  filter: WordFilter | null
+  filter: WordFilter
 }
 
 let lastGame: string | null
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
   const [words, setWords] = useState(wordlist)
   const [completed, setCompleted] = useState<Word[]>([])
   const [missed, setMissed] = useState(0)
-  const [filter, setFilter] = useState<WordFilter | null>(null)
+  const [filter, setFilter] = useState<WordFilter>(allWordsFilter)
   const currentWord = words[0]
 
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -57,7 +57,7 @@ const Home: NextPage = () => {
     setWords(words => words.slice(1).concat(currentWord))
   }
 
-  const handleFilter = (filter: WordFilter) => {
+  const handleFilter = (filter: WordFilter, preserveFirst = true) => {
     // get words that match the current filter and have not already been completed
     let newWords = filterWords(wordlist, filter).filter(word =>
       completed.every(({ hanzi }) => hanzi !== word.hanzi)
@@ -65,10 +65,13 @@ const Home: NextPage = () => {
     newWords = shuffle(newWords)
 
     // if newWords contains currentWord, keep that at the the front
-    for (let i = 0; i < newWords.length; i++) {
-      if (newWords[i].hanzi === currentWord.hanzi) {
-        newWords[i] = newWords[0]
-        newWords[0] = currentWord
+    if (preserveFirst) {
+      for (let i = 0; i < newWords.length; i++) {
+        if (newWords[i].hanzi === currentWord.hanzi) {
+          newWords[i] = newWords[0]
+          newWords[0] = currentWord
+          break
+        }
       }
     }
 
@@ -78,13 +81,10 @@ const Home: NextPage = () => {
     setDrawerOpen(false)
   }
 
-  const resetFlashcards = (filter: WordFilter | null) => {
-    let newWords = shuffle(wordlist)
-    if (filter) newWords = filterWords(newWords, filter)
-    setWords(newWords)
+  const resetFlashcards = (filter: WordFilter = allWordsFilter) => {
+    handleFilter(filter, false)
     setCompleted([])
     setMissed(0)
-    setDrawerOpen(false)
   }
 
   useEffect(() => {
@@ -108,9 +108,9 @@ const Home: NextPage = () => {
       setCompleted(save.completed)
       setMissed(save.missed)
     } else {
-      resetFlashcards(null)
+      resetFlashcards()
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container>
@@ -149,9 +149,9 @@ const Home: NextPage = () => {
       <Drawer title="Filters" isOpen={drawerOpen} setIsOpen={setDrawerOpen}>
         <div className="mx-auto max-w-md px-4">
           <Filters
-            activeFilters={filter || allWordsFilter}
+            activeFilters={filter}
             handleFilter={handleFilter}
-            handleReset={filter => resetFlashcards(filter)}
+            handleReset={resetFlashcards}
             isActive={drawerOpen}
           />
         </div>
