@@ -23,17 +23,19 @@ const itemsFromMap = (map: FilterMap): string[] =>
     .filter(([, state]) => state)
     .map(([item]) => item)
 
+interface FilterListProps {
+  name: string
+  options: string[]
+  include?: string[]
+  handleFilter: (options: string[]) => void
+}
+
 const FilterList = ({
   name,
   options,
   include,
-  onFilter,
-}: {
-  name: string
-  options: string[]
-  include?: (typeof options)[number][]
-  onFilter: (options: string[]) => void
-}) => {
+  handleFilter,
+}: FilterListProps) => {
   const [filtered, setFiltered] = useState<FilterMap>(
     mapFromItems(options, include)
   )
@@ -44,17 +46,17 @@ const FilterList = ({
       [item]: state,
     }
     setFiltered(newFilters)
-    onFilter(itemsFromMap(newFilters))
+    handleFilter(itemsFromMap(newFilters))
   }
 
   const selectAll = () => {
     setFiltered(mapFromItems(options))
-    onFilter(options)
+    handleFilter(options)
   }
 
   const selectNone = () => {
     setFiltered(mapFromItems(options, []))
-    onFilter([])
+    handleFilter([])
   }
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const FilterList = ({
 export interface FiltersProps {
   wordData?: Word[]
   activeFilters?: WordFilter
-  onFilter: (filter: WordFilter) => void
+  handleFilter: (filter: WordFilter) => void
   handleReset: (filter: WordFilter) => void
   isActive: boolean
 }
@@ -96,7 +98,7 @@ export interface FiltersProps {
 const Filters = ({
   wordData = wordlist,
   activeFilters = allWordsFilter,
-  onFilter,
+  handleFilter,
   handleReset,
   isActive,
 }: FiltersProps) => {
@@ -104,7 +106,7 @@ const Filters = ({
   const [filters, setFilters] = useState(activeFilters)
   const [error, setError] = useState<boolean | string>(false)
 
-  const handleFilter = (attr: keyof Word, filtered: string[]) => {
+  const handleFilterList = (attr: keyof Word, filtered: string[]) => {
     setFilters(filters => ({
       ...filters,
       [attr]: filtered,
@@ -128,7 +130,7 @@ const Filters = ({
 
   const resetCards = () => validateForm(filterError) && handleReset(filters)
 
-  const saveFilters = () => validateForm(filterError) && onFilter(filters)
+  const saveFilters = () => validateForm(filterError) && handleFilter(filters)
 
   useEffect(() => {
     validateForm()
@@ -146,13 +148,13 @@ const Filters = ({
           name="Lessons"
           options={allWordsFilter.lesson.map(n => n.toString())}
           include={filters.lesson.map(n => n.toString())}
-          onFilter={filtered => handleFilter('lesson', filtered)}
+          handleFilter={filtered => handleFilterList('lesson', filtered)}
         />
         <FilterList
           name="Types"
           options={allWordsFilter.type}
           include={filters.type}
-          onFilter={filtered => handleFilter('type', filtered)}
+          handleFilter={filtered => handleFilterList('type', filtered)}
         />
       </div>
       <div className="mt-12 space-x-4 space-y-2 text-center">

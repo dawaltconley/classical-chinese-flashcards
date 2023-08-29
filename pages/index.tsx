@@ -150,7 +150,7 @@ const Home: NextPage = () => {
         <div className="mx-auto max-w-md px-4">
           <Filters
             activeFilters={filter || allWordsFilter}
-            onFilter={handleFilter}
+            handleFilter={handleFilter}
             handleReset={filter => resetFlashcards(filter)}
             isActive={drawerOpen}
           />
