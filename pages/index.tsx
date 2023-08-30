@@ -16,7 +16,7 @@ interface SaveGame {
   words: Word[]
   completed: Word[]
   missed: number
-  filter: WordFilter
+  filter?: WordFilter
 }
 
 let lastGame: string | null
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
         ? filterWords(save.words, save.filter)
         : save.words
       setWords(words)
-      setFilter(save.filter)
+      setFilter(save.filter || allWordsFilter)
       setCompleted(save.completed)
       setMissed(save.missed)
     } else {
