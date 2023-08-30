@@ -1,10 +1,10 @@
-/** @type {import('next').NextConfig} */
-
-const withPWA = require('next-pwa')({
+// @ts-check
+const withPWA = require('@ducanh2912/next-pwa').default({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
 })
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export', // static exports
   reactStrictMode: true,
