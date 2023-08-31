@@ -120,7 +120,8 @@ const Home: NextPage = () => {
           name="description"
           content='Flashcards for vocab in Van Norden&apos;s "Classical Chinese for Everyone"'
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" key="icon" />
+        <link rel="canonical" href="https://cc4e.dylan.ac" key="canonical" />
       </Head>
 
       <header className="items center mb-8 flex h-16 w-full justify-between p-4">
