@@ -38,6 +38,31 @@ export const completeVariant = (
 export const getDefinitions = (word: Word): Word[] =>
   [word, ...(word.other ?? [])].map(v => completeVariant(word, v))
 
+export const isWord = (word: object): word is Word => {
+  try {
+    return getDefinitions(word as Word).every(
+      w =>
+        typeof w.hanzi === 'string' &&
+        typeof w.pinyin === 'string' &&
+        typeof w.definition === 'string' &&
+        (w.simplified === undefined || typeof w.simplified === 'string') &&
+        typeof w.type === 'string' &&
+        w.type in wcDict &&
+        allLessons.includes(w.lesson)
+    )
+  } catch (e) {
+    return false
+  }
+}
+
+export const isWordFilter = (filter: object): filter is WordFilter =>
+  'lesson' in filter &&
+  Array.isArray(filter.lesson) &&
+  filter.lesson.every(f => allLessons.some(l => l === f)) &&
+  'type' in filter &&
+  Array.isArray(filter.type) &&
+  filter.type.every(f => f in wcDict)
+
 /** determines whether a filter matches a specific word */
 export function filterMatch(w: Word, f: WordFilter): boolean
 export function filterMatch(w: WordVariant, f: VariantFilter): boolean

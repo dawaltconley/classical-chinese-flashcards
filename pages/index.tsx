@@ -4,7 +4,12 @@ import Head from 'next/head'
 
 import wordlist from '../data/wordlist'
 import { Word, WordFilter } from '../types/words'
-import { filterWords, allWordsFilter } from '../utils/words'
+import {
+  filterWords,
+  allWordsFilter,
+  isWord,
+  isWordFilter,
+} from '../utils/words'
 import Card from '../components/Card'
 import Button from '../components/Button'
 import ThemeToggle from '../components/ThemeToggle'
@@ -18,6 +23,19 @@ interface SaveGame {
   missed: number
   filter?: WordFilter
 }
+
+const isSaveGame = (save: object): save is SaveGame =>
+  'words' in save &&
+  Array.isArray(save.words) &&
+  save.words.every(isWord) &&
+  'completed' in save &&
+  Array.isArray(save.completed) &&
+  save.completed.every(isWord) &&
+  'missed' in save &&
+  typeof save.missed === 'number' &&
+  'filter' in save &&
+  !!save.filter &&
+  isWordFilter(save.filter)
 
 let lastGame: string | null
 if (typeof window !== 'undefined')
@@ -94,12 +112,14 @@ const Home: NextPage = () => {
       missed,
       filter,
     }
+    console.log('saving', isSaveGame(save))
     window.localStorage.setItem('flashcards', JSON.stringify(save))
   }, [words, completed, missed, filter])
 
   useEffect(() => {
     const save: SaveGame | null = lastGame && JSON.parse(lastGame)
     if (save) {
+      console.log('loading', isSaveGame(save))
       const words = save.filter
         ? filterWords(save.words, save.filter)
         : save.words
