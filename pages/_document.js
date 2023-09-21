@@ -17,6 +17,11 @@ export default function Document() {
 
         <link rel="manifest" href="/manifest.json" />
         <meta name="application-name" content="Classical Chinese Flashcards" />
+        <script
+          defer
+          data-domain="cc4e.dylan.ac"
+          src="https://plausible.io/js/script.js"
+        ></script>
       </Head>
       <body>
         <Main />
