@@ -11,7 +11,7 @@
     transform-style: var(--transform-style, initial);
   }
 
-  & > *:last-child {
+  & > *:nth-child(2) {
     transform: translateZ(0) rotateY(180deg);
     // z-index: 10;
   }

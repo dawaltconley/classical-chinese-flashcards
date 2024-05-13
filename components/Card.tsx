@@ -134,27 +134,18 @@ const Card = ({
 
   const front = useRef<HTMLHeadingElement>(null)
 
-  const [width, setWidth] = useState(0)
-  const [height, setHeight] = useState(0)
-
-  useEffect(() => {
-    if (front.current) {
-      setWidth(front.current.scrollWidth)
-      setHeight(front.current.scrollHeight)
-    }
-  }, [])
-
   return (
     <div className="context-3d">
       <FlipTransition
         duration={flipDur}
         className="tap-highlight-none mx-auto"
-        // width={width}
-        // height={height}
         onClick={() => flip()}
       >
         {!isFlipped ? (
-          <h1 ref={front} className="card p-4">
+          <h1
+            ref={front}
+            className="card peer p-4 peer-first:absolute peer-first:inset-0"
+          >
             <WordHanzi word={word} />
           </h1>
         ) : (
