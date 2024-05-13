@@ -53,8 +53,8 @@ export default function FlipTransition({
         }}
         {...props}
       >
-        {current}
-        {last}
+        <div className="absolute inset-0 overflow-clip">{current}</div>
+        <div className="absolute inset-0 overflow-clip">{last}</div>
       </div>
     </CSSTransition>
   )

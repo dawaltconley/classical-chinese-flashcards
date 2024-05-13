@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, forwardRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
 import FlipTransition from './FlipTransition'
@@ -7,14 +7,20 @@ import type { Word, WordVariant, WordFilter } from '../types/words'
 import { filterMatch, expandWordClass } from '../utils/words'
 import Button from './Button'
 
-const WordHanzi = ({ word }: { word: Word }) => (
-  <div
-    lang="zh-Hant"
-    className="hanzi overflow-hidden whitespace-nowrap font-serif"
-  >
-    {word.hanzi}
-  </div>
-)
+const WordHanzi = forwardRef<HTMLDivElement, { word: Word }>(function WordHanzi(
+  { word },
+  ref
+) {
+  return (
+    <div
+      ref={ref}
+      lang="zh-Hant"
+      className="hanzi card overflow-hidden whitespace-nowrap p-4 font-serif"
+    >
+      {word.hanzi}
+    </div>
+  )
+})
 
 type Definition = WordVariant & Required<Pick<WordVariant, 'type' | 'lesson'>>
 
@@ -77,7 +83,7 @@ const WordInfo = ({ word, filters }: { word: Word; filters?: WordFilter }) => {
   }, [])
 
   return (
-    <div className="flex h-full w-full overflow-y-auto">
+    <div className="card flex h-full w-full overflow-y-auto p-4">
       <div className="m-auto table text-left font-serif">
         <dfn
           title={word.hanzi}
@@ -144,12 +150,12 @@ const Card = ({
         {!isFlipped ? (
           <h1
             ref={front}
-            className="card peer p-4 peer-first:absolute peer-first:inset-0"
+            className="peer peer-first:absolute peer-first:inset-0"
           >
             <WordHanzi word={word} />
           </h1>
         ) : (
-          <div className="card absolute inset-0 p-4">
+          <div className="absolute inset-0">
             <WordInfo word={word} filters={filters} />
           </div>
         )}
