@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-light-svg-icons'
+import FlipTransition from './FlipTransition'
 
 import type { Word, WordVariant, WordFilter } from '../types/words'
 import { filterMatch, expandWordClass } from '../utils/words'
@@ -105,82 +106,68 @@ export interface CardProps {
   filters?: WordFilter
   markCorrect: () => void
   markIncorrect: () => void
+  flipDur?: number
 }
 
-const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
-  const defaultDur = 500
-
+const Card = ({
+  word,
+  filters,
+  markCorrect,
+  markIncorrect,
+  flipDur = 500,
+}: CardProps) => {
   const [isFlipped, setIsFlipped] = useState(false)
   const [hasFlipped, setHasFlipped] = useState(false)
-  const [isFlipping, setIsFlipping] = useState(false)
-  const [flipDur, setFlipDur] = useState(defaultDur)
-
-  const [frontContent, setFrontContent] = useState(<WordHanzi word={word} />)
-  const [backContent, setBackContent] = useState(
-    <WordInfo word={word} filters={filters} />
-  )
 
   const answerButtons = useRef<HTMLDivElement>(null)
 
   const flip = () => {
-    if (isFlipping) return
+    setHasFlipped(true)
     setIsFlipped(show => !show)
-    if (flipDur > 0) {
-      setIsFlipping(true)
-      setTimeout(() => {
-        setIsFlipping(false)
-      }, flipDur)
-    }
   }
 
   /**
    * handles the answer
    */
   const handleAnswer = (answer: () => void) => {
-    if (isFlipping) return
-    if (!isFlipped) {
-      // if card is front-side up, secretly flip it first
-      setBackContent(frontContent)
-      setFlipDur(0)
-      setIsFlipped(true)
-    }
-
-    // handle the answer and get a new word
+    setIsFlipped(false)
+    setHasFlipped(false)
     answer()
   }
 
-  useEffect(() => {
-    if (isFlipped) setHasFlipped(true)
-  }, [isFlipped])
+  const front = useRef<HTMLHeadingElement>(null)
 
-  /** reset the card to its initial state whenever it recieves a new word */
-  useEffect(() => {
-    setFrontContent(<WordHanzi word={word} />)
-    setIsFlipped(false)
-    setHasFlipped(false)
-    setFlipDur(defaultDur)
-    setIsFlipping(true)
-    setTimeout(() => {
-      setBackContent(<WordInfo word={word} filters={filters} />)
-      setIsFlipping(false)
-    }, defaultDur)
-  }, [word])
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
+
+  // useEffect(() => {
+  //   if (front.current) {
+  //     setWidth(front.current.scrollWidth)
+  //     setHeight(front.current.scrollHeight)
+  //   }
+  // }, [word])
 
   return (
-    <div className="context-3d">
-      <button
-        className={`flippable ${isFlipped ? 'flippable--flipped' : ''}
-          flex-center tap-highlight-none relative mx-auto`}
-        style={{
-          transitionDuration: flipDur.toString() + 'ms',
-        }}
+    <>
+      <FlipTransition
+        as="button"
+        duration={flipDur}
+        unmount={false}
+        className="flex-center tap-highlight-none relative mx-auto h-40"
+        width={width}
+        height={height}
         onClick={() => flip()}
       >
-        <h1 className="flippable__front card p-4">{frontContent}</h1>
-        <div className="flippable__back card absolute inset-0 p-4">
-          {backContent}
-        </div>
-      </button>
+        {!isFlipped ? (
+          <h1 key={word.hanzi} ref={front} className="card h-full p-4">
+            <WordHanzi word={word} />
+          </h1>
+        ) : (
+          <div key={word.hanzi} className="card absolute inset-0 h-full p-4">
+            <WordInfo word={word} filters={filters} />
+          </div>
+        )}
+      </FlipTransition>
       <div
         ref={answerButtons}
         className="mx-auto mt-4 w-1/2 min-w-[6rem] overflow-hidden"
@@ -209,7 +196,7 @@ const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

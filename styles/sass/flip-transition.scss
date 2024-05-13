@@ -1,0 +1,39 @@
+// .flip {
+//   --angle: 0deg;
+//   transform: translateZ(0) rotateY(var(--angle, 0deg));
+//   transform-style: var(--transform-style, initial);
+//   backface-visibility: none;
+//   transition-property: none;
+//
+//   &-enter,
+//   &-exit {
+//     --angle: 180deg;
+//     transition-property: width, height;
+//   }
+//   &-enter-active,
+//   &-exit-active {
+//     --angle: 0deg;
+//     transition-property: transform, width, height;
+//   }
+//   &-enter-done,
+//   &-exit-done {
+//     --angle: 0deg;
+//     transition-property: width, height;
+//   }
+// }
+
+.flip {
+  --angle: 0deg;
+  transform: translateZ(0) rotateY(var(--angle, 0deg));
+  transform-style: var(--transform-style, initial);
+  backface-visibility: hidden;
+  // transition-property: none;
+
+  &--in {
+    --angle: 180deg;
+  }
+
+  &--out {
+    --angle: -180deg;
+  }
+}
