@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef } from 'react'
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import clsx from 'clsx'
 import '../styles/sass/flip-transition.scss'
@@ -8,7 +8,7 @@ export interface FlipTransitionProps extends ComponentPropsWithoutRef<'div'> {
   duration: number
   width?: number
   height?: number
-  children: React.ReactNode
+  children: JSX.Element
 }
 
 export default function FlipTransition({
@@ -44,18 +44,14 @@ export default function FlipTransition({
         className={clsx('flip relative', className)}
         style={{
           transitionDuration: duration + 'ms',
-          width: width + 'px',
-          height: height + 'px',
+          width: width ? `${width}px` : undefined,
+          height: height ? `${height}px` : undefined,
           ...style,
         }}
         {...props}
       >
-        <div key="front" className="flippable__front absolute inset-0">
-          {current}
-        </div>
-        <div key="back" className="flippable__back absolute inset-0">
-          {last}
-        </div>
+        {current}
+        {last}
       </div>
     </CSSTransition>
   )

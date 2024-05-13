@@ -106,68 +106,31 @@ export interface CardProps {
   filters?: WordFilter
   markCorrect: () => void
   markIncorrect: () => void
+  flipDur?: number
 }
 
-const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
-  const defaultDur = 500
-
+const Card = ({
+  word,
+  filters,
+  markCorrect,
+  markIncorrect,
+  flipDur = 500,
+}: CardProps) => {
   const [isFlipped, setIsFlipped] = useState(false)
   const [hasFlipped, setHasFlipped] = useState(false)
-  const [isFlipping, setIsFlipping] = useState(false)
-  const [flipDur, setFlipDur] = useState(defaultDur)
-
-  const [frontContent, setFrontContent] = useState(<WordHanzi word={word} />)
-  const [backContent, setBackContent] = useState(
-    <WordInfo word={word} filters={filters} />
-  )
 
   const answerButtons = useRef<HTMLDivElement>(null)
 
   const flip = () => {
-    if (isFlipping) return
-    setIsFlipped(show => !show)
-    // if (flipDur > 0) {
-    //   setIsFlipping(true)
-    //   setTimeout(() => {
-    //     setIsFlipping(false)
-    //   }, flipDur)
-    // }
+    setHasFlipped(true)
+    setIsFlipped(f => !f)
   }
 
-  /**
-   * handles the answer
-   */
   const handleAnswer = (answer: () => void) => {
-    if (isFlipping) return
-    if (!isFlipped) {
-      // if card is front-side up, secretly flip it first
-      setBackContent(frontContent)
-      setFlipDur(0)
-      setIsFlipped(true)
-    }
-
-    // handle the answer and get a new word
+    setIsFlipped(false)
+    setHasFlipped(false)
     answer()
   }
-
-  // useEffect(() => {
-  //   if (isFlipped) setHasFlipped(true)
-  // }, [isFlipped])
-
-  // /** reset the card to its initial state whenever it recieves a new word */
-  // useEffect(() => {
-  //   setFrontContent(<WordHanzi word={word} />)
-  //   setIsFlipped(false)
-  //   setHasFlipped(false)
-  //   setFlipDur(defaultDur)
-  //   setIsFlipping(true)
-  //   setTimeout(() => {
-  //     setBackContent(<WordInfo word={word} filters={filters} />)
-  //     setIsFlipping(false)
-  //   }, defaultDur)
-  // }, [word])
-  //
-  console.log({ isFlipped })
 
   const front = useRef<HTMLHeadingElement>(null)
 
@@ -185,17 +148,19 @@ const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
     <div className="context-3d">
       <FlipTransition
         duration={flipDur}
-        className="flex-center tap-highlight-none relative mx-auto h-40"
-        width={width}
-        height={height}
+        className="tap-highlight-none mx-auto"
+        // width={width}
+        // height={height}
         onClick={() => flip()}
       >
         {!isFlipped ? (
-          <h1 ref={front} className="card h-full p-4">
-            {frontContent}
+          <h1 ref={front} className="card p-4">
+            <WordHanzi word={word} />
           </h1>
         ) : (
-          <div className="card h-full p-4">{backContent}</div>
+          <div className="card absolute inset-0 p-4">
+            <WordInfo word={word} filters={filters} />
+          </div>
         )}
       </FlipTransition>
       <div

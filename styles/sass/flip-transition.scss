@@ -2,8 +2,19 @@
   --angle: 0deg;
   transform: translateZ(0) rotateY(var(--angle, 0deg));
   transform-style: var(--transform-style, initial);
-  backface-visibility: none;
+  // backface-visibility: none;
   transition-property: none;
+
+  & > * {
+    backface-visibility: hidden;
+    transform: translateZ(0) rotateY(0deg);
+    transform-style: var(--transform-style, initial);
+  }
+
+  & > *:last-child {
+    transform: translateZ(0) rotateY(180deg);
+    // z-index: 10;
+  }
 
   &-enter,
   &-exit {
