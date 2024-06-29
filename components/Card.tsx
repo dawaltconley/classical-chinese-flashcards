@@ -164,7 +164,7 @@ const Card = ({ word, filters, markCorrect, markIncorrect }: CardProps) => {
       setBackContent(<WordInfo word={word} filters={filters} />)
       setIsFlipping(false)
     }, defaultDur)
-  }, [word])
+  }, [word]) // eslint-disable-line react-hooks/exhaustive-deps -- need a better solution to this, but this effect should only run on word change
 
   return (
     <div className="context-3d">
