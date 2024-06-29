@@ -34,8 +34,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with
 and can be run locally using
 
 ```bash
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
 To learn more about Next.js, take a look at the following resources:
